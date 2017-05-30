@@ -5,7 +5,7 @@ exports.getInfo = function(req, res, next) {
 	var https = require('https');
 
 	var options = {
-	  host: 'app64319644.auth0.com',
+	  host: 'app69362200.auth0.com',
 	  path: '/userinfo',
 	  //host: 'thammasat-university.herokuapp.com',
 	  //path: '/',
@@ -49,14 +49,14 @@ exports.deleteuser = function(req, res, next) {
 
 	// Build the post string from an object
 	var postBody = JSON.stringify({      
-		'client_id':'eXK3gp22Vo0qFEXVgOAnWuSdkYpAdEl3',
-		'client_secret':'GjV6PSghfaM2ctf8miKFmO1uHZrPpz51ohFkZlAormf6_ZjF_pB5f17mAcjvKWcO',
-		'audience':'https://app64319644.auth0.com/api/v2/',
+		'client_id':'AtH1L7wf0qZ4VsjnbNKDe8hoLaRp7YxQ',
+		'client_secret':'8rYAWEc1RbtZ4RoEBWDqIV-8vZjq4-iXBpPYe7AdSViAkoy3jRKk-98JQFEuXnbc',
+		'audience':'https://app69362200.auth0.com/api/v2/',
 		'grant_type':'client_credentials'
 	});
 	
 	var options = {
-	  host: 'app64319644.auth0.com',
+	  host: 'app69362200.auth0.com',
 	  path: '/oauth/token',
 	  //host: 'thammasat-university.herokuapp.com',
 	  //path: '/',
@@ -257,7 +257,7 @@ exports.checkin = function(req, res, next){
 	var https = require('https');
 
 	var options = {
-	  host: 'app64319644.auth0.com',
+	  host: 'app69362200.auth0.com',
 	  path: '/userinfo',
 	  //host: 'thammasat-university.herokuapp.com',
 	  //path: '/',
@@ -352,7 +352,7 @@ exports.RequestCheckout = function(req, res, next) {
 	var https = require('https');
 	
 	var options = {
-	  host: 'app64319644.auth0.com',
+	  host: 'app69362200.auth0.com',
 	  path: '/userinfo',
 	  port: '443',
 	  method: 'GET',
@@ -402,7 +402,7 @@ exports.checkout = function(req, res, next){
 	var https = require('https');
 
 	var options = {
-	  host: 'app64319644.auth0.com',
+	  host: 'app69362200.auth0.com',
 	  path: '/userinfo',
 	  //host: 'thammasat-university.herokuapp.com',
 	  //path: '/',
@@ -480,7 +480,7 @@ exports.renew = function(req, res, next) {
 	var https = require('https');
 
 	var options = {
-	  host: 'app64319644.auth0.com',
+	  host: 'app69362200.auth0.com',
 	  path: '/userinfo',
 	  //host: 'thammasat-university.herokuapp.com',
 	  //path: '/',
