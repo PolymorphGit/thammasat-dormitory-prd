@@ -30,12 +30,11 @@
 		<script type="text/javascript">
 		//function [checkScholarship] for this page only
 		function checkScholarship(){
-			
 			var obj1 = document.getElementById('request_Zone__c');
 			var obj2 = document.getElementById('chkScholarship');
 			
 			var tempValue=obj1.options[obj1.selectedIndex].text.toLowerCase();   
-			
+			//alert("Scholarship: " + obj2.checked);
 		 	if(obj2.checked){
                 if ( (tempValue.indexOf('zone m')<=-1)&&(tempValue.indexOf('zone f')<=-1) ){
                     angular.element(document.getElementById('main')).scope().lead.request_zone__c = null;
@@ -754,7 +753,7 @@
 							<td>
 							</td>
 							<td>
-								<input type="text" ng-model="lead.student_id__c" id="txt_student_id__c" maxlenght="10" />
+								<input type="text" ng-model="lead.student_id__c" id="txt_student_id__c" maxlength="10" />
 								<label id="lbl_student_id__c" />
 							</td>
 						</tr>
@@ -937,7 +936,7 @@
 							</td>
 							<td></td>
 							<td>
-								 <input type="checkbox" ng-model="lead.scholarship__c" id="chkScholarship" onclick="checkScholarship()" onchange="checkScholarship()" />
+								 <input type="checkbox" ng-model="lead.scholarship__c" id="chkScholarship" />
 								 <label style="color:red;" >*โปรดทำเครื่องหมายในช่องสี่เหลี่ยมกรณีเป็นนักศึกษาทุนทุกประเภท</label>
 							</td>
 						</tr>

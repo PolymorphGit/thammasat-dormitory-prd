@@ -3,6 +3,9 @@ var db = require('./pghelper');
 exports.getDetail = function(req, res, next) {
 	var id = req.params.id;
 	var output = '';
+	var date;
+	var time;
+	var detail;
 	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		//console.log(results);
@@ -51,7 +54,7 @@ exports.getList = function(req, res, next) {
 			    var obj = JSON.parse(str);
 			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					var query = "SELECT * FROM salesforce.Case where accountid='" + results[0].sfid + "'";
+					var query = "SELECT * FROM salesforce.Case where accountid='" + results[0].sfid + "' and type<>'Care and Clean'";
 					if(!isNaN(limit))
 					{
 						query += " limit " + limit;
@@ -65,12 +68,21 @@ exports.getList = function(req, res, next) {
 					.then(function(results2) {	
 						//Build Output
 						var output = '[';
+						var date;
+						var time;
+						var detail;
 						for(var i = 0 ; i < results2.length ; i++)
 						{
+							date = results2[0].createddate;
+							time = ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
+							date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + ("0" + date.getFullYear()).slice(-2);		
 							output += '{"id":"' + results2[i].sfid;
-							output += '", "name":"' + results2[i].subject + ' (' + results2[i].casenumber + ')'
+							output += '", "name":"' + results2[i].subject + ' (' + results2[i].casenumber + ')';
 							output += '", "type":"case';
-							output += '", "detail":"' + results2[i].description;
+							detail = results2[i].description;
+							detail = detail.replace(/(\r\n|\n|\r)/gm, " ");
+							//detail = detail.trim();
+							output += '", "detail":"' + detail;
 							output += '", "status":"' + results2[i].status;
 							output += '", "created_date":"' + date;
 							output += '", "created_time":"' + time + '"},';
@@ -80,7 +92,7 @@ exports.getList = function(req, res, next) {
 							output = output.substr(0, output.length - 1);
 						}
 						output += ']';
-						//console.log(output);
+						console.log(output);
 						res.json(JSON.parse(output));
 					})
 				    .catch(next);
