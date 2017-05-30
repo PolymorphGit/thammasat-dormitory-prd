@@ -52,7 +52,7 @@ exports.getList = function(req, res, next) {
 	var https = require('https');
 	
 	var options = {
-	  host: 'app64319644.auth0.com',
+	  host: 'app69362200.auth0.com',
 	  path: '/userinfo',
 	  port: '443',
 	  method: 'GET',
