@@ -7,9 +7,9 @@ function sayHello() {
 sayHello();
 
 var pusher = new Pusher({
-  appId: '321597',
-  key: 'f57a4e884d78cc6e048a',
-  secret: '6bd62949b0bcbf8b22a8',
+  appId: '345082',
+  key: '3b671a9d40df043e9366',
+  secret: '83c0c30e8dfc1df9ad67',
   encrypted: true
 });
 
