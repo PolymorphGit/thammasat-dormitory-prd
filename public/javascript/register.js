@@ -112,6 +112,7 @@ angular.module('leadApp', [])
     		  {
     			  //alert(value.zones);
     	  			$scope.zones = value.zones;
+			  $scope.request_zone__c = '';
     		  }
 	      });
       }
