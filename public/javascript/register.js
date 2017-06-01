@@ -60,7 +60,17 @@ angular.module('leadApp', [])
     		  {
     			//alert(value.zones);
     	  		$scope.zones = value.zones;
-			$scope.lead.request_zone__c = '';
+			if($scope.lead.scholarship__c)
+        	  		{
+        	  			if($scope.lead.gender__c == 'Male' && !$scope.lead.request_zone__c.include('zone M'))
+        	  			{
+        	  				$scope.lead.request_zone__c = '';
+        	  			}
+        	  			else if($scope.lead.gender__c == 'Female' && !$scope.lead.request_zone__c.include('zone F'))
+        	  			{
+        	  				$scope.lead.request_zone__c = '';
+        	  			}
+        	  		}
     		  }
 	      });
     	  
@@ -113,7 +123,17 @@ angular.module('leadApp', [])
     		  {
     			  //alert(value.zones);
     	  			$scope.zones = value.zones;
-			  $scope.lead.request_zone__c = '';
+			  if($scope.lead.scholarship__c)
+        	  		{
+        	  			if($scope.lead.gender__c == 'Male' && !$scope.lead.request_zone__c.include('zone M'))
+        	  			{
+        	  				$scope.lead.request_zone__c = '';
+        	  			}
+        	  			else if($scope.lead.gender__c == 'Female' && !$scope.lead.request_zone__c.include('zone F'))
+        	  			{
+        	  				$scope.lead.request_zone__c = '';
+        	  			}
+        	  		}
     		  }
 	      });
       }
