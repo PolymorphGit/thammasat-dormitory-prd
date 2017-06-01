@@ -60,6 +60,7 @@ angular.module('leadApp', [])
     		  {
     			//alert(value.zones);
     	  		$scope.zones = value.zones;
+			$scope.lead.request_zone__c = '';
     		  }
 	      });
     	  
@@ -112,7 +113,7 @@ angular.module('leadApp', [])
     		  {
     			  //alert(value.zones);
     	  			$scope.zones = value.zones;
-			  $scope.request_zone__c = '';
+			  $scope.lead.request_zone__c = '';
     		  }
 	      });
       }
