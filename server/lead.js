@@ -17,7 +17,7 @@ exports.createLead = function(req, res, next) {
 	var identification_number__c = (req.body.identification_number__c=='undefined' || req.body.identification_number__c==null ||req.body.identification_number__c=='null'? '' : req.body.identification_number__c);
 	var passport_number__c  = (req.body.passport_number__c =='undefined' || req.body.passport_number__c ==null || req.body.passport_number__c=='null'? '' :req.body.passport_number__c);
 	var gender__c = (req.body.gender__c=='undefined' || req.body.gender__c==null ||req.body.gender__c=='null'? '' : req.body.gender__c);
-	var title_th__c = (req.body.title_th__c=='undefined' || req.body.title_th__c==null ||req.body.title_th__c=='null'? '' : req.body.title_th__c);
+	//var title_th__c = (req.body.title_th__c=='undefined' || req.body.title_th__c==null ||req.body.title_th__c=='null'? '' : req.body.title_th__c);
 	var first_name_th__c = (req.body.first_name_th__c=='undefined' || req.body.first_name_th__c==null ||req.body.first_name_th__c=='null'? '' : req.body.first_name_th__c);
 	var last_name_th__c = (req.body.last_name_th__c=='undefined' || req.body.last_name_th__c==null ||req.body.last_name_th__c=='null'? '' : req.body.last_name_th__c);
 	var salutation = (req.body.salutation=='undefined' || req.body.salutation==null ||req.body.salutation=='null'? '' :req.body.salutation);
@@ -56,7 +56,7 @@ exports.createLead = function(req, res, next) {
 	var sleep_soundly__c =(req.body.sleep_soundly__c? req.body.sleep_soundly__c : 'false');
 	var love_cleaning__c =(req.body.love_cleaning__c? req.body.love_cleaning__c : 'false');
 	
-	var query2 = "INSERT INTO salesforce.lead (identification_number__c, passport_number__c, gender__c, title_th__c, ";
+	var query2 = "INSERT INTO salesforce.lead (identification_number__c, passport_number__c, gender__c,";
 	query2 += "first_name_th__c, last_name_th__c, salutation, firstname, lastname, mobilephone, email, congenital_disease__c, ";
 	query2 += "student_id__c, faculty__c, request_zone__c, street, city, state, postalcode, ";
 	query2 += "country, parent_name__c, parent_phone__c, parent_name_2__c, parent_phone_2__c,";
@@ -66,7 +66,7 @@ exports.createLead = function(req, res, next) {
 	query2 += "Sleep_After_Midnight__c, Sleep_with_Light_On__c, Sleep_with_Turn_Off_Air_Condition__c, Sleep_Soundly__c,Love_Cleaning__c";
 	query2 +=") VALUES ('";
 	query2 += identification_number__c + "', '" + passport_number__c + "', '" + gender__c + "', '";
-	query2 += title_th__c + "', '" + first_name_th__c + "', '" + last_name_th__c + "', '";
+	query2 += first_name_th__c + "', '" + last_name_th__c + "', '";
 	query2 += salutation + "', '" + firstname + "', '" + lastname + "', '" + mobilephone + "', '";
 	query2 += email + "', '" + congenital_disease__c + "', '" + student_id__c + "', '" + faculty__c + "', '";
 	query2 += request_zone__c + "', '" + street + "', '" + city + "', '";
