@@ -24,9 +24,19 @@ exports.getCleanRate = function(req, res, next) {
 			    //res.send(obj.identities[0].user_id);
 			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					db.select("SELECT * FROM salesforce.Product2 WHERE SFID='" + results[0].room__c + "'")
+					var today = new Date();
+					var startDate = new Date(today.getFullYear(), 5, 1);
+					var endDate = new Date(today.getFullYear(), 6, 31);
+					var room = results[0].room__c;
+					console.log("Today: " + today + ", Start: " + startDate + ", End: " + endDate);
+					if((startDate < today && today < endDate))
+					{
+						console.log("Summer Term");
+						room = results[0].room_summer__c;
+					}
+					db.select("SELECT * FROM salesforce.Product2 WHERE SFID='" + room + "'")
 					.then(function(results2) {
-						db.select("SELECT * FROM salesforce.Master_Clean_Rate__c where type__c='" + results2[0].room_type__c + "'")
+						db.select("SELECT * FROM salesforce.Master_Clean_Rate__c where type__c='" + results2[0].room_type__c + "' order by quantity__c asc")
 						.then(function(results2) {
 							console.log(results2);
 							var output = '[';
@@ -67,6 +77,7 @@ exports.getDetail = function(req, res, next) {
 	var output = '';
 	var date;
 	var time;
+	var detail;
 	db.select("SELECT * FROM salesforce.WorkOrder WHERE sfid='" + id + "'")
 	.then(function(results0) {
 	db.select("SELECT * FROM salesforce.case WHERE sfid='" + results0[0].caseid + "' and type='Care and Clean'")
@@ -74,12 +85,15 @@ exports.getDetail = function(req, res, next) {
 		console.log(results);	
 		//output = JSON.stringify(results);
 		date = results[0].createddate;
+		date.setHours(date.getHours() + 7);
 		time = ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
-		date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + ("0" + date.getFullYear()).slice(-2);	
+		date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();	
 		output = '[{"id":"' + results[0].sfid;
 		output += '", "name":"' + results[0].subject + " (" + results[0].casenumber + ")";
 		output += '", "type":"clean';
-		output += '", "detail":"' + results[0].description;	
+		detail = results[0].description == null ? '' : results[0].description;
+		detail = detail.replace(/(\r\n|\n|\r)/gm, " ");
+		output += '", "detail":"' + detail;	
 		output += '", "allow_access":"' + results[0].allow_to_access_room__c;
 		output += '", "agrre_to_payment":"' + results[0].agree_to_pay__c;
 		output += '", "quantity":"' + results[0].package_number__c;
@@ -97,7 +111,8 @@ exports.getDetail = function(req, res, next) {
 				for(var i = 0 ; i <results2.length ; i++)
 				{
 					date = results2[0].working_date__c;
-					date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + ("0" + date.getFullYear()).slice(-2);
+					date.setHours(date.getHours() + 7);
+					date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 					output += '{"clean_id":"' + results2[i].sfid;
 					output += '", "working_date":"' + date;
 					output += '", "period":"' + results2[i].cleaning_period__c;
@@ -141,38 +156,52 @@ exports.getList = function(req, res, next) {
 			    var obj = JSON.parse(str);
 			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					var query = "SELECT * FROM salesforce.WorkOrder where accountid='" + results[0].sfid + "'";
+					
+					
+					var query = "SELECT * FROM salesforce.WorkOrder where accountid='" + results[0].sfid + "' and subject='Care and Clean' Order by createddate desc";
 					if(!isNaN(limit))
 					{
 						query += " limit " + limit;
 					}
+				    	if(!isNaN(start) && start != 0)
+					{
+						query += " OFFSET  " + start;
+					}
 					//console.log(query);
 					db.select(query)
-					.then(function(results2) {	
+					.then(function(results3) {	
 						//Build Output
+						console.log(results3);
 						var output = '[';
 						var createdate;
 						var date;
 						var time;
-						for(var i = 0 ; i <results2.length ; i++)
+						for(var i = 0 ; i < results3.length ; i++)
 						{
-							createdate = results2[i].createddate;
-							date = createdate.getDate() + '/' + createdate.getMonth() + '/' + createdate.getFullYear();
-							time = ("0" + createdate.getHours()).slice(-2) + ':' + ("0" + createdate.getMinutes()).slice(-2);
-							output += '{"id":"' + results2[i].sfid;
-							output += '", "name":"' + results2[i].subject + ' (' + results2[i].workordernumber + ')';
-							output += '", "type":"clean';
-							output += '", "detail":"วันที่: ' + date + ' ช่วงเวลา: ' + results2[i].cleaning_period__c;
-							output += '", "status":"' + results2[i].status;
-							output += '", "created_date":"' + date;
-							output += '", "created_time":"' + time + '"},';
+							createdate = results3[i].createddate;
+							date = results3[i].working_date__c;
+							if(createdate != null)
+							{
+								createdate.setHours(createdate.getHours() + 7);
+								date.setHours(date.getHours() + 7);
+								time = ("0" + createdate.getHours()).slice(-2) + ':' + ("0" + createdate.getMinutes()).slice(-2);
+								createdate = ("0" + createdate.getDate()).slice(-2) + '/' + ("0" + (createdate.getMonth() + 1)).slice(-2) + '/' + createdate.getFullYear();
+								date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+								output += '{"id":"' + results3[i].sfid;
+								output += '", "name":"' + results3[i].subject + ' (' + results3[i].workordernumber + ')';
+								output += '", "type":"clean';
+								output += '", "detail":"วันที่: ' + date + ' ช่วงเวลา: ' + results3[i].cleaning_period__c;
+								output += '", "status":"' + results3[i].status;
+								output += '", "created_date":"' + createdate;
+								output += '", "created_time":"' + time + '"},';
+							}
 						}
-						if(results2.length)
+						if(output.length > 1)
 						{
 							output = output.substr(0, output.length - 1);
 						}
 						output += ']';
-						//console.log(output);
+						console.log(output);
 						res.json(JSON.parse(output));
 					})
 				    .catch(next);
@@ -210,14 +239,20 @@ exports.openClean = function(req, res, next) {
 		    str += chunk;
 		});
 		results.on('end', function() {
+			console.log(str);
 			var obj = JSON.parse(str);
 			if(obj.status == 'Invalid access token')
 			{
-				res.status(887).send("{ status: \"Invalid access token\" }");
+				res.status(887).send("{ \"status\": \"Invalid access token\" }");
 			}
 			else if(obj.status == 'fail')
 			{
-				res.json(obj);
+				//res.json(obj);
+				res.send('{ "status": "fail", "message": "' + obj.message + '" }');
+			}
+			else if(obj.status__c != 'Checkin')
+			{
+				res.send('{ "status": "fail", "message": "คุณยังไม่ได้ทำการ Check in" }');
 			}
 			else
 			{
@@ -244,7 +279,9 @@ exports.openClean = function(req, res, next) {
 										var query2 = "INSERT INTO salesforce.WorkOrder (caseid, working_date__c, cleaning_period__c, recordtypeid, assetid, subject, accountid) VALUES ";
 										for(var i = 0 ; i < req.body.schedule.length; i++)
 										{
-											query2 += "('" + results4[0].sfid + "', '" + req.body.schedule[i].date + "', '" + req.body.schedule[i].time;
+											var date = req.body.schedule[i].date;
+											date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
+											query2 += "('" + results4[0].sfid + "', '" + date + "', '" + req.body.schedule[i].time;
 											query2 += "', '" + results5[0].sfid + "', '" + results6[0].sfid +"', 'Care and Clean', '" + obj.sfid + "'), ";
 										}
 										if(req.body.schedule.length > 0)
@@ -253,7 +290,7 @@ exports.openClean = function(req, res, next) {
 										}
 										db.select(query2)
 										.then(function(results7) {
-											res.send('{ status: "success" }');
+											res.send('{ "status": "success" }');
 										})
 									    .catch(next);
 									})
@@ -274,7 +311,7 @@ exports.openClean = function(req, res, next) {
 	httprequest.on('error', (e) => {
 		res.send('problem with request: ${e.message}');
 	});
-	httprequest.write(req.body);
+	httprequest.write(postBody);
 	httprequest.end();
 }
 
@@ -303,33 +340,98 @@ exports.checkCap = function(req, res, next) {
 				var obj = JSON.parse(str);
 				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
-					db.select("SELECT * FROM salesforce.clean_capacity__c WHERE zone__c='" + results2[0].zone__c + "'")
-					.then(function(results3) {
-						//Build Query 
-						var listDate = '';
-						for(var i = 0 ; i < req.body.schedule.length; i++)
+					var listDate = '';
+					var date;
+					var CheckDuplicate = false;
+					for(var i = 0 ; i < req.body.schedule.length; i++)
+					{
+						date = req.body.schedule[i].date;
+						date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
+						listDate += "'" + date + "', ";
+						for(var j = 0 ; j < req.body.schedule.length; j++)
 						{
-							listDate += req.body.schedule[i].date + "', ";
-						}
-						listDate = listDate.substr(0, listDate.length - 2);
-						
-						var query = 'SELECT count(Id), working_date__c, cleaning_period__c FROM salesforce.workorder where working_date__c IN (' + listDate +') group by working_date__c, cleaning_period__c';
-						db.select(query)
-						.then(function(results4) {
-							//Loop check count with capacity
-							var message = '';
-							for(var i = 0 ; i < req.body.schedule.length; i++)
+							if(i != j && req.body.schedule[i].date == req.body.schedule[j].date)
 							{
-								
+								CheckDuplicate = true;
+							}
+						}
+					}
+					if(CheckDuplicate == false)
+					{
+						listDate = listDate.substr(0, listDate.length - 2);
+						var query = "SELECT Id, to_char(working_date__c, 'DD/MM/YYYY') as date FROM salesforce.workorder where accountid='" + results2[0].sfid + "' and working_date__c IN (" + listDate +")";
+						db.select(query)
+						.then(function(results3) {
+							//console.log(results3);
+							if(results3.length == 0)
+							{
+								db.select("SELECT * FROM salesforce.clean_capacity__c WHERE zone__c='" + results2[0].zone__c + "'")
+								.then(function(results4) {
+									console.log(results4);
+									query = "SELECT count(worder.Id) as count, to_char(working_date__c, 'DD/MM/YYYY') as date, cleaning_period__c FROM salesforce.workorder as worder ";
+									query += "LEFT JOIN salesforce.account as acc on worder.accountid = acc.sfid ";
+									query += "where acc.zone__c='" + results2[0].zone__c + "' and working_date__c IN (" + listDate +") group by working_date__c, cleaning_period__c";
+									db.select(query)
+									.then(function(results5) {
+										//Loop check count with capacity
+										console.log(results5);
+										var message = '';
+										for(var i = 0 ; i < results5.length; i++)
+										{
+											console.log('date: ' + results5[i].date + ', period: ' + results5[i].cleaning_period__c);
+											for(var j = 0 ; j < req.body.schedule.length; j++)
+											{
+												console.log('>> date: ' + req.body.schedule[j].date + ', period: ' + req.body.schedule[j].time);
+												if(results5[i].cleaning_period__c == req.body.schedule[j].time && results5[i].date == req.body.schedule[j].date)
+												{
+													console.log("---check---(" + results5[i].cleaning_period__c + ")-(" + results5[i].count + ")");
+													if((results5[i].cleaning_period__c == 'Morning' && results5[i].count >= results4[0].morning__c) || 
+													   (results5[i].cleaning_period__c == 'Afternoon' && results5[i].count >= results4[0].afternoon__c))
+													{
+														message += ' วันที่ ' + results5[i].date + ' ช่วง ' + results5[i].cleaning_period__c + '/';
+													}
+												}
+											}
+										}
+										if(message != '')
+										{
+											res.send('{ "status": "fail", "message": "' + message + ' เต็ม" }');
+										}
+										else
+										{
+											//res.send('{ "status": "success" }');
+											res.json(results2[0]);
+										}
+									})
+								    .catch(next);
+								})
+							    .catch(next);
+							}
+							else
+							{
+								var message = "คุณได้ทำการจอง วันที่ ";
+								for(var i = 0 ; i < results3.length ; i++)
+								{
+									message += results3[i].date + "และ ";
+								}
+								if(results3.length > 0)
+								{
+									message = message.substr(0, message.length - 4);
+								}
+								res.send('{ "status": "fail", "message": "' + message + ' แล้ว" }');
 							}
 						})
 					    .catch(next);
-					})
-				    .catch(next);
+					}
+					else
+					{
+						var message = "คุณได้ทำการจอง วันที่ซ้ำกัน";
+						res.send('{ "status": "fail", "message": "' + message + '" }');
+					}
 				})
 			    .catch(next);
 			}
-		    catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+		    catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	
