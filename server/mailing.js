@@ -12,8 +12,9 @@ exports.getDetail = function(req, res, next) {
 		.then(function(results2) {
 			//console.log(results2);	
 			date = results[0].createddate;
+			date.setHours(date.getHours() + 7);
 			time = ("0" + date.getHours()).slice(-2) + ':' + ("0" + date.getMinutes()).slice(-2);
-			date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + ("0" + date.getFullYear()).slice(-2);		
+			date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();		
 			output = '[{"id":"' + results[0].sfid;
 			output += '", "name":"' + results[0].name;
 			output += '", "created_date":"' + date;
@@ -22,14 +23,17 @@ exports.getDetail = function(req, res, next) {
 			output += '", "mailing_type__c":"' + results[0].mailing_type__c;
 			output += '", "received_name__c":"' + results[0].received_name__c;			
 			date = results[0].received_date__c;
+			/*
 			if(date != null)
 			{
-				date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + ("0" + date.getFullYear()).slice(-2);	
+				date.setHours(date.getHours() + 7);
+				date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
 			}
 			else
 			{
 				date = '';
 			}
+			*/
 			output += '", "received_date__c":"' + date + '"}]';
 			console.log(output);
 			res.json(JSON.parse(output));
@@ -64,7 +68,7 @@ exports.getList = function(req, res, next) {
 			    var obj = JSON.parse(str);
 			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					var query = "SELECT * FROM salesforce.Mailing__c where Student_Name__c='" + results[0].sfid + "'";
+					var query = "SELECT * FROM salesforce.Mailing__c where Student_Name__c='" + results[0].sfid + "' Order by createddate desc";
 					if(!isNaN(limit))
 					{
 						query += " limit " + limit;
@@ -84,7 +88,9 @@ exports.getList = function(req, res, next) {
 						for(var i = 0 ; i <results2.length ; i++)
 						{
 							createdate = results2[i].createddate;
-							date = ("0" + createdate.getDate()).slice(-2) + '/' + ("0" + createdate.getMonth()).slice(-2) + '/' + ("0" + createdate.getFullYear()).slice(-2);
+							createdate.setHours(createdate.getHours() + 7);
+							date = createdate;
+							date = ("0" + createdate.getDate()).slice(-2) + '/' + ("0" + (createdate.getMonth() + 1)).slice(-2) + '/' + createdate.getFullYear();
 							time = ("0" + createdate.getHours()).slice(-2) + ':' + ("0" + createdate.getMinutes()).slice(-2);
 							output += '{"id":"' + results2[i].sfid;
 							output += '", "name":"' + results2[i].name;
@@ -106,7 +112,7 @@ exports.getList = function(req, res, next) {
 				})
 			    .catch(next);
 			}
-			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+			catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	
