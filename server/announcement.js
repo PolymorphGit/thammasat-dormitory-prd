@@ -5,7 +5,7 @@ exports.getDetail = function(req, res, next) {
 	var limit = req.headers['limit'];
 	var start = req.headers['start'];
 	
-	var query = "SELECT * FROM salesforce.Announcement__c";
+	var query = "SELECT * FROM salesforce.Announcement__c Order by createddate desc";
 	if(!isNaN(limit))
 	{
 		query += " limit " + limit;
@@ -22,9 +22,10 @@ exports.getDetail = function(req, res, next) {
 		var time;
 		for(var i = 0 ; i <results.length ; i++)
 		{
-			createdate = results[i].createddate;
-			date = createdate.getDate() + '/' + createdate.getMonth() + '/' + createdate.getFullYear();
+			date = createdate = results[i].createddate;
+			date.setHours(date.getHours() + 7);
 			time = ("0" + createdate.getHours()).slice(-2) + ':' + ("0" + createdate.getMinutes()).slice(-2);
+			date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 			output += '{"id":"' + results[i].sfid;
 			output += '", "name":"' + results[i].name;
 			output += '", "type":"announcement';
