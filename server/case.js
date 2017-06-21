@@ -15,7 +15,7 @@ exports.getDetail = function(req, res, next) {
 		date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();	
 		output = '{"id":"' + results[0].sfid;
 		output += '", "name":"' + results[0].subject + ' (' + results[0].casenumber + ')';
-		detail = results[0].description;
+		detail = results[0].description == null ? '' : results[0].description;
 		detail = detail.replace(/(\r\n|\n|\r)/gm, " ");
 		//detail = detail.trim();
 		output += '", "detail":"' + detail;
