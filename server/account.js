@@ -568,7 +568,7 @@ exports.checkin = function(req, res, next){
 										db.select("INSERT INTO salesforce.Asset (Name, accountId, product2id, UsageEndDate, contract_end__c, active__c) VALUES ('" + result4[0].name + "', '" + results2[0].sfid + "', '" + room + "', '" + enddate + "', '" + enddate + "', true)")
 										.then(function(results5) {
 											console.log(results5);	
-											res.send("{ status: \"Success\"}");
+											res.send("{ \"status\": \"Success\"}");
 										})
 									    .catch(next);
 									})
