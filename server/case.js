@@ -437,9 +437,11 @@ exports.openCaseGuest = function(req, res, next) {
 				.then(function(results) {
 					db.select("SELECT * FROM salesforce.RecordType WHERE name='Request to Stay'")
 					.then(function(results2) {
+						var date = req.body.date;
+						date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
 						var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject, citizen_id_passport_no__c, stay_start_date__c) ";
 						query += "VALUES ('" + results2[0].sfid + "', '" + results[0].sfid + "', 'Mobile Application', 'Request', '"; 
-						query += "ขออนุญาตค้างคืน', '" + req.body.comment + "', 'Medium', 'ขออนุญาตค้างคืน', '" + req.body.identity_number + "', '" + req.body.date + "')";
+						query += "ขออนุญาตค้างคืน', '" + req.body.comment + "', 'Medium', 'ขออนุญาตค้างคืน', '" + req.body.identity_number + "', '" + date + "')";
 						//console.log(query);
 						db.select(query)
 						.then(function(results3) {
