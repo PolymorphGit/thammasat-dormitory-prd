@@ -134,8 +134,11 @@ function sendContractExpire()
 					type: 'Contract',
 				   	message: 'สัญญาจะหมดอายุในวันที่:' + results[i].contract_end__c.toDateString() };
 			console.log('To:' + to + ', สัญญาจะหมดอายุในวันที่:' + results[i].contract_end__c.toDateString());
-			pusher.trigger(to, 'Contract Expire', payload);
-			
+			//pusher.trigger(to, 'Contract Expire', payload);
+			pusher.notify([to], {
+				apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
+				fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			});
 			listId += '\'' + results[i].sfid + '\', ';
 			listAccId += '\'' + results[i].accountid + '\', ';
 		}
