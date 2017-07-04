@@ -276,13 +276,14 @@ exports.openClean = function(req, res, next) {
 								.then(function(results5) {
 									db.select("SELECT * FROM salesforce.Asset WHERE accountid='" + obj.sfid + "' and active__c=true")
 									.then(function(results6) {
-										var query2 = "INSERT INTO salesforce.WorkOrder (caseid, working_date__c, cleaning_period__c, recordtypeid, assetid, subject, accountid) VALUES ";
+										var query2 = "INSERT INTO salesforce.WorkOrder (caseid, working_date__c, cleaning_period__c, recordtypeid, assetid, subject, accountid, case_heroku_id__c) VALUES ";
 										for(var i = 0 ; i < req.body.schedule.length; i++)
 										{
 											var date = req.body.schedule[i].date;
 											date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
 											query2 += "('" + results4[0].sfid + "', '" + date + "', '" + req.body.schedule[i].time;
 											query2 += "', '" + results5[0].sfid + "', '" + results6[0].sfid +"', 'Care and Clean', '" + obj.sfid + "'), ";
+											query2 += obj.sfid + "', '" + results4[0].id + "'), ";
 										}
 										if(req.body.schedule.length > 0)
 										{
