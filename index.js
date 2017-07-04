@@ -9,6 +9,7 @@ var case2 = require('./server/case')
 var	clean = require('./server/careandclean')
 var noti = require('./notification')
 var roommate = require('./server/roommate')
+var fyi = require('./server/fyi')
 var lead = require('./server/lead')
 var bodyParser = require('body-parser')
 var app = express()
@@ -39,8 +40,11 @@ app.post('/createstudent', jsonParser, lead.createLead);
 app.get('/deletestudent/:id', lead.deleteLead);
 app.post('/updatestudent/:id', jsonParser, lead.updateLead);
 
+app.get('/getlistzone', account.getZone);
 app.get('/deleteuser/:id', account.deleteuser);
 app.get('/userinfo', account.getInfo);
+app.get('/userinfo2', account.getInfo2);
+app.get('/checkstatus', account.checkStatus);
 app.post('/updateaccount/:id', jsonParser, account.update);
 app.get('/userinfo/:id', account.UserInfobyId);
 app.get('/getprimary/:id', account.getprimary);
@@ -61,22 +65,28 @@ app.get('/mailing', mail.getList);
 app.get('/mailing/:id', mail.getDetail);
 app.get('/billing', pay.getList);
 app.get('/billing/:id', pay.getDetail);
+app.get('/getfyi', fyi.getDetail);
 app.get('/case', case2.getList);
 app.get('/case/:id', case2.getDetail);
-app.post('/opencase', urlencodedParser, case2.openCase);
+app.post('/opencaseservice', urlencodedParser, case2.openCaseService);
+app.post('/opencasecomplain', urlencodedParser, case2.openCaseComplain);
+app.post('/opencaserequest', urlencodedParser, case2.openCaseRequest);
 app.post('/opencaseother', urlencodedParser, case2.openCaseOther);
-app.post('/opencaserenew', urlencodedParser, case2.openCaseRenew);
+app.post('/opencaseaccess', urlencodedParser, case2.openCaseAccess);
+app.post('/opencaseguest', urlencodedParser, case2.openCaseGuest);
+app.post('/opencasechange', urlencodedParser, case2.openCaseChange);
 app.get('/getcleanrate', clean.getCleanRate);
 app.get('/clean', clean.getList);
 app.get('/clean/:id', clean.getDetail);
 app.post('/openclean', jsonParser, clean.openClean);
+app.post('/checkclean', jsonParser, clean.checkCap);
 
 app.get('/checkindetail', account.checkinDetail);
-app.get('/checkin', account.checkin);
-app.post('/requestcheckout', account.RequestCheckout);
+app.post('/checkin', urlencodedParser, account.checkin);
+app.post('/requestcheckout', urlencodedParser, account.RequestCheckout);
 app.get('/checkout', account.checkout);
 
-app.post('/notification', noti.push);
+app.post('/notification', urlencodedParser, noti.push);
 
 app.get('/view_account/:id', function(request, response){
 	console.log(request.params.id);
