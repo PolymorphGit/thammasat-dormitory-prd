@@ -29,7 +29,7 @@ function sendBilling()
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Invoice__c WHERE send_notification__c is null or send_notification__c = false limit 5")
+	db.select("SELECT * FROM salesforce.Invoice__c WHERE send_notification__c is null or send_notification__c = false ")
 	.then(function(results) {
 		console.log('Invoice count: ' + results.length);
 		for(var i = 0 ; i < results.length ; i++)
@@ -77,7 +77,7 @@ function sendMailing()
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Mailing__c WHERE send_notification__c is null or send_notification__c = false limit 5")
+	db.select("SELECT * FROM salesforce.Mailing__c WHERE send_notification__c is null or send_notification__c = false ")
 	.then(function(results) {
 		console.log('Mailing count: ' + results.length);
 		for(var i = 0 ; i < results.length ; i++)
@@ -121,7 +121,7 @@ function sendContractExpire()
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Asset WHERE active__c=true and send_notification__c=false and contract_end__c > NOW() - interval '1 months' limit 5")
+	db.select("SELECT * FROM salesforce.Asset WHERE active__c=true and send_notification__c=false and contract_end__c > NOW() - interval '1 months' ")
 	.then(function(results) {
 		console.log(results);
 		for(var i = 0 ; i < results.length ; i++)
@@ -170,7 +170,7 @@ function caseNotification()
 	var listCaseId = '(';
 	db.select("SELECT * FROM salesforce.RecordType WHERE name !='Care and Clean' and sobjecttype = 'Case'")
 	.then(function(rec) {
-		db.select("SELECT * FROM salesforce.Case WHERE send_notification__c=false and type != 'Care and Clean' and status != 'New' limit 10")
+		db.select("SELECT * FROM salesforce.Case WHERE send_notification__c=false and type != 'Care and Clean' and status != 'New' ")
 		.then(function(results) {
 			//console.log(results);
 			for(var i = 0 ; i < results.length ; i++)
@@ -379,7 +379,7 @@ function workorderNotification()
 	var listCaseId = '(';
 	db.select("SELECT * FROM salesforce.RecordType WHERE name='Maid'")
 	.then(function(rec) {
-		db.select("SELECT * FROM salesforce.workorder WHERE send_notification__c=false and recordtypeid = '" + rec[0].sfid + "' and status ='Closed' limit 10")
+		db.select("SELECT * FROM salesforce.workorder WHERE send_notification__c=false and recordtypeid = '" + rec[0].sfid + "' and status ='Closed' ")
 		.then(function(results) {
 			//console.log(results);
 			for(var i = 0 ; i < results.length ; i++)
