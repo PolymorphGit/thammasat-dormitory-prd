@@ -163,3 +163,261 @@ function sendContractExpire()
 	.catch(function(e){console.log(e);});
 }
 sendContractExpire();
+
+function caseNotification()
+{
+	var sfid, type, message;
+	var listCaseId = '(';
+	db.select("SELECT * FROM salesforce.RecordType WHERE name !='Care and Clean' and sobjecttype = 'Case'")
+	.then(function(rec) {
+		db.select("SELECT * FROM salesforce.Case WHERE send_notification__c=false and type != 'Care and Clean' and status != 'New' limit 10")
+		.then(function(results) {
+			//console.log(results);
+			for(var i = 0 ; i < results.length ; i++)
+			{
+				for(var j = 0 ; j < rec.length ; j++)
+				{
+					if(results[i].recordtypeid == rec[j].sfid)
+					{
+						sfid = results[i].sfid;
+						message = '';
+						type = '';
+						//Services
+						if(rec[j].name == 'Services')
+						{
+							if (results[i].status == 'Working') {
+								type = 'problem working';
+							} 
+							else if (results[i].status == 'On Hold') 
+							{
+								type = 'problem on hold';
+								message = results[i].reason_on_hold__c;
+							} 
+							else if (results[i].status == 'Completed') 
+							{
+								type = 'problem closed';
+								if(results[i].amount__c != null)
+								{
+								    message = 'มีค่าใช้จ่าย ' + results[i].Amount__c + ' บาท เนื่องจาก ' + results[i].Payment_Detail__c;
+								}
+							}
+						}
+						
+						//Complain
+						else if(rec[j].name == 'Complain')
+						{
+							if (results[i].status == 'Accepted') {
+								type = 'complain accept';
+								message = results[i].response_message__c;
+						    	}
+						}
+						
+						//Checkout
+						else if(rec[j].name == 'Checkout')
+						{
+							if (results[i].status == 'Confirm') 
+							{
+								type = 'checkout confirm';
+								message = results[i].response_message__c;
+							} 
+							else if (results[i].status == 'Waiting for Payment') 
+							{
+								type = 'checkout payment';
+								if (results[i].amount__c != null) 
+								{
+									message = 'มีค่าใช้จ่าย ' + results[i].amount__c + ' บาท เนื่องจาก ' + results[i].payment_detail__c;
+								}
+							}
+						}
+						
+						//Early and Late Access
+						else if(rec[j].name == 'Early and Late Access')
+						{
+							if (results[i].problem_type__c == 'ขออนุญาตเข้าหอ หลังเวลา') 
+							{
+								if (results[i].status == 'Approve') 
+								{
+								    type = 'access approve';
+								} 
+								else if (results[i].status == 'Reject') 
+								{
+								    type = 'access reject';
+								    message = results[i].response_message__c;
+								}
+							} 
+							else if (results[i].problem_type__c == 'ขออนุญาตออกหอ ก่อนเวลา') 
+							{
+								if (results[i].status == 'Approve') 
+								{
+								    type = 'leave approve';
+								} 
+								else if (results[i].status == 'Reject') 
+								{
+								    type = 'leave reject';
+								    message = results[i].Response_Message__c;
+								}
+							}
+						}
+						
+						//Request to Stay
+						else if(rec[j].name == 'Request to Stay')
+						{
+							if (results[i].status == 'Approve') 
+							{
+								type = 'stay approve';
+							} 
+							else if (results[i].status == 'Reject') 
+							{
+								type = 'stay reject';
+								message = results[i].response_message__c;
+							}
+						}
+						
+						//Check Mailing
+						else if(rec[j].name == 'Check Mailing')
+						{
+							if (results[i].status == 'Found') 
+							{
+								type = 'mail found';
+							} 
+							else if (results[i].status == 'Not Found') 
+							{
+								type = 'mail not found';
+								message = results[i].response_message__c;
+							}
+						}
+						
+						//Request Household
+						else if(rec[j].name == 'Request Household')
+						{
+							if (results[i].status == 'Working') 
+							{
+								type = 'household in progress';
+							} 
+							else if (results[i].status == 'Waiting Document') 
+							{
+								type = 'household wait doc';
+								message = results[i].response_message__c;
+							} 
+							else if (results[i].status == 'Completed') 
+							{
+								type = 'household completed';
+								message = results[i].response_message__c;
+							}
+						}
+						
+						//Other
+						else if(rec[j].name == 'Other')
+						{
+							if (results[i].status == 'In Progress') 
+							{
+								type = 'other in progress';
+							} 
+							else if (results[i].status == 'Completed') 
+							{
+								type = 'other completed';
+								message = results[i].response_message__c;
+							}
+						}
+						
+						//Move Room
+						else if(rec[j].name == 'Move Room')
+						{
+							if (results[i].status == 'Approve') 
+							{
+								type = 'room accepted';
+							} 
+							else if (results[i].status == 'Reject') 
+							{
+								type = 'room reject';
+								message = results[i].response_message__c;
+							}
+						}
+						
+						if(type != '')
+						{
+							var https = require('https');
+							var options = {
+							  host: 'thammasat-university-prd.herokuapp.com',
+							  path: '/notification',
+							  port: '443',
+							  method: 'POST',
+							  headers: { 'sfid': sfid, 'content-type': 'application/x-www-form-urlencoded', 'type': type, 'Content-Length': Buffer.byteLength(message) }
+							};
+							//console.log('Type:' + rec[j].name + 'Status:' + results[i].status);
+							//console.log(options);
+							//console.log(message);
+							callback = function(results) { };
+							var httprequest = https.request(options, callback);
+							httprequest.on('error', (e) => {
+								console.log('problem with request: ${e.message}');
+							});
+							if(message != undefined)
+							{
+								httprequest.write(message);
+							}
+							httprequest.end();
+						}
+					}
+				}
+				db.select("UPDATE salesforce.Case SET send_notification__c=true WHERE SFID = '" + results[i].sfid + "' RETURNING *")
+				.then(function(results) {
+					//console.log('Send Case : ' + results[i].sfid);
+				})
+				.catch(function(e){console.log(e);});
+			}
+		})
+		.catch(function(e){console.log(e);});
+	})		  
+	.catch(function(e){console.log(e);});
+}
+caseNotification();
+	
+function workorderNotification()
+{
+	var sfid, type, message;
+	var listCaseId = '(';
+	db.select("SELECT * FROM salesforce.RecordType WHERE name='Maid'")
+	.then(function(rec) {
+		db.select("SELECT * FROM salesforce.workorder WHERE send_notification__c=false and recordtypeid = '" + rec[0].sfid + "' and status ='Closed' limit 10")
+		.then(function(results) {
+			//console.log(results);
+			for(var i = 0 ; i < results.length ; i++)
+			{
+				for(var j = 0 ; j < rec.length ; j++)
+				{
+					if(results[i].recordtypeid == rec[j].sfid)
+					{
+						sfid = results[i].sfid;
+						message = '';
+						type = 'clean closed';
+						
+						var https = require('https');
+						var options = {
+						  host: 'thammasat-university-prd.herokuapp.com',
+						  path: '/notification',
+						  port: '443',
+						  method: 'POST',
+						  headers: { 'sfid': sfid, 'content-type': 'application/x-www-form-urlencoded', 'type': type, 'Content-Length': Buffer.byteLength(message)}
+						};
+						callback = function(results) { };
+						var httprequest = https.request(options, callback);
+						httprequest.on('error', (e) => {
+							console.log('problem with request: ${e.message}');
+						});
+						httprequest.write(message);
+						httprequest.end();
+					}
+				}
+				db.select("UPDATE salesforce.workorder SET send_notification__c=true WHERE SFID = '" + results[i].sfid + "' RETURNING *")
+				.then(function(results) {
+					//console.log('Send Clean : ' + results[i].sfid);
+				})
+				.catch(function(e){console.log(e);});
+			}
+		})
+		.catch(function(e){console.log(e);});
+	})		  
+	.catch(function(e){console.log(e);});
+}
+workorderNotification();
