@@ -271,13 +271,16 @@ exports.openClean = function(req, res, next) {
 					db.select(query)
 					.then(function(results3) {
 						setTimeout(function () {
-							//console.log(results3);
+							console.log(results3);
 							db.select("SELECT * FROM salesforce.Case WHERE id='" + results3[0].id + "'")
 							.then(function(results4) {
+								console.log(results4);
 								db.select("SELECT * FROM salesforce.RecordType WHERE name='Maid'")
 								.then(function(results5) {
+									console.log(results5);
 									db.select("SELECT * FROM salesforce.Asset WHERE accountid='" + obj.sfid + "' and active__c=true")
 									.then(function(results6) {
+										console.log(results6);
 										var query2 = "INSERT INTO salesforce.WorkOrder (caseid, working_date__c, cleaning_period__c, recordtypeid, assetid, subject, accountid, case_heroku_id__c) VALUES ";
 										for(var i = 0 ; i < req.body.schedule.length; i++)
 										{
