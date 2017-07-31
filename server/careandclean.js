@@ -365,7 +365,7 @@ exports.checkCap = function(req, res, next) {
 						var query = "SELECT Id, to_char(working_date__c, 'DD/MM/YYYY') as date FROM salesforce.workorder where accountid='" + results2[0].sfid + "' and working_date__c IN (" + listDate +")";
 						db.select(query)
 						.then(function(results3) {
-							//console.log(results3);
+							console.log(results3);
 							if(results3.length == 0)
 							{
 								db.select("SELECT * FROM salesforce.clean_capacity__c WHERE zone__c='" + results2[0].zone__c + "'")
