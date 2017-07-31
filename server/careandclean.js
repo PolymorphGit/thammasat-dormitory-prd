@@ -135,6 +135,7 @@ exports.getDetail = function(req, res, next) {
 exports.getList = function(req, res, next) {
 	var head = req.headers['authorization'];
 	var limit = req.headers['limit'];
+	var start = req.headers['start'];
 	var https = require('https');
 	
 	var options = {
@@ -224,6 +225,7 @@ exports.openClean = function(req, res, next) {
 	if (!req.body) return res.sendStatus(400);
 	console.log(req.body);
 	var https = require('https');
+	var postBody = JSON.stringify(req.body);
 	
 	var options = {
 	  host: 'thammasat-university-prd.herokuapp.com',
