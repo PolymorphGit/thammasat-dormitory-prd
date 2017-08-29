@@ -209,7 +209,6 @@ function caseNotification()
 							if (results[i].status == 'Accepted') {
 								type = 'complain accept';
 								message = results[i].response_message__c;
-								console.log('----Complian : ' + results[i].response_message__c);
 						    	}
 						}
 						
@@ -355,6 +354,7 @@ function caseNotification()
 							});
 							if(message != undefined)
 							{
+								console.log('----Message : ' + results[i].response_message__c);
 								httprequest.write(message);
 							}
 							httprequest.end();
