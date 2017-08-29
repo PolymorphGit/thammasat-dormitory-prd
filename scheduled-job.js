@@ -354,7 +354,7 @@ function caseNotification()
 							});
 							if(message != undefined)
 							{
-								console.log('----Message : ' + results[i].response_message__c);
+								console.log('----Message : ' + message + '------');
 								httprequest.write(message);
 							}
 							httprequest.end();
