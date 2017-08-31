@@ -354,7 +354,7 @@ function caseNotification()
 							});
 							if(message != undefined)
 							{
-								message = JSON.stringify({'message': message});
+								//message = JSON.stringify({'message': message});
 								console.log('----Message : ' + message + '------');
 								httprequest.write(message);
 							}
