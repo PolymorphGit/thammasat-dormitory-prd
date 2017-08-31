@@ -1,5 +1,6 @@
 var db = require('./server/pghelper');
 var Pusher = require('pusher');
+var querystring = require('querystring');
 
 function sayHello() {
     console.log('Notification');
@@ -333,7 +334,14 @@ function caseNotification()
 								message = results[i].response_message__c;
 							}
 						}
-						
+						if(message == undefined)
+						{
+							message = ''	
+						}
+						else
+						{
+							message = querystring.stringify({'message': message});	
+						}
 						if(type != '')
 						{
 							var https = require('https');
@@ -352,12 +360,7 @@ function caseNotification()
 							httprequest.on('error', (e) => {
 								console.log('problem with request: ${e.message}');
 							});
-							if(message != undefined)
-							{
-								//message = JSON.stringify({'message': message});
-								console.log('----Message : ' + message + '------');
-								httprequest.write(message);
-							}
+							httprequest.write(message);
 							httprequest.end();
 						}
 					}
