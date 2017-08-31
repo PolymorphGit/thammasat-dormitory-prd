@@ -15,7 +15,8 @@ exports.push = function(req, res, next)
 	var id = req.headers['sfid'];
 	var type = req.headers['type'];
 	var message = req.body.message;
-	console.log(message);
+	console.log('---message : ' + message);
+	onsole.log('---Body : ' + req.body);
 	var result = true;
 	switch(type)
 	{
