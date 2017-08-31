@@ -28,9 +28,9 @@ exports.getDetail = function(req, res, next) {
 		output += '", "allow_to_access":"' + results[0].allow_to_access_room__c;
 		output += '", "amount":"' + results[0].amount__c;
 		output += '", "payment_detail":"' + results[0].payment_detail__c;
-		if(results[i].status == 'Approved' || results[i].status == 'Confirm' || results[i].status == 'Accepted')
+		if(results[0].status == 'Approved' || results[0].status == 'Confirm' || results[0].status == 'Accepted')
 		{
-			results[i].status = 'Completed';	
+			results[0].status = 'Completed';	
 		}
 		output += '", "status":"' + results[0].status;
 		
