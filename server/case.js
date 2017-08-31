@@ -107,6 +107,10 @@ exports.getList = function(req, res, next) {
 								detail = detail.replace(/(\r\n|\n|\r)/gm, " ");
 								//detail = detail.trim();
 								output += '", "detail":"' + detail;
+								if(results2[i].status == 'Approved' || results2[i].status == 'Confirm' || results2[i].status == 'Accepted')
+								{
+									results2[i].status = 'Completed';	
+								}
 								output += '", "status":"' + results2[i].status;
 								output += '", "created_date":"' + date;
 								output += '", "created_time":"' + time + '"},';
