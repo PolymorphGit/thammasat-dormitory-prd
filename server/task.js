@@ -47,6 +47,13 @@ exports.getFeed = function(req, res, next) {
 						//console.log(query);
 						db.select(query)
 						.then(function(results2) {	
+							for(var i = 0 ; i < results2.length ; i++)
+							{
+								if(results2[i].type == "case" && (results2[i].status == 'Approved' || results2[i].status == 'Confirm' || results2[i].status == 'Accepted'))
+								{
+									results2[i].status = 'Completed';
+								}
+							}
 							res.json(results2)
 						})
 					    .catch(next);
