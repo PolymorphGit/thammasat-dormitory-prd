@@ -310,7 +310,7 @@ function caseNotification()
 						//Other
 						else if(rec[j].name == 'Other')
 						{
-							if (results[i].status == 'In Progress') 
+							if (results[i].status == 'Working') 
 							{
 								type = 'other in progress';
 							} 
