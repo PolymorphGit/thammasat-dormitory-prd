@@ -96,12 +96,12 @@ function getMailing(id, next)
 	.then(function(results) {
 		to = results[0].student_name__c;
 		console.log('To:' + to + ', No:' + results[0].name + ', type:' + results[0].mailing_type__c + ', date:' + results[0].received_date__c);
-		noti = { title : 'มีพัศดุส่งมาถึง วันที่ ' + results[0].createddate.toDateString(), 
-				 body : 'มีพัศดุ ' + results[0].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[0].createddate.toDateString(),
+		noti = { title : 'มีพัสดุส่งมาถึง วันที่ ' + results[0].createddate.toDateString(), 
+				 body : 'มีพัสดุ ' + results[0].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[0].createddate.toDateString(),
 				 click_action: 'MAIN_ACTIVITY'};
 		payload = {	ID: results[0].sfid,
 				type: 'Mailing',
-				message: 'มีพัศดุ ' + results[0].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[0].createddate.toDateString() };
+				message: 'มีพัสดุ ' + results[0].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[0].createddate.toDateString() };
 		//pusher.trigger(to, 'Mailing', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -255,12 +255,12 @@ function checkoutConfirm(id, next)
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'อนุญาติให้ทำการ Check-out ได้', 
-				 body : 'อนุญาติให้ทำการ Check-out ได้ ',
+		noti = { title : 'อนุญาตให้ทำการ Check-out ได้', 
+				 body : 'อนุญาตให้ทำการ Check-out ได้ ',
 				 click_action: 'MAIN_ACTIVITY' };
 		payload = {	ID: results[0].sfid,
 					type: 'Case',
-					message: 'อนุญาติให้ทำการ Check-out ได้' };
+					message: 'อนุญาตให้ทำการ Check-out ได้' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -309,12 +309,12 @@ function accessApprove(id, next)
 		date.setHours(date.getHours() + 7);
 		date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'อนุญาติเข้าหอดึกได้ในวันที่ ' + date, 
-				 body : 'อนุญาติเข้าหอดึกได้ในวันที่ ' + date,
+		noti = { title : 'อนุญาตเข้าหอดึกได้ในวันที่ ' + date, 
+				 body : 'อนุญาตเข้าหอดึกได้ในวันที่ ' + date,
 				 click_action: 'MAIN_ACTIVITY' };
 		payload = {	ID: results[0].sfid,
 					type: 'Case',
-					message: 'อนุญาติเข้าหอดึกได้ในวันที่ ' + date };
+					message: 'อนุญาตเข้าหอดึกได้ในวันที่ ' + date };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -338,12 +338,12 @@ function accesReject(id, message, next)
 		date.setHours(date.getHours() + 7);
 		date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'ไม่อนุญาติเข้าหอดึกได้ในวันที่ ' + date + ' เนื่องจาก ' + message, 
-				 body : 'ไม่อนุญาติเข้าหอดึกได้ในวันที่ ' + date + ' เนื่องจาก ' + message,
+		noti = { title : 'ไม่อนุญาตเข้าหอดึกได้ในวันที่ ' + date + ' เนื่องจาก ' + message, 
+				 body : 'ไม่อนุญาตเข้าหอดึกได้ในวันที่ ' + date + ' เนื่องจาก ' + message,
 				 click_action: 'MAIN_ACTIVITY' };
 		payload = {	ID: results[0].sfid,
 					type: 'Case',
-					message: 'ไม่อนุญาติเข้าหอดึกได้ในวันที่ ' + date + ' เนื่องจาก ' + message };
+					message: 'ไม่อนุญาตเข้าหอดึกได้ในวันที่ ' + date + ' เนื่องจาก ' + message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -367,12 +367,12 @@ function leaveApprove(id, next)
 		date.setHours(date.getHours() + 7);
 		date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'อนุญาติออกจากหอพักก่อนเวลาได้ในวันที่ ' + date, 
-				 body : 'อนุญาติออกจากหอพักก่อนเวลาได้ในวันที่ ' + date,
+		noti = { title : 'อนุญาตออกจากหอพักก่อนเวลาได้ในวันที่ ' + date, 
+				 body : 'อนุญาตออกจากหอพักก่อนเวลาได้ในวันที่ ' + date,
 				 click_action: 'MAIN_ACTIVITY' };
 		payload =  {	ID: results[0].sfid,
 						type: 'Case',
-						message: 'อนุญาติออกจากหอพักก่อนเวลาได้ในวันที่ ' + date };
+						message: 'อนุญาตออกจากหอพักก่อนเวลาได้ในวันที่ ' + date };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -396,12 +396,12 @@ function leaveReject(id, message, next)
 		date.setHours(date.getHours() + 7);
 		date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'ไม่อนุญาติออกจากหอพักก่อนเวลาได้ในวันที่ ' + date + ' เนื่องจาก ' + message, 
-				 body : 'ไม่อนุญาติออกจากหอพักก่อนเวลาได้ในวันที่ ' + date + ' เนื่องจาก ' + message,
+		noti = { title : 'ไม่อนุญาตออกจากหอพักก่อนเวลาได้ในวันที่ ' + date + ' เนื่องจาก ' + message, 
+				 body : 'ไม่อนุญาตออกจากหอพักก่อนเวลาได้ในวันที่ ' + date + ' เนื่องจาก ' + message,
 				 click_action: 'MAIN_ACTIVITY' };
 		payload = {	ID: results[0].sfid,
 					type: 'Case',
-					message: 'ไม่อนุญาติออกจากหอพักก่อนเวลาได้ในวันที่ ' + date + ' เนื่องจาก ' + message };
+					message: 'ไม่อนุญาตออกจากหอพักก่อนเวลาได้ในวันที่ ' + date + ' เนื่องจาก ' + message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -425,12 +425,12 @@ function stayApprove(id, next)
 		date.setHours(date.getHours() + 7);
 		date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'อนุญาติให้พาเพื่อนเข้าพักได้วันที่ ' + date , 
-				 body : 'อนุญาติให้พาเพื่อนเข้าพักได้วันที่ ' + date,
+		noti = { title : 'อนุญาตให้พาเพื่อนเข้าพักได้วันที่ ' + date , 
+				 body : 'อนุญาตให้พาเพื่อนเข้าพักได้วันที่ ' + date,
 				 click_action: 'MAIN_ACTIVITY' };
 		payload = {	ID: results[0].sfid,
 					type: 'Case',
-					message: 'อนุญาติให้พาเพื่อนเข้าพักได้วันที่ ' + date };
+					message: 'อนุญาตให้พาเพื่อนเข้าพักได้วันที่ ' + date };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -454,12 +454,12 @@ function stayReject(id, message, next)
 		date = date.setHours(date.getHours() + 7);
 		date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'ไม่อนุญาติให้พาเพื่อนเข้าพักได้วันที่ ' + date + ' เนื่องจาก ' + message, 
-				 body : 'ไม่อนุญาติให้พาเพื่อนเข้าพักได้วันที่ ' + date + ' เนื่องจาก ' + message,
+		noti = { title : 'ไม่อนุญาตให้พาเพื่อนเข้าพักได้วันที่ ' + date + ' เนื่องจาก ' + message, 
+				 body : 'ไม่อนุญาตให้พาเพื่อนเข้าพักได้วันที่ ' + date + ' เนื่องจาก ' + message,
 				 click_action: 'MAIN_ACTIVITY' };
 		payload =  {	ID: results[0].sfid,
 						type: 'Case',
-						message: 'ไม่อนุญาติให้พาเพื่อนเข้าพักได้วันที่ ' + date + ' เนื่องจาก ' + message };
+						message: 'ไม่อนุญาตให้พาเพื่อนเข้าพักได้วันที่ ' + date + ' เนื่องจาก ' + message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -480,12 +480,12 @@ function roomAccept(id, next)
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'อนุญาติให้ทำการย้ายห้อง', 
-				 body : 'อนุญาติให้ทำการย้ายห้อง',
+		noti = { title : 'อนุญาตให้ทำการย้ายห้อง', 
+				 body : 'อนุญาตให้ทำการย้ายห้อง',
 				 click_action: 'MAIN_ACTIVITY' };
 		payload = {	ID: results[0].sfid,
 					type: 'Case',
-					message: 'อนุญาติให้ทำการย้ายห้อง' };
+					message: 'อนุญาตให้ทำการย้ายห้อง' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -506,12 +506,12 @@ function roomReject(id, message, next)
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'ไม่อนุญาติให้ทำการย้ายห้อง เนื่องจาก ' + message, 
-				 body : 'ไม่อนุญาติให้ทำการย้ายห้อง เนื่องจาก ' + message,
+		noti = { title : 'ไม่อนุญาตให้ทำการย้ายห้อง เนื่องจาก ' + message, 
+				 body : 'ไม่อนุญาตให้ทำการย้ายห้อง เนื่องจาก ' + message,
 				 click_action: 'MAIN_ACTIVITY' };
 		payload = {	ID: results[0].sfid,
 					type: 'Case',
-					message: 'ไม่อนุญาติให้ทำการย้ายห้อง เนื่องจาก ' + message };
+					message: 'ไม่อนุญาตให้ทำการย้ายห้อง เนื่องจาก ' + message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -532,12 +532,12 @@ function mailFound(id, next)
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'พบพัศดุของท่าน ให้มารับได้', 
-				 body : 'พบพัศดุของท่าน ให้มารับได้',
+		noti = { title : 'พบพัสดุของท่าน ให้มารับได้', 
+				 body : 'พบพัสดุของท่าน ให้มารับได้',
 				 click_action: 'MAIN_ACTIVITY' };
 		payload =  {	ID: results[0].sfid,
 						type: 'Case',
-						message: 'พบพัศดุของท่าน ให้มารับได้' };
+						message: 'พบพัสดุของท่าน ให้มารับได้' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", badge : 1, sound : "default", data : payload } },
@@ -558,12 +558,12 @@ function mailNotFound(id, next)
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'ไม่พบพัศดุของท่าน', 
-				 body : 'ไม่พบพัศดุของท่าน',
+		noti = { title : 'ไม่พบพัสดุของท่าน', 
+				 body : 'ไม่พบพัสดุของท่าน',
 				 click_action: 'MAIN_ACTIVITY' };
 		payload = {	ID: results[0].sfid,
 					type: 'Case',
-					message: 'ไม่พบพัศดุของท่าน' };
+					message: 'ไม่พบพัสดุของท่าน' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
