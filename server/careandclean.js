@@ -78,6 +78,7 @@ exports.getDetail = function(req, res, next) {
 	var date;
 	var time;
 	var detail;
+	var period;
 	db.select("SELECT * FROM salesforce.WorkOrder WHERE sfid='" + id + "'")
 	.then(function(results0) {
 	db.select("SELECT * FROM salesforce.case WHERE sfid='" + results0[0].caseid + "' and type='Care and Clean'")
@@ -101,6 +102,7 @@ exports.getDetail = function(req, res, next) {
 		output += '", "created_date":"' + date;
 		output += '", "created_time":"' + time + '"}]';
 		
+		
 		db.select("SELECT * FROM salesforce.WorkOrder WHERE caseid='" + results[0].sfid + "'")
 		.then(function(results2) {	
 			//console.log(results2);
@@ -115,7 +117,8 @@ exports.getDetail = function(req, res, next) {
 					date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 					output += '{"clean_id":"' + results2[i].sfid;
 					output += '", "working_date":"' + date;
-					output += '", "period":"' + results2[i].cleaning_period__c;
+					period = results2[i].cleaning_period__c == 'Morning'? 'เช้า' : 'บ่าย';
+					output += '", "period":"' + period;
 					output += '", "status":"' + results2[i].status + '"},';
 				}
 				output = output.substr(0, output.length - 1);
@@ -177,6 +180,7 @@ exports.getList = function(req, res, next) {
 						var createdate;
 						var date;
 						var time;
+						var period;
 						for(var i = 0 ; i < results3.length ; i++)
 						{
 							createdate = results3[i].createddate;
@@ -191,7 +195,8 @@ exports.getList = function(req, res, next) {
 								output += '{"id":"' + results3[i].sfid;
 								output += '", "name":"' + results3[i].subject + ' (' + results3[i].workordernumber + ')';
 								output += '", "type":"clean';
-								output += '", "detail":"วันที่: ' + date + ' ช่วงเวลา: ' + results3[i].cleaning_period__c;
+								period = results3[i].cleaning_period__c == 'Morning' ? 'เช้า' : 'บ่าย';
+								output += '", "detail":"วันที่: ' + date + ' ช่วงเวลา: ' + period;
 								output += '", "status":"' + results3[i].status;
 								output += '", "created_date":"' + createdate;
 								output += '", "created_time":"' + time + '"},';
