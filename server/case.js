@@ -78,7 +78,7 @@ exports.getList = function(req, res, next) {
 			    var obj = JSON.parse(str);
 			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					var query = "SELECT * FROM salesforce.Case where accountid='" + results[0].sfid + "' and type<>'Care and Clean'  Order by createddate desc";
+					var query = "SELECT * FROM salesforce.Case where accountid='" + results[0].sfid + "' and type<>'Care and Clean' and createddate is not null Order by createddate desc";
 					if(!isNaN(limit))
 					{
 						query += " limit " + limit;
