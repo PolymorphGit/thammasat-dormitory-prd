@@ -40,6 +40,7 @@ function sendBilling()
 			amount = results[i].total_amount__c;
 			duedate = results[i].due_date__c;
 			duedate = duedate.setHours(duedate.getHours() + 7);
+			duedate = ("0" + duedate.getDate()).slice(-2) + '/' + ("0" + (duedate.getMonth() + 1)).slice(-2) + '/' + duedate.getFullYear();
 			
 			noti = { title : 'คุณมียอดค่าใช้จ่าย จำนวน ' + amount + 'บาท', 
 				 body : 'คุณมียอดค่าใช้ ' + amount + ' บาท กำหนดชำระวันที่ ' + duedate,
@@ -78,19 +79,22 @@ function sendMailing()
 	var to;
 	var noti;
 	var payload;
+	var duedate;
 	db.select("SELECT * FROM salesforce.Mailing__c WHERE send_notification__c is null or send_notification__c = false ")
 	.then(function(results) {
 		console.log('Mailing count: ' + results.length);
 		for(var i = 0 ; i < results.length ; i++)
 		{
 			to = results[i].student_name__c;
-			noti = { title : 'มีพัสดุส่งมาถึง วันที่ ' + results[i].createddate.toDateString(), 
-				 body : 'มีพัสดุ ' + results[i].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[i].createddate.toDateString(),
+			duedate = results[i].createddate;
+			duedate = ("0" + duedate.getDate()).slice(-2) + '/' + ("0" + (duedate.getMonth() + 1)).slice(-2) + '/' + duedate.getFullYear();
+			noti = { title : 'มีพัสดุส่งมาถึง วันที่ ' + duedate, 
+				 body : 'มีพัสดุ ' + results[i].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + duedate,
 				 click_action: 'MAIN_ACTIVITY'};
 			payload = {	ID: results[i].sfid,
 					type: 'Mailing',
-					message: 'มีพัสดุ ' + results[i].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[i].createddate.toDateString() };
-			console.log('To:' + to + ', No:' + results[i].name + ', type:' + results[i].mailing_type__c + ', date:' + results[i].createddate.toDateString());
+					message: 'มีพัสดุ ' + results[i].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[i].duedate};
+			console.log('To:' + to + ', No:' + results[i].name + ', type:' + results[i].mailing_type__c + ', date:' + results[i].duedate);
 			//pusher.trigger(to, 'Mailing', payload);
 			pusher.notify([to], {
 				apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
@@ -122,19 +126,22 @@ function sendContractExpire()
 	var to;
 	var noti;
 	var payload;
+	var contract_end_date;
 	db.select("SELECT * FROM salesforce.Asset WHERE active__c=true and send_notification__c=false and contract_end__c > NOW() - interval '1 months' ")
 	.then(function(results) {
 		console.log(results);
 		for(var i = 0 ; i < results.length ; i++)
 		{
 			to = results[i].accountid;
+			contract_end_date = results[0].contract_end__c;
+			contract_end_date = ("0" + contract_end_date.getDate()).slice(-2) + '/' + ("0" + (contract_end_date.getMonth() + 1)).slice(-2) + '/' + contract_end_date.getFullYear();
 			noti = { title : 'สัญญาจะหมดอายุ', 
-				 body : 'ในวันที่:' + results[0].contract_end__c.toDateString(),
+				 body : 'ในวันที่:' + contract_end_date,
 				 click_action: 'MAIN_ACTIVITY'};
 			payload = {	ID: to,
 					type: 'Contract',
-				   	message: 'สัญญาจะหมดอายุในวันที่:' + results[i].contract_end__c.toDateString() };
-			console.log('To:' + to + ', สัญญาจะหมดอายุในวันที่:' + results[i].contract_end__c.toDateString());
+				   	message: 'สัญญาจะหมดอายุในวันที่:' + contract_end_date };
+			console.log('To:' + to + ', สัญญาจะหมดอายุในวันที่:' + contract_end_date);
 			//pusher.trigger(to, 'Contract Expire', payload);
 			pusher.notify([to], {
 				apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
