@@ -610,12 +610,12 @@ function houseDoc(id, next)
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'ไม่ได้รับเอกสารในการขอทะเบียนบ้าานของท่าน กรุณานำส่งที่จุดรับด้วย', 
-				 body : 'ไม่ได้รับเอกสารในการขอทะเบียนบ้าานของท่าน กรุณานำส่งที่จุดรับด้วย',
+		noti = { title : 'ไม่ได้รับเอกสารในการขอทะเบียนบ้านของท่าน กรุณานำส่งที่จุดรับด้วย', 
+				 body : 'ไม่ได้รับเอกสารในการขอทะเบียนบ้านของท่าน กรุณานำส่งที่จุดรับด้วย',
 				 click_action: 'MAIN_ACTIVITY' };
 		payload =  {	ID: results[0].sfid,
 						type: 'Case',
-						message: 'ไม่ได้รับเอกสารในการขอทะเบียนบ้าานของท่าน กรุณานำส่งที่จุดรับด้วย' };
+						message: 'ไม่ได้รับเอกสารในการขอทะเบียนบ้านของท่าน กรุณานำส่งที่จุดรับด้วย' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
