@@ -22,7 +22,7 @@ exports.getDetail = function(req, res, next) {
 			output += '", "owner_name":"' + results2[0].first_name_th__c + ' ' + results2[0].last_name_th__c;
 			output += '", "mailing_type__c":"';
 			output +=  results[0].mailing_type__c == null ? '' : results[0].mailing_type__c;
-			output += '", "received_name__c":"' + results[0].received_name__c == null ? '' : results[0].received_name__c;			
+			output += '", "received_name__c":"' + (results[0].received_name__c == null ? '' : results[0].received_name__c);			
 			date = results[0].received_date__c == null ? '' : results[0].received_date__c;
 			/*
 			if(date != null)
