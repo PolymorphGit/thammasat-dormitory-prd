@@ -84,12 +84,12 @@ function sendMailing()
 		for(var i = 0 ; i < results.length ; i++)
 		{
 			to = results[i].student_name__c;
-			noti = { title : 'มีพัศดุส่งมาถึง วันที่ ' + results[i].createddate.toDateString(), 
-				 body : 'มีพัศดุ ' + results[i].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[i].createddate.toDateString(),
+			noti = { title : 'มีพัสดุส่งมาถึง วันที่ ' + results[i].createddate.toDateString(), 
+				 body : 'มีพัสดุ ' + results[i].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[i].createddate.toDateString(),
 				 click_action: 'MAIN_ACTIVITY'};
 			payload = {	ID: results[i].sfid,
 					type: 'Mailing',
-					message: 'มีพัศดุ ' + results[i].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[i].createddate.toDateString() };
+					message: 'มีพัสดุ ' + results[i].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[i].createddate.toDateString() };
 			console.log('To:' + to + ', No:' + results[i].name + ', type:' + results[i].mailing_type__c + ', date:' + results[i].createddate.toDateString());
 			//pusher.trigger(to, 'Mailing', payload);
 			pusher.notify([to], {
