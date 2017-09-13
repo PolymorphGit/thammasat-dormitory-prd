@@ -146,7 +146,7 @@ function problemHold(id, message, next)
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
-		noti = { title : 'Case ' + results[0].casenumber + ' ได้ถูกพักช่ั่วคราว', 
+		noti = { title : 'Case ' + results[0].casenumber + ' ได้ถูกพักชั่วคราว', 
 				 body : 'Case ' + results[0].subject + ' ได้ถูกพักเนื่องจาก '+ message,
 				 click_action: 'MAIN_ACTIVITY'};
 		payload = {	ID: results[0].sfid,
@@ -172,11 +172,11 @@ function problemClosed(id, message, next)
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
 		noti = { title : 'Case ' + results[0].casenumber + ' ได้ดำเนินการแก้ไข', 
-				 body : 'Case ' + results[0].subject + ' ได้ได้ทำการแก้ไขแล้ว ' + message,
+				 body : 'Case ' + results[0].subject + ' ได้ทำการแก้ไขแล้ว ' + message,
 				 click_action: 'MAIN_ACTIVITY'};
 		payload = {	ID: results[0].sfid,
 					type: 'Case',
-					message: 'Case ' + results[0].subject + ' ได้ได้ทำการแก้ไขแล้ว '+ message };
+					message: 'Case ' + results[0].subject + ' ได้ทำการแก้ไขแล้ว '+ message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
 			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
