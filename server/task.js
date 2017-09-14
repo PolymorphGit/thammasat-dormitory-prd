@@ -53,8 +53,8 @@ exports.getFeed = function(req, res, next) {
 								{
 									results2[i].status = 'Completed';
 								}
-								results2[i].detail.replace('Morning', 'เช้า');
-								results2[i].detail.replace('Afternoon', 'บ่าย');
+								results2[i].detail = results2[i].detail.replace('Morning', 'เช้า');
+								results2[i].detail = results2[i].detail.replace('Afternoon', 'บ่าย');
 									
 							}
 							res.json(results2)
