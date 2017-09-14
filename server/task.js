@@ -53,8 +53,11 @@ exports.getFeed = function(req, res, next) {
 								{
 									results2[i].status = 'Completed';
 								}
-								//results2[i].detail = results2[i].detail.replace(/Morning/g, 'เช้า');
-								//results2[i].detail = results2[i].detail.replace(/Afternoon/g, 'บ่าย');
+								if(results2[i].detail != null)
+								{
+									results2[i].detail = results2[i].detail.replace(/Morning/g, 'เช้า');
+									results2[i].detail = results2[i].detail.replace(/Afternoon/g, 'บ่าย');
+								}
 								/*if(results2[i].detail.substring(results2[i].detail.length - 7, results2[i].detail.length) == 'Morning')
 								{
 									results2[i].detail = results2[i].detail.substring(0, results2[i].detail.length - 7) + 'เช้า';
@@ -63,7 +66,7 @@ exports.getFeed = function(req, res, next) {
 								{
 									results2[i].detail = results2[i].detail.substring(0, results2[i].detail.length - 9) + 'บ่าย';	
 								}*/
-								console.log(results2[i].detail + ', length : ' + results2[i].detail.length);
+								//console.log(results2[i].detail + ', length : ' + results2[i].detail.length);
 							}
 							res.json(results2)
 						})
