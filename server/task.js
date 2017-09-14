@@ -53,9 +53,16 @@ exports.getFeed = function(req, res, next) {
 								{
 									results2[i].status = 'Completed';
 								}
-								results2[i].detail = results2[i].detail.replace('Morning', 'เช้า');
-								results2[i].detail = results2[i].detail.replace('Afternoon', 'บ่าย');
-									
+								//results2[i].detail = results2[i].detail.replace('Morning', 'เช้า');
+								//results2[i].detail = results2[i].detail.replace('Afternoon', 'บ่าย');
+								if(results2[i].detail.includes('Morning'))
+								{
+									results2[i].detail = results2[i].detail.substr(0, results2[i].detail.lenght - 7) + 'เช้า';
+								}
+								else
+								{
+									results2[i].detail = results2[i].detail.substr(0, results2[i].detail.lenght - 9) + 'บ่าย';
+								}
 							}
 							res.json(results2)
 						})
