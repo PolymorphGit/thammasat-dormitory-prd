@@ -55,7 +55,7 @@ exports.getFeed = function(req, res, next) {
 								}
 								//results2[i].detail = results2[i].detail.replace('Morning', 'เช้า');
 								//results2[i].detail = results2[i].detail.replace('Afternoon', 'บ่าย');
-								if(results2[i].detail.includes('Morning'))
+								if(results2[i].detail.search('Morning') > -1)
 								{
 									results2[i].detail = results2[i].detail.substr(0, results2[i].detail.lenght - 7) + 'เช้า';
 								}
