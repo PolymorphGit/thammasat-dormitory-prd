@@ -112,7 +112,7 @@ exports.getDetail = function(req, res, next) {
 				//output += JSON.stringify(results2);
 				for(var i = 0 ; i <results2.length ; i++)
 				{
-					date = results2[0].working_date__c;
+					date = results2[i].working_date__c;
 					date.setHours(date.getHours() + 7);
 					date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 					output += '{"clean_id":"' + results2[i].sfid;
