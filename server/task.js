@@ -55,14 +55,15 @@ exports.getFeed = function(req, res, next) {
 								}
 								//results2[i].detail = results2[i].detail.replace(/Morning/g, 'เช้า');
 								//results2[i].detail = results2[i].detail.replace(/Afternoon/g, 'บ่าย');
-								if(results2[i].detail.substring(results2[i].detail.lenght - 7, results2[i].detail.lenght) == 'Morning')
+								/*if(results2[i].detail.substring(results2[i].detail.lenght - 7, results2[i].detail.lenght) == 'Morning')
 								{
 									results2[i].detail = results2[i].detail.substring(0, results2[i].detail.lenght - 7) + 'เช้า';
 								}
 								else
 								{
 									results2[i].detail = results2[i].detail.substring(0, results2[i].detail.lenght - 9) + 'บ่าย';	
-								}
+								}*/
+								console.log(results2[i].detail + ', length : ' + results2[i].detail.lenght);
 							}
 							res.json(results2)
 						})
