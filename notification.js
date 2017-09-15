@@ -79,8 +79,8 @@ function getBilling(id, next)
 				    message: 'คุณมียอดค่าใช้ ' + amount + ' บาท กำหนดชำระวันที่ ' + duedate };
 		//pusher.trigger(to, 'Billing', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -104,8 +104,8 @@ function getMailing(id, next)
 				message: 'มีพัสดุ ' + results[0].mailing_type__c + ' ส่งถึงคุณ วันที่ ' + results[0].createddate.toDateString() };
 		//pusher.trigger(to, 'Mailing', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -129,8 +129,8 @@ function problemWorking(id, next)
 					message: results[0].subject + ' กำลังดำเนินการ' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -154,8 +154,8 @@ function problemHold(id, message, next)
 					message: 'Case ' + results[0].subject + ' ได้ถูกพักเนื่องจาก '+ message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -179,8 +179,8 @@ function problemClosed(id, message, next)
 					message: 'Case ' + results[0].subject + ' ได้ทำการแก้ไขแล้ว '+ message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -204,8 +204,8 @@ function complainAccept(id, message, next)
 					message: 'ได้รับทราบเรื่อง ' + results[0].subject + ' แล้ว '+ message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -236,8 +236,8 @@ function cleanClosed(id, next)
 						message: 'Subject:' + results2[0].subject + ', Working Date:' + date + ', Period:' + results[0].cleaning_period__c };
 			//pusher.trigger(to, 'Clean', payload);
 			pusher.notify([to], {
-				apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-				fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+				apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+				fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 			});
 			return true;
 		})
@@ -263,8 +263,8 @@ function checkoutConfirm(id, next)
 					message: 'อนุญาตให้ทำการ Check-out ได้' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -288,8 +288,8 @@ function checkoutPayment(id, message, next)
 					message: message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -317,8 +317,8 @@ function accessApprove(id, next)
 					message: 'อนุญาตเข้าหอดึกได้ในวันที่ ' + date };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -346,8 +346,8 @@ function accesReject(id, message, next)
 					message: 'ไม่อนุญาตเข้าหอดึกได้ในวันที่ ' + date + ' เนื่องจาก ' + message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -375,8 +375,8 @@ function leaveApprove(id, next)
 						message: 'อนุญาตออกจากหอพักก่อนเวลาได้ในวันที่ ' + date };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -404,8 +404,8 @@ function leaveReject(id, message, next)
 					message: 'ไม่อนุญาตออกจากหอพักก่อนเวลาได้ในวันที่ ' + date + ' เนื่องจาก ' + message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -433,8 +433,8 @@ function stayApprove(id, next)
 					message: 'อนุญาตให้พาเพื่อนเข้าพักได้วันที่ ' + date };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -462,8 +462,8 @@ function stayReject(id, message, next)
 						message: 'ไม่อนุญาตให้พาเพื่อนเข้าพักได้วันที่ ' + date + ' เนื่องจาก ' + message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -488,8 +488,8 @@ function roomAccept(id, next)
 					message: 'อนุญาตให้ทำการย้ายห้อง' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -514,8 +514,8 @@ function roomReject(id, message, next)
 					message: 'ไม่อนุญาตให้ทำการย้ายห้อง เนื่องจาก ' + message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -540,8 +540,8 @@ function mailFound(id, next)
 						message: 'พบพัสดุของท่าน ให้มารับได้' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -566,8 +566,8 @@ function mailNotFound(id, next)
 					message: 'ไม่พบพัสดุของท่าน' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -592,8 +592,8 @@ function houseProgress(id, next)
 					message: 'กำลังดำเนินการขอเอกสารทะเบียนบ้านให้' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -618,8 +618,8 @@ function houseDoc(id, next)
 						message: 'ไม่ได้รับเอกสารในการขอทะเบียนบ้านของท่าน กรุณานำส่งที่จุดรับด้วย' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -644,8 +644,8 @@ function houseCompleted(id, next)
 						message: 'เอกสสารทะเบียนบ้านของท่านมาถึงแล้ว' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -670,8 +670,8 @@ function otherProgress(id, next)
 					message: 'ได้รับเรื่อง' + results[0].description + 'กำลังดำเนินการ' };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
@@ -694,8 +694,8 @@ function otherCompleted(id, message, next)
 		payload = { ID: results[0].sfid, type: 'Case', message: message };
 		//pusher.trigger(to, 'Case', payload);
 		pusher.notify([to], {
-			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload } },
-			fcm: { notification : noti, badge : 1, sound : "default", data : payload }
+			apns: { aps: { alert : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" } },
+			fcm: { notification : noti, badge : 1, sound : "default", data : payload, to: "/topics/news", priority: "high" }
 		});
 		return true;
 	})
