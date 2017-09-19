@@ -352,8 +352,8 @@ exports.getmobileid = function(req, res, next) {
 					results2.on('end', function() {
 						try
 						{
-							console.log(str2);	
 							str2 = str2.substr(1, str2.length - 1);
+							console.log(str2);	
 							var obj2 = JSON.parse(str2);
 							console.log('Mobile Id : ' + obj2.identities[0].user_id);
 							res.send(obj2.identities[0].user_id);
