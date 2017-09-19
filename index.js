@@ -42,6 +42,7 @@ app.post('/updatestudent/:id', jsonParser, lead.updateLead);
 
 app.get('/getlistzone', account.getZone);
 app.get('/deleteuser/:id', account.deleteuser);
+app.get('/getuser/:id', account.getmobileid);
 app.get('/userinfo', account.getInfo);
 app.get('/userinfo2', account.getInfo2);
 app.get('/checkstatus', account.checkStatus);
