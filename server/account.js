@@ -354,7 +354,7 @@ exports.getmobileid = function(req, res, next) {
 						{
 							console.log(str2);	
 							var obj = JSON.parse(str2);
-							res.json(obj.identities[0].user_id);
+							res.send(obj.identities[0].user_id);
 						}
 						catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
 					});
