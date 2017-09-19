@@ -339,7 +339,7 @@ exports.getmobileid = function(req, res, next) {
 				  host: 'app69362200.auth0.com',
 				  path: '/api/v2/users?q="' + id + '"',
 				  port: '443',
-				  method: 'DELETE',
+				  method: 'GET',
 				  headers: { 'Authorization': 'Bearer ' + obj.access_token }
 				};
 				console.log(options2);
