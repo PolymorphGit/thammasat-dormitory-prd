@@ -297,6 +297,89 @@ exports.deleteuser = function(req, res, next) {
 	httprequest.end();
 };
 
+exports.getmobileid = function(req, res, next) {
+	var id = req.params.id;
+	var https = require('https');
+	
+	// Build the post string from an object
+	var postBody = JSON.stringify({      
+		'client_id':'AtH1L7wf0qZ4VsjnbNKDe8hoLaRp7YxQ',
+		'client_secret':'8rYAWEc1RbtZ4RoEBWDqIV-8vZjq4-iXBpPYe7AdSViAkoy3jRKk-98JQFEuXnbc',
+		'audience':'https://app69362200.auth0.com/api/v2/',
+		'grant_type':'client_credentials'
+	});
+	
+	var options = {
+	  host: 'app69362200.auth0.com',
+	  path: '/oauth/token',
+	  //host: 'thammasat-university.herokuapp.com',
+	  //path: '/',
+	  port: '443',
+	  method: 'POST',
+	  headers: { 'Content-Type': 'application/json',
+		  		 'Content-Length': Buffer.byteLength(postBody)
+	  }
+	};
+	
+	callback = function(results) {
+		var str = '';
+		results.on('data', function(chunk) {
+		    str += chunk;
+		});
+		results.on('end', function() {
+			try
+			{
+				//console.log('return:' + str);
+				var obj = JSON.parse(str);
+				//obj.access_token
+				console.log('Id:' + id + ', Token:' + obj.access_token);
+				
+				var https2 = require('https');
+				var options2 = {
+				  host: 'app69362200.auth0.com',
+				  path: '/api/v2/users?q="' + id + '"',
+				  port: '443',
+				  method: 'DELETE',
+				  headers: { 'Authorization': 'Bearer ' + obj.access_token }
+				};
+				console.log(options2);
+				
+				callback2 = function(results2) {
+					var str2 = '';
+					results2.on('data', function(chunk2) {
+						str2 += chunk2;
+					});
+					results2.on('end', function() {
+						try
+						{
+							console.log(str2);	
+							var obj = JSON.parse(str2);
+							res.json(obj.identities[0].user_id);
+						}
+						catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+					});
+				}
+				
+				var httprequest2 = https.request(options2, callback2);
+				httprequest2.on('error', (e2) => {
+					//console.log(`problem with request: ${e.message}`);
+					res.send('problem with request: ${e2.message}');
+				});
+				httprequest2.end();
+			}
+			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+		});
+	}
+	
+	var httprequest = https.request(options, callback);
+	httprequest.on('error', (e) => {
+		//console.log(`problem with request: ${e.message}`);
+		res.send('problem with request: ${e.message}');
+	});
+	httprequest.write(postBody);
+	httprequest.end();
+};
+
 exports.UserInfobyId = function(req, res, next) {
 	var id = req.params.id;
 	db.select("SELECT * FROM salesforce.Account WHERE SFID='" + id + "'")
