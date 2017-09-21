@@ -127,7 +127,7 @@ function sendContractExpire()
 	var noti;
 	var payload;
 	var contract_end_date;
-	db.select("SELECT * FROM salesforce.Asset WHERE active__c=true and send_notification__c=false and contract_end__c > NOW() - interval '1 months' ")
+	db.select("SELECT * FROM salesforce.Asset WHERE active__c=true and send_notification__c=false and contract_end__c < NOW() - interval '1 months' ")
 	.then(function(results) {
 		console.log(results);
 		for(var i = 0 ; i < results.length ; i++)
