@@ -278,7 +278,7 @@ exports.openCaseRequest = function(req, res, next) {
 				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
 					var type = "Check Mailing";
-					if (req.body.problem_type == "ขอทะเบียนบ้าน")
+					if (req.body.problem_type == "คัดสำเนาทะเบียนบ้าน")
 					{
 						type = "Request Household";
 					}
