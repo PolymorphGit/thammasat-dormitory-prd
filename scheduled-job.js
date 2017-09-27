@@ -40,7 +40,7 @@ function sendBilling()
 			amount = results[i].total_amount__c;
 			duedate = results[i].due_date__c;
 			duedate = duedate.setHours(duedate.getHours() + 7);
-			duedate = ("0" + duedate.getDate()).slice(-2) + '/' + ("0" + (duedate.getMonth() + 1)).slice(-2) + '/' + duedate.getFullYear();
+			//duedate = ("0" + duedate.getDate()).slice(-2) + '/' + ("0" + (duedate.getMonth() + 1)).slice(-2) + '/' + duedate.getFullYear();
 			
 			noti = { title : 'คุณมียอดค่าใช้จ่าย จำนวน ' + amount + 'บาท', 
 				 body : 'คุณมียอดค่าใช้ ' + amount + ' บาท กำหนดชำระวันที่ ' + duedate,
