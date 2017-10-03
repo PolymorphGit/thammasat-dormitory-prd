@@ -86,8 +86,11 @@ exports.getInfo2 = function(req, res, next) {
 					.then(function(results2) {
 						console.log(results2);	
 						date = results[0].birthdate__c;
-						date.setHours(date.getHours() + 7);
-						date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
+						if(date != null)
+						{
+							//date.setHours(date.getHours() + 7);
+							date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
+						}
 						output = '[{"id":"' + results[0].sfid;
 						output += '", "salutation":"' + results[0].salutation;
 						output += '", "name":"' + results[0].name;
