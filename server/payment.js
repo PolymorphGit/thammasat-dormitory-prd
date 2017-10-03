@@ -27,8 +27,15 @@ exports.getDetail = function(req, res, next) {
 				for(var i = 0 ; i <results2.length ; i++)
 				{
 					date = results2[i].due_date__c;
-					//date.setHours(date.getHours() + 7);
-					date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+					if(date != null)
+					{
+						//date.setHours(date.getHours() + 7);
+						date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+					}
+					else
+					{
+						date = '';	
+					}
 					output += '{"line_id":"' + results2[i].sfid;
 					output += '", "line_number":"' + results2[i].name;
 					output += '", "type":"' + results2[i].invoice_line_item_type__c;
