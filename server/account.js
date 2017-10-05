@@ -72,7 +72,7 @@ exports.getInfo2 = function(req, res, next) {
 			    //res.send(obj.identities[0].user_id);
 			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					console.log(results);
+					//console.log(results);
 					var room = results[0].room__c;
 					var enddate = '';
 					var today = new Date();
@@ -84,7 +84,7 @@ exports.getInfo2 = function(req, res, next) {
 					}
 					db.select("SELECT * FROM salesforce.Product2 WHERE SFID='" + room + "'")
 					.then(function(results2) {
-						console.log(results2);	
+						//console.log(results2);	
 						date = results[0].birthdate__c;
 						if(date != null)
 						{
@@ -147,6 +147,7 @@ exports.getInfo2 = function(req, res, next) {
 						output += '", "sleep_with_turn_off_air_condition__c":"' + results[0].sleep_with_turn_off_air_condition__c;
 						output += '", "check_in_comment__c":"' + results[0].check_in_comment__c;
 						output += '", "picture_url__c":"' + results[0].picture_url__c + '"}]';
+						console.log(output);
 						res.json(JSON.parse(output));
 					})
 				    .catch(next);
