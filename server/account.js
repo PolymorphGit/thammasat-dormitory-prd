@@ -127,11 +127,11 @@ exports.getInfo2 = function(req, res, next) {
 						}
 						output += '", "zone__c":"' + results[0].zone__c;
 						output += '", "gender__c":"' + results[0].gender__c;
-						output += '", "billingstreet":"' + results[0].billingstreet;
-						output += '", "billingcountry":"' + results[0].billingcountry;
-						output += '", "billingcity":"' + results[0].billingcity;
-						output += '", "billingpostalcode":"' + results[0].billingpostalcode;
-						output += '", "billingstate":"' + results[0].billingstate;
+						//output += '", "billingstreet":"' + results[0].billingstreet;
+						//output += '", "billingcountry":"' + results[0].billingcountry;
+						//output += '", "billingcity":"' + results[0].billingcity;
+						//output += '", "billingpostalcode":"' + results[0].billingpostalcode;
+						//output += '", "billingstate":"' + results[0].billingstate;
 						output += '", "parent_name__c":"' + results[0].parent_name__c;
 						output += '", "parent_phone__c":"' + results[0].parent_phone__c;
 						output += '", "parent_name_2__c":"' + results[0].parent_name_2__c;
