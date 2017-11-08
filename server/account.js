@@ -166,6 +166,269 @@ exports.getInfo2 = function(req, res, next) {
 	httprequest.end();
 };
 
+exports.challengecode = function(req, res, next) {
+	var head = req.headers['authorization'];
+	var https = require('https');
+	
+	var options = {
+	  host: 'app69362200.auth0.com',
+	  path: '/userinfo',
+	  //host: 'thammasat-university.herokuapp.com',
+	  //path: '/',
+	  port: '443',
+	  method: 'GET',
+	  headers: { 'authorization': head }
+	};
+	
+	callback = function(results) {
+		var str = '';
+		results.on('data', function(chunk) {
+			str += chunk;
+		});
+		results.on('end', function() {
+			try
+			{
+				var obj = JSON.parse(str);
+				var Username = 'tupsm';
+				var Password = 'sms1234';
+				var phone;
+				var msg;
+				var Sender = 'PSM.TU';
+				
+				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				.then(function(results2) {
+					console.log(results2);
+					phone = results2[0].personmobilephone;
+					msg = 'Your%20verify%20code%20is%20' + results2[0].auth_code__c;
+					var valid = results2[0].auth_code_valid__c;
+					if(phone != null)
+					{
+						//Check auth code valid
+						var today = new Date();
+						if(valid == null || valid < today)
+						{
+							//Generate new code	
+							results2[0].auth_code__c = Math.floor(100000 + Math.random() * 900000);
+							console.log('Verify Code ' + results2[0].auth_code__c);
+							msg = 'Your%20verify%20code%20is%20' + results2[0].auth_code__c;
+							valid = today;
+							valid.setMinutes( valid.getMinutes() + 5 );
+							console.log('Expired ' + valid);
+						}
+						
+						//console.log('User: ' + Username + ', Password: ' + Password + ', Msnlist: ' + phone + ', Msg: ' + msg + ', Sender :' + Sender);
+						var path = '/SMSLink/SendMsg/index.php?User=' + Username + '&Password=' + Password + '&Msnlist=' + phone + '&Msg=' + msg + '&Sender=' + Sender;
+						var options2 = {
+						  host: 'member.smsmkt.com',
+						  path: path,
+						  port: '443',
+						  method: 'GET'
+						  //headers: { 'User': Username, 'Password': Password, 'Msnlist': phone, 'Msg': msg, 'Sender': Sender}
+						};
+						console.log(options2);
+						callback2 = function(results3){
+							var str = '';
+							results3.on('data', function(chunk) {
+								str += chunk;
+							});
+							results3.on('end', function() {
+								console.log(str);
+								//res.send(str);
+								var send = str.includes('Status=0');
+								if(send == true)
+								{
+									res.send('OK');
+									if(results2[0].auth_code_valid__c == null || results2[0].auth_code_valid__c < today)
+									{
+										//write new code to DB
+										var query = "UPDATE salesforce.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
+										query += "auth_code_valid__c='" + valid.toLocaleString() + "' ";
+										query += " WHERE SFID='" + results2[0].sfid + "'";
+										db.select(query)
+										.then(function(results4) {
+											console.log(results4);	
+											//res.json(results4);
+										})	
+										.catch(next);
+									}
+								}
+								else
+								{
+									res.send('Fail');	
+								}
+							});
+						}
+						var httprequest2 = https.request(options2, callback2);
+						httprequest2.on('error', (e) => {
+							//console.log(`problem with request: ${e.message}`);
+							res.send('problem with request: ${e.message}');
+						});
+						httprequest2.end();
+						/*
+						var datetime = valid.toLocaleString();
+						var query = "UPDATE salesforce.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
+						query += "auth_code_valid__c='" + datetime + "' ";
+						query += " WHERE SFID='" + results2[0].sfid + "'";
+						console.log(query);
+						db.select(query)
+						.then(function(results4) {
+							console.log(results4);	
+							res.json(results4);
+						})	
+						.catch(next);
+						*/
+					}
+					else
+					{
+						res.send('User no phone number');
+					}
+				})
+			        .catch(next);
+			}
+			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+		});
+	}
+	
+	var httprequest = https.request(options, callback);
+	httprequest.on('error', (e) => {
+		//console.log(`problem with request: ${e.message}`);
+		res.send('problem with request: ${e.message}');
+	});
+	httprequest.end();
+};
+
+exports.verifycode = function(req, res, next) {
+	var head = req.headers['authorization'];
+	var otp = req.headers['otp'];
+	var https = require('https');
+	
+	var options = {
+	  host: 'app69362200.auth0.com',
+	  path: '/userinfo',
+	  //host: 'thammasat-university.herokuapp.com',
+	  //path: '/',
+	  port: '443',
+	  method: 'GET',
+	  headers: { 'authorization': head }
+	};
+	
+	callback = function(results) {
+		var str = '';
+		results.on('data', function(chunk) {
+			str += chunk;
+		});
+		results.on('end', function() {
+			try
+			{
+				var obj = JSON.parse(str);
+				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				.then(function(results2) { 
+					console.log(results2);	
+					if(results2[0].auth_code__c == otp)
+					{
+					   	var valid = new Date();
+						if(results2[0].auth_code_valid__c > valid)
+						{
+							var output = '';
+							var room = results2[0].room__c;
+							var enddate = '';
+							var today = new Date();
+							var startDate = new Date(today.getFullYear(), 5, 1);
+							var endDate = new Date(today.getFullYear(), 6, 31);
+							if((startDate < today && today < endDate))
+							{
+								room = results2[0].room_summer__c;
+							}
+							db.select("SELECT * FROM salesforce.Product2 WHERE SFID='" + room + "'")
+							.then(function(results3) {
+								console.log(results3);	
+								date = results2[0].birthdate__c;
+								date.setHours(date.getHours() + 7);
+								date = ("0" + date.getDate()).slice(-2) + '/' + ("0" + date.getMonth()).slice(-2) + '/' + date.getFullYear();	
+								output = '[{"id":"' + results2[0].sfid;
+								output += '", "salutation":"' + results2[0].salutation;
+								output += '", "name":"' + results2[0].name;
+								output += '", "firstname":"' + results2[0].firstname;
+								output += '", "lastname":"' + results2[0].lastname;
+								output += '", "title_th__c":"' + results2[0].title_th__c;
+								output += '", "first_name_th__c":"' + results2[0].first_name_th__c;		
+								output += '", "last_name_th__c":"' + results2[0].last_name_th__c;
+								output += '", "identification_number__c":"' + results2[0].identification_number__c;
+								output += '", "passport_number__c":"' + results2[0].passport_number__c;
+								if(results2[0].student_id__c != null)
+								{
+									output += '", "student_id__c":"' + results2[0].student_id__c;
+								}
+								else
+								{
+									output += '", "student_id__c":"';
+								}
+								output += '", "personemail":"' + results2[0].personemail;
+								output += '", "personmobilephone":"' + results2[0].personmobilephone;
+								output += '", "birthdate__c":"' + date;
+								output += '", "faculty__c":"' + results2[0].faculty__c;
+								output += '", "status__c":"' + results2[0].status__c;
+								output += '", "allow_check_out__c":"' + results2[0].allow_check_out__c;
+								if(results3.length > 0)
+								{
+									output += '", "room__c":"' + results3[0].name;
+									output += '", "building__c":"' + results3[0].building__c;
+								}
+								else
+								{
+									output += '", "room__c":"no room';
+									output += '", "building__c":"no building';
+								}
+								output += '", "zone__c":"' + results2[0].zone__c;
+								output += '", "gender__c":"' + results2[0].gender__c;
+								output += '", "billingstreet":"' + results2[0].billingstreet;
+								output += '", "billingcountry":"' + results2[0].billingcountry;
+								output += '", "billingcity":"' + results2[0].billingcity;
+								output += '", "billingpostalcode":"' + results2[0].billingpostalcode;
+								output += '", "billingstate":"' + results2[0].billingstate;
+								output += '", "parent_name__c":"' + results2[0].parent_name__c;
+								output += '", "parent_phone__c":"' + results2[0].parent_phone__c;
+								output += '", "parent_name_2__c":"' + results2[0].parent_name_2__c;
+								output += '", "parent_phone_2__c":"' + results2[0].parent_phone_2__c;
+								output += '", "scholarship__c":"' + results2[0].scholarship__c;
+								output += '", "disabled__c":"' + results2[0].disabled__c;
+								output += '", "renew__c":"' + results2[0].renew__c;
+								output += '", "graduated_from__c":"' + results2[0].graduated_from__c;
+								output += '", "sleep_after_midnight__c":"' + results2[0].sleep_after_midnight__c;
+								output += '", "sleep_soundly__c":"' + results2[0].sleep_soundly__c;
+								output += '", "sleep_with_light_on__c":"' + results2[0].sleep_with_light_on__c;
+								output += '", "love_cleaning__c":"' + results2[0].love_cleaning__c;
+								output += '", "sleep_with_turn_off_air_condition__c":"' + results2[0].sleep_with_turn_off_air_condition__c;
+								output += '", "check_in_comment__c":"' + results2[0].check_in_comment__c;
+								output += '", "picture_url__c":"' + results2[0].picture_url__c + '"}]';
+								res.json(JSON.parse(output));
+							})
+						    .catch(next);
+						}
+						else
+						{
+							res.send('Verify Code Expire');
+						}
+					}
+					else
+					{
+						res.send('Incorrect Code');
+					}
+				})
+				.catch(next);
+			}
+			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+		});
+	}
+	
+	var httprequest = https.request(options, callback);
+	httprequest.on('error', (e) => {
+		//console.log(`problem with request: ${e.message}`);
+		res.send('problem with request: ${e.message}');
+	});
+	httprequest.end();
+};
+
 exports.checkStatus = function(req, res, next) {
 	var head = req.headers['authorization'];
 	var https = require('https');
