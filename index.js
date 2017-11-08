@@ -40,6 +40,8 @@ app.post('/createstudent', jsonParser, lead.createLead);
 app.get('/deletestudent/:id', lead.deleteLead);
 app.post('/updatestudent/:id', jsonParser, lead.updateLead);
 
+app.get('/challengecode', account.challengecode);
+app.get('/verifycode', account.verifycode);
 app.get('/getlistzone', account.getZone);
 app.get('/deleteuser/:id', account.deleteuser);
 app.get('/getuser/:id', account.getmobileid);
