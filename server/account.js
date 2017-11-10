@@ -145,7 +145,7 @@ exports.getInfo2 = function(req, res, next) {
 						output += '", "sleep_with_light_on__c":"' + results[0].sleep_with_light_on__c;
 						output += '", "love_cleaning__c":"' + results[0].love_cleaning__c;
 						output += '", "sleep_with_turn_off_air_condition__c":"' + results[0].sleep_with_turn_off_air_condition__c;
-						output += '", "check_in_comment__c":"' + results[0].check_in_comment__c;
+						//output += '", "check_in_comment__c":"' + results[0].check_in_comment__c;
 						output += '", "picture_url__c":"' + results[0].picture_url__c + '"}]';
 						console.log(output);
 						res.json(JSON.parse(output));
