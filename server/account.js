@@ -154,7 +154,7 @@ exports.getInfo2 = function(req, res, next) {
 				})
 			    .catch(next);
 			}
-			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+			catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	
@@ -237,7 +237,8 @@ exports.challengecode = function(req, res, next) {
 								var send = str.includes('Status=0');
 								if(send == true)
 								{
-									res.send('OK');
+									res.send("{ \"status\": \"OK\" }");
+									//res.send('OK');
 									if(results2[0].auth_code_valid__c == null || results2[0].auth_code_valid__c < today)
 									{
 										//write new code to DB
@@ -254,7 +255,8 @@ exports.challengecode = function(req, res, next) {
 								}
 								else
 								{
-									res.send('Fail');	
+									res.send("{ \"status\": \"Fail\" }");
+									//res.send('Fail');	
 								}
 							});
 						}
@@ -280,12 +282,13 @@ exports.challengecode = function(req, res, next) {
 					}
 					else
 					{
-						res.send('User no phone number');
+						res.send("{ \"status\": \"User no phone number\" }");
+						//res.send('User no phone number');
 					}
 				})
 			        .catch(next);
 			}
-			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+			catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	
@@ -407,17 +410,19 @@ exports.verifycode = function(req, res, next) {
 						}
 						else
 						{
-							res.send('Verify Code Expire');
+							res.send("{ \"status\": \"Verify Code Expire\" }");
+							//res.send('Verify Code Expire');
 						}
 					}
 					else
 					{
-						res.send('Incorrect Code');
+						res.send("{ \"status\": \"Incorrect Code\" }");
+						//res.send('Incorrect Code');
 					}
 				})
 				.catch(next);
 			}
-			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+			catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	
@@ -461,7 +466,7 @@ exports.checkStatus = function(req, res, next) {
 				})
 			    .catch(next);
 			}
-			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+			catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	
@@ -540,7 +545,7 @@ exports.deleteuser = function(req, res, next) {
 								res.json(obj2);
 							}
 						}
-						catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+						catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 					});
 				}
 				
@@ -551,7 +556,7 @@ exports.deleteuser = function(req, res, next) {
 				});
 				httprequest2.end();
 			}
-			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+			catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	
@@ -625,7 +630,7 @@ exports.getmobileid = function(req, res, next) {
 							console.log('Mobile Id : ' + obj2.identities[0].user_id);
 							res.send(obj2.identities[0].user_id);
 						}
-						catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+						catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 					});
 				}
 				
@@ -636,7 +641,7 @@ exports.getmobileid = function(req, res, next) {
 				});
 				httprequest2.end();
 			}
-			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+			catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	
@@ -745,7 +750,7 @@ exports.getRoommate = function(req, res, next) {
 
 exports.logout = function(req, res, next) {
 	var head = req.headers['authorization'];
-	res.send("{ status: \"Success\" }");
+	res.send("{ \"status\": \"Success\" }");
 };
 
 exports.getZone = function(req, res, next) {
@@ -830,7 +835,7 @@ exports.getZone = function(req, res, next) {
 				})
 			    .catch(next);
 			}
-			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+			catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	var httprequest = https.request(options, callback);
@@ -1000,7 +1005,7 @@ exports.RequestCheckout = function(req, res, next) {
 				})
 			    .catch(next);
 			}
-			catch(ex) {	res.status(887).send("{ status: \"Invalid access token\" }");	}
+			catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
 		});
 	}
 	var httprequest = https.request(options, callback);
@@ -1124,7 +1129,7 @@ exports.renew = function(req, res, next) {
 					    db.select(query)
 						.then(function(results3) {
 							console.log(results3);
-							res.send("{ status: \"Success\", message:\"หากต้องการเปลี่ยนห้องให้ดำเนินการภายใน 1 เดือน\" }");
+							res.send("{ \"status\": \"Success\", message:\"หากต้องการเปลี่ยนห้องให้ดำเนินการภายใน 1 เดือน\" }");
 						})
 					    .catch(next);
 					}
