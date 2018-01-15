@@ -211,7 +211,6 @@ exports.challengecode = function(req, res, next) {
 							//Generate new code	
 							results2[0].auth_code__c = Math.floor(100000 + Math.random() * 900000);
 							console.log('Verify Code ' + results2[0].auth_code__c);
-							msg = 'Your%20verify%20code%20is%20' + results2[0].auth_code__c;
 							valid = today;
 							valid.setMinutes( valid.getMinutes() + 5 );
 							console.log('Expired ' + valid);
