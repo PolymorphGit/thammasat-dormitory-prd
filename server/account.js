@@ -193,13 +193,14 @@ exports.challengecode = function(req, res, next) {
 				var Password = 'sms1234';
 				var phone;
 				var msg;
-				var Sender = 'PSM.TU';
+				var Sender = 'SMSMKT.COM';//'PSM.TU';
 				
 				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
 					console.log(results2);
 					phone = results2[0].personmobilephone;
-					msg = 'Your%20verify%20code%20is%20' + results2[0].auth_code__c;
+					//msg = 'Your%20verify%20code%20is%20' + results2[0].auth_code__c;
+					msg = 'Your%20verify%20code%20baanTU%20is%20' + results2[0].auth_code__c;
 					var valid = results2[0].auth_code_valid__c;
 					if(phone != null)
 					{
