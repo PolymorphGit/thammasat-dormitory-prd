@@ -385,11 +385,11 @@ exports.verifycode = function(req, res, next) {
 								}
 								output += '", "zone__c":"' + results2[0].zone__c;
 								output += '", "gender__c":"' + results2[0].gender__c;
-								output += '", "billingstreet":"' + results2[0].billingstreet;
-								output += '", "billingcountry":"' + results2[0].billingcountry;
-								output += '", "billingcity":"' + results2[0].billingcity;
-								output += '", "billingpostalcode":"' + results2[0].billingpostalcode;
-								output += '", "billingstate":"' + results2[0].billingstate;
+								//output += '", "billingstreet":"' + results2[0].billingstreet;
+								//output += '", "billingcountry":"' + results2[0].billingcountry;
+								//output += '", "billingcity":"' + results2[0].billingcity;
+								//output += '", "billingpostalcode":"' + results2[0].billingpostalcode;
+								//output += '", "billingstate":"' + results2[0].billingstate;
 								output += '", "parent_name__c":"' + results2[0].parent_name__c;
 								output += '", "parent_phone__c":"' + results2[0].parent_phone__c;
 								output += '", "parent_name_2__c":"' + results2[0].parent_name_2__c;
@@ -397,13 +397,13 @@ exports.verifycode = function(req, res, next) {
 								output += '", "scholarship__c":"' + results2[0].scholarship__c;
 								output += '", "disabled__c":"' + results2[0].disabled__c;
 								output += '", "renew__c":"' + results2[0].renew__c;
-								output += '", "graduated_from__c":"' + results2[0].graduated_from__c;
+								//output += '", "graduated_from__c":"' + results2[0].graduated_from__c;
 								output += '", "sleep_after_midnight__c":"' + results2[0].sleep_after_midnight__c;
 								output += '", "sleep_soundly__c":"' + results2[0].sleep_soundly__c;
 								output += '", "sleep_with_light_on__c":"' + results2[0].sleep_with_light_on__c;
 								output += '", "love_cleaning__c":"' + results2[0].love_cleaning__c;
 								output += '", "sleep_with_turn_off_air_condition__c":"' + results2[0].sleep_with_turn_off_air_condition__c;
-								output += '", "check_in_comment__c":"' + results2[0].check_in_comment__c;
+								//output += '", "check_in_comment__c":"' + results2[0].check_in_comment__c;
 								output += '", "picture_url__c":"' + results2[0].picture_url__c + '"}]';
 								res.json(JSON.parse(output));
 							})
