@@ -65,7 +65,7 @@ exports.getInfo2 = function(req, res, next) {
 		results.on('end', function() {
 			try
 			{
-			    console.log(str);
+			    //console.log(str);
 			    var obj = JSON.parse(str);
 			    var output = '';
 			    var date;
@@ -73,7 +73,7 @@ exports.getInfo2 = function(req, res, next) {
 			    //res.send(obj.identities[0].user_id);
 			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					//console.log(results);
+					console.log(results);
 					var room = results[0].room__c;
 					var enddate = '';
 					var today = new Date();
