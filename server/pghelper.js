@@ -30,7 +30,7 @@ exports.select = function (sql) {
                 	done();
                 	reject(e);
             	}
-		pool.end()
+		//pool.end()
 		});
 	});
 };
