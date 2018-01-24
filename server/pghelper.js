@@ -28,12 +28,15 @@ if (process.env.DATABASE_URL !== undefined)
 	pg.defaults.ssl = true;	
 }
 */
+import {
+  parse as parseConnectionString
+} from 'pg-connection-string';
 
 exports.select = function (sql) {
 	return new Promise((resolve, reject) => {
 		
-		//var pool = new pg.Pool()
-		const pool = new Pool(config);
+		const pool = new pg.Pool(typeof configuration === 'string' ? parseConnectionString(configuration) : configuration);
+		//const pool = new Pool(config);
 		pool.connect(databaseURL, function (err, conn, done) {
 			if (err) reject(err);
 			try{
