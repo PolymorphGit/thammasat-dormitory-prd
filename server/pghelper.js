@@ -20,7 +20,7 @@ const config = {
   idleTimeoutMillis: 30000,
 };
 */
-var pg = require('pg').native,
+var pg = require('pg'),
     Q = require('q'),
     databaseURL = process.env.DATABASE_URL || 'postgres://u8imgdodm3jkq2:pccc07f14d7068e19ddbf5fd48ccdc226070cff71d26055390fa199c454a79c2d@ec2-52-86-233-50.compute-1.amazonaws.com:5432/d89pl2t2eqpara';
 
