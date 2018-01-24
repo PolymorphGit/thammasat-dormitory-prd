@@ -27,7 +27,18 @@ if (process.env.DATABASE_URL !== undefined)
 	pg.defaults.ssl = true;	
 }
 */
-
+module.exports = (text, cb) => {
+   var pool = new pg.Pool(config)
+   pool.connect((err, client, done) => {
+     if (err) return cb(err);
+     client.query(text, (err, result) => {
+       done();
+       if (err) return cb(err);
+       return cb(null, result.rows, result);
+       ////cb(err, result);
+     });
+   });
+};
 exports.select = function (sql) {
 	
 	return new Promise((resolve, reject) => {
@@ -37,12 +48,7 @@ exports.select = function (sql) {
 		//const pool = new Pool()
 		//console.log('====Start Pool====');
 		//pg.connect(databaseURL, function (err, conn, done) {
-		pool.query(sql, function (err, result) {
-			console.log(sql);
-			if(err) reject(err);
-			else resolve(result.rows);
-		});
-		/*
+		
 		pool.connect(function(err, conn, done) {
 			console.log('====Connected====');
 			if (err) reject(err);
@@ -58,6 +64,6 @@ exports.select = function (sql) {
                 		done();
                 		reject(e);
             		}
-		//});*/
+		});
 	});
 };
