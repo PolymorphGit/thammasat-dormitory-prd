@@ -31,12 +31,12 @@ exports.select = function (sql) {
 	
 	return new Promise((resolve, reject) => {
 		
-		var pool = pg.Pool()
-		//const pool = new Pool(config)
+		//var pool = pg.Pool()
+		const pool = new Pool(config)
 		//const pool = new Pool()
 		//console.log('====Start Pool====');
 		//pg.connect(databaseURL, function (err, conn, done) {
-		pool.connect(databaseURL, (err, conn, done) => {
+		pool.connect().then((err, conn, done) => {
 			console.log('====Connected====');
 			if (err) reject(err);
 			try{
