@@ -65,6 +65,7 @@ exports.getInfo2 = function(req, res, next) {
 		results.on('end', function() {
 			try
 			{
+			    console.log(str);
 			    var obj = JSON.parse(str);
 			    var output = '';
 			    var date;
