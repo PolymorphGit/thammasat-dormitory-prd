@@ -43,7 +43,8 @@ exports.select = function (sql) {
 			if (err) {
 			    deferred.reject(err);
 			} else {
-			    deferred.resolve(singleItem ? result.rows[0] : result.rows);
+			    //deferred.resolve(singleItem ? result.rows[0] : result.rows);
+			    deferred.resolve(result.rows);
 			}
 		    });
 		}
