@@ -41,10 +41,12 @@ exports.select = function (sql) {
 				});
 			}
 			catch (e) {
-                	done();
-                	reject(e);
-            	}
-		//pool.end()
+                		done();
+                		reject(e);
+            		}
+		});
+		pool.on('error', function (err, client) {
+			console.error('idle client error', err.message, err.stack);
 		});
 	});
 };
