@@ -71,8 +71,8 @@ exports.getInfo2 = function(req, res, next) {
 			    var date;
 				var time;
 			    //res.send(obj.identities[0].user_id);
-			    db.exports("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'", function(results){
-				//.then(function(results) {
+			    db.exports("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				.then(function(results) {
 					console.log(results);
 					var room = results[0].room__c;
 					var enddate = '';
