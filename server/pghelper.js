@@ -38,8 +38,10 @@ exports.select = function (sql) {
     	pg.connect(databaseURL, function (err, conn, done) {
 		if (err) return deferred.reject(err);
 		try {
+		    console.log('====Connected====');
 		    conn.query(sql, values, function (err, result) {
 			done();
+			console.log(sql);
 			if (err) {
 			    deferred.reject(err);
 			} else {
