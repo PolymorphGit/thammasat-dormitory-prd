@@ -33,7 +33,7 @@ exports.select = function (sql) {
 		var pool = pg.Pool()
 		//const pool = new Pool(config)
 		//console.log('====Start Pool====');
-		pool.connect(databaseURL, function (err, conn, done) {
+		pg.connect(databaseURL, function (err, conn, done) {
 			console.log('====Connected====');
 			if (err) reject(err);
 			try{
@@ -49,8 +49,8 @@ exports.select = function (sql) {
                 		reject(e);
             		}
 		});
-		pool.on('error', function (err, client) {
+		/*pool.on('error', function (err, client) {
 			console.error('idle client error', err.message, err.stack);
-		});
+		});*/
 	});
 };
