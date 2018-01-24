@@ -32,7 +32,7 @@ exports.select = function (sql) {
 	
 	return new Promise((resolve, reject) => {
 		
-		var pool = pg.Pool(config)
+		var pool = new pg.Pool(config)
 		//const pool = new Pool(config)
 		//const pool = new Pool()
 		//console.log('====Start Pool====');
