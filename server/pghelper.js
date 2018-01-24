@@ -37,7 +37,7 @@ exports.select = function (sql) {
 		//const pool = new Pool()
 		//console.log('====Start Pool====');
 		//pg.connect(databaseURL, function (err, conn, done) {
-		pool.connect().then((err, conn, done) => {
+		pool.connect(function(err, conn, done) {
 			console.log('====Connected====');
 			if (err) reject(err);
 			try{
