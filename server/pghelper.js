@@ -32,7 +32,7 @@ if (process.env.DATABASE_URL !== undefined)
 exports.select = function (sql) {
 	return new Promise((resolve, reject) => {
 		
-		var pool = pg.Pool()
+		var pool = pg.Pool(params)
 		//const pool = new Pool(config);
 		pool.connect(databaseURL, function (err, conn, done) {
 			if (err) reject(err);
