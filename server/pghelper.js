@@ -20,10 +20,6 @@ const config = {
   idleTimeoutMillis: 30000,
 };
 
-const Client = require('pg')
-const client = new Client()
-client.connect()
-
 /*
 if (process.env.DATABASE_URL !== undefined) 
 {
@@ -32,11 +28,7 @@ if (process.env.DATABASE_URL !== undefined)
 */
 
 exports.select = function (sql) {
-	client.query(sql, (err, res) => {
-  		console.log(err ? err.stack : res.rows[0].message) // Hello World!
-  		client.end()
-	})
-	/*
+
 	return new Promise((resolve, reject) => {
 		
 		var pool = pg.Pool()
@@ -60,6 +52,6 @@ exports.select = function (sql) {
 		});
 		/*pool.on('error', function (err, client) {
 			console.error('idle client error', err.message, err.stack);
-		});
-	});*/
+		});*/
+	});
 };
