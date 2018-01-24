@@ -37,11 +37,17 @@ exports.select = function (sql) {
 		//const pool = new Pool()
 		//console.log('====Start Pool====');
 		//pg.connect(databaseURL, function (err, conn, done) {
-		//pool.connect(function(err, conn, done) {
+		pool.query(sql, function (err, result) {
+			console.log(sql);
+			if(err) reject(err);
+			else resolve(result.rows);
+		});
+		/*
+		pool.connect(function(err, conn, done) {
 			console.log('====Connected====');
-			//if (err) reject(err);
+			if (err) reject(err);
 			try{
-				pool.query(sql, function (err, result) {
+				conn.query(sql, function (err, result) {
 					done();
 					console.log(sql);
 					if(err) reject(err);
@@ -52,9 +58,6 @@ exports.select = function (sql) {
                 		done();
                 		reject(e);
             		}
-		//});
-		/*pool.on('error', function (err, client) {
-			console.error('idle client error', err.message, err.stack);
-		});*/
+		//});*/
 	});
 };
