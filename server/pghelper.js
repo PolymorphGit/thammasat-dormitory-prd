@@ -8,17 +8,13 @@ var pg = require('pg'),
 	console.log(databaseURL);
 
 const Pool = require('pg-pool');
-const url = require('url')
-
-const params = url.parse(process.env.DATABASE_URL || 'postgres://u8imgdodm3jkq2:pccc07f14d7068e19ddbf5fd48ccdc226070cff71d26055390fa199c454a79c2d@ec2-52-86-233-50.compute-1.amazonaws.com:5432/d89pl2t2eqpara');
-const auth = params.auth.split(':');
 
 const config = {
-  user: auth[0],
-  password: auth[1],
-  host: params.hostname,
-  port: params.port,
-  database: params.pathname.split('/')[1],
+  user: 'u8imgdodm3jkq2',
+  password: 'pccc07f14d7068e19ddbf5fd48ccdc226070cff71d26055390fa199c454a79c2d',
+  host: 'ec2-52-86-233-50.compute-1.amazonaws.com',
+  port: 5432,
+  database: 'df3pgi81qfmoc7',
   ssl: true
 };
 
@@ -32,8 +28,8 @@ if (process.env.DATABASE_URL !== undefined)
 exports.select = function (sql) {
 	return new Promise((resolve, reject) => {
 		
-		var pool = pg.Pool(params)
-		//const pool = new Pool(config);
+		//var pool = pg.Pool()
+		const pool = new Pool(config);
 		pool.connect(databaseURL, function (err, conn, done) {
 			if (err) reject(err);
 			try{
