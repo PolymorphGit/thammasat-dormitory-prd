@@ -15,8 +15,8 @@ if (process.env.DATABASE_URL !== undefined)
 
 exports.select = function (sql) {
 	return new Promise((resolve, reject) => {
-		//var pool = new pg.Pool()
-		pg.connect(databaseURL, function (err, conn, done) {
+		var pool = new pg.Pool()
+		pool.connect(databaseURL, function (err, conn, done) {
 			if (err) reject(err);
 			try{
 				conn.query(sql, function (err, result) {
@@ -27,9 +27,10 @@ exports.select = function (sql) {
 				});
 			}
 			catch (e) {
-                done();
-                reject(e);
-            }
+                	done();
+                	reject(e);
+            	}
+		pool.end()
 		});
 	});
 };
