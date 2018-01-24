@@ -32,16 +32,16 @@ exports.select = function (sql) {
 	
 	return new Promise((resolve, reject) => {
 		
-		//var pool = pg.Pool()
-		const pool = new Pool(config)
+		var pool = pg.Pool(config)
+		//const pool = new Pool(config)
 		//const pool = new Pool()
 		//console.log('====Start Pool====');
 		//pg.connect(databaseURL, function (err, conn, done) {
-		pool.connect(function(err, conn, done) {
+		//pool.connect(function(err, conn, done) {
 			console.log('====Connected====');
-			if (err) reject(err);
+			//if (err) reject(err);
 			try{
-				conn.query(sql, function (err, result) {
+				pool.query(sql, function (err, result) {
 					done();
 					console.log(sql);
 					if(err) reject(err);
@@ -52,7 +52,7 @@ exports.select = function (sql) {
                 		done();
                 		reject(e);
             		}
-		});
+		//});
 		/*pool.on('error', function (err, client) {
 			console.error('idle client error', err.message, err.stack);
 		});*/
