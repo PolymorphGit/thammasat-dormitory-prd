@@ -15,7 +15,9 @@ const config = {
   host: 'ec2-52-86-233-50.compute-1.amazonaws.com',
   port: 5432,
   database: 'df3pgi81qfmoc7',
-  ssl: true
+  ssl: true,
+  max: 10,
+  idleTimeoutMillis: 30000,
 };
 
 /*
