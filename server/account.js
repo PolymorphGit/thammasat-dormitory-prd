@@ -194,7 +194,8 @@ exports.challengecode = function(req, res, next) {
 				var Password = 'sms1234';
 				var phone;
 				var msg;
-				var Sender = 'SMSMKT.COM';//'PSM.TU';
+				var Sender = 'baanTU';
+				///Sender = 'SMSMKT.COM';
 				
 				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
