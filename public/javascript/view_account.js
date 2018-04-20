@@ -65,6 +65,7 @@ angular.module('accountApp', [])
     	data[0].parent_name_2__c = data[0].parent_name_2__c == null || data[0].parent_name_2__c =='null' ? '' : data[0].parent_name_2__c;
     	data[0].parent_phone_2__c = data[0].parent_phone_2__c == null || data[0].parent_phone_2__c =='null' ? '' : data[0].parent_phone_2__c;
     	data[0].disabled__c = data[0].disabled__c == null || data[0].disabled__c =='null' ? '' : data[0].disabled__c;
+	data[0].charter_room__c = data[0].charter_room__c == null || data[0].charter_room__c =='null' ? '' : data[0].charter_room__c;
     	
     	data[0].sleeping_time__c = data[0].sleeping_time__c == null || data[0].sleeping_time__c =='null' ? '' : data[0].sleeping_time__c;
     	data[0].sleeping_behavior__c = data[0].sleeping_behavior__c == null || data[0].sleeping_behavior__c =='null' ? '' : data[0].sleeping_behavior__c;
