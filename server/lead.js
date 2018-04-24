@@ -46,6 +46,8 @@ exports.createLead = function(req, res, next) {
 	var parent_name_2__c = (req.body.parent_name_2__c=='undefined' || req.body.parent_name_2__c==null ||req.body.parent_name_2__c=='null'? '' : req.body.parent_name_2__c);
 	var parent_phone_2__c = (req.body.parent_phone_2__c=='undefined' || req.body.parent_phone_2__c==null ||req.body.parent_phone_2__c=='null'? '' : req.body.parent_phone_2__c);
 	
+	var charter_room__c = (req.body.charter_room__c ? req.body.charter_room__c : 'false');
+	
 	//var sleeping_time__c = (req.body.sleeping_time__c=='undefined' || req.body.sleeping_time__c==null ||req.body.sleeping_time__c=='null'? '' : req.body.sleeping_time__c);
 	//var sleeping_behavior__c = (req.body.sleeping_behavior__c=='undefined' || req.body.sleeping_behavior__c==null ||req.body.sleeping_behavior__c=='null'? '' : req.body.sleeping_behavior__c);
 	//var using_air_conditioner__c = (req.body.using_air_conditioner__c=='undefined' || req.body.using_air_conditioner__c==null ||req.body.using_air_conditioner__c=='null'? '' : req.body.using_air_conditioner__c);
@@ -75,6 +77,7 @@ exports.createLead = function(req, res, next) {
 	query2 += scholarship + "', '" + scholarship_name + "', '";
 	query2 += disable + "', '" + birthdate__c + "' , '";
 	query2 += parent_income__c + "','"
+	query2 += charter_room__c + "','"
 	//query2 += sleeping_time__c+"','"+sleeping_behavior__c+"','"+using_air_conditioner__c+"'" 
 	query2 += sleep_after_midnight__c+"','"+sleep_with_light_on__c+"','"+sleep_with_turn_off_air_condition__c+"' , '" +sleep_soundly__c+"','"+	love_cleaning__c+"') RETURNING *";
 	
@@ -164,6 +167,9 @@ exports.updateLead = function(req, res, next) {
 	
 	
 	//New Field
+	var Charter_Room = (req.body.charter_room__c ? req.body.charter_room__c : 'false');
+	query += "charter_room__c='" + Charter_Room + "', ";
+	
 	var Scholarship = (req.body.scholarship__c ? req.body.scholarship__c : 'false');
 	//console.log(req.body.graduated_from__c.replace('\'', '\'\''));
 	//console.log(req.body.scholarship__c);
