@@ -721,6 +721,10 @@ exports.update = function(req, res, next) {
 	}
 	var Disable = (req.body.disabled__c ? req.body.disabled__c : 'false');
 	query += "disabled__c=" + Disable + ", ";
+	
+	var charter_room = (req.body.charter_room__c? req.body.charter_room__c : 'false');
+	query += "charter_room__c='" + charter_room + "', ";
+	
 	var Birthday = '1990-7-2';
 	//query += "birthdate__c='" + req.body.birthdate__c + "', ";
 	query += "parent_income__c='" + req.body.parent_income__c + "' ";
