@@ -114,7 +114,6 @@ angular.module('accountApp', [])
 				var title_th__c = data[0].title_th__c == null || data[0].title_th__c =='null' ? '' : data[0].title_th__c;
 		    	var first_name_th__c = data[0].first_name_th__c == null || data[0].first_name_th__c =='null' ? '' : data[0].first_name_th__c;
 		    	var last_name_th__c = data[0].last_name_th__c == null || data[0].last_name_th__c =='null' ? '' : data[0].last_name_th__c;
-		    	var charter_room__c = data[0].charter_room__c == null || data[0].charter_room__c =='null' ? '' : data[0].charter_room__c;
 				
 		    	var primary_roomamate_name ='';
 		    	primary_roomamate_name =title_th__c;
