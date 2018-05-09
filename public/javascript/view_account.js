@@ -35,7 +35,7 @@ angular.module('accountApp', [])
     $http.get('../userinfo/' + accountId)
     .success((data) => {
     	console.log(data);
-    	alert("data : " + JSON.stringify(data[0]));
+    	//alert("data : " + JSON.stringify(data[0]));
     	data[0].Name = data[0].Name == null || data[0].Name =='null' ? '' : data[0].Name;
     	data[0].identification_number__c = data[0].identification_number__c == null || data[0].identification_number__c =='null' ? '' : data[0].identification_number__c;
     	data[0].passport_number__c = data[0].passport_number__c == null || data[0].passport_number__c =='null' ? '' : data[0].passport_number__c;
@@ -97,7 +97,7 @@ angular.module('accountApp', [])
 
     	
     	$scope.account = data[0];
-    	//alert(JSON.stringify(data[0]));
+    	/alert($scope.account);
     	
 		 $http.get('../getroommate2/' + accountId)
 		.success((data) => {
