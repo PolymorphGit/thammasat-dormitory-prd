@@ -590,7 +590,6 @@
                             <td> : </td>
                             <td>
                             	<label id="faculty"> {{ account.faculty__c }} </label>
-				    {{ account.zone__c}}
                             </td>
                         </tr>
                         <!--
@@ -621,11 +620,12 @@
 				<td> : </td>
 				<td>
 				    <input type="checkbox" ng-model="{{ account.charter_room__c}}" id="chkCharterRoom" disabled="disabled"/>
+					{{ account.zone__c}}
 				</td>
                         </tr>    
                         <tr>
                             <td align="right">
-                                Request Zone / เลือกโซน
+                                Request Zone / เลือกโซน {{ account.zone__c}}
                             </td>
                             <td> : </td>
                             <td>
