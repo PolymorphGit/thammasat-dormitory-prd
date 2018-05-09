@@ -97,7 +97,7 @@ angular.module('accountApp', [])
 
     	
     	$scope.account = data[0];
-    	/alert($scope.account);
+    	alert($scope.account);
     	
 		 $http.get('../getroommate2/' + accountId)
 		.success((data) => {
