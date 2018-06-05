@@ -30,13 +30,13 @@ angular.module('leadApp', [])
                     ,'Faculty of Science and Technology','Sirindhorn International Institute of Technology'
                     ,'Faculty of Social Administration','Faculty of Sociology and Anthropology','Others'];
   $scope.zone = [{'Gender':'Male', 'Scholar': false, 'zones':['Zone B (4-person room)'
-                                            ,'Zone C and E (2-person room)','Zone C Plus (2-person room)'
+                                            ,'Zone C and E (2-person room)'
                                             ,'Zone M (4-person room | air-condition | share WC)','Zone M (4-person room | air-condition | private WC)'
                                             ,'Zone M (4-person room | fan | share WC)','Zone M (4-person room | fan | private WC)']}, 
                  {'Gender':'Male', 'Scholar': true, 'zones':['Zone M (4-person room | air-condition | share WC)','Zone M (4-person room | air-condition | private WC)'
                                             ,'Zone M (4-person room | fan | share WC)','Zone M (4-person room | fan | private WC)']}, 
 	  			 {'Gender':'Female', 'Scholar': false, 'zones':['Zone B (4-person room)','Zone B8 (4-person room)'
-	  			                              ,'Zone C and E (2-person room)','Zone C Plus (2-person room)'
+	  			                              ,'Zone C and E (2-person room)'
 	  			                              ,'Zone F (4-person room | air-condition | share WC)','Zone F (4-person room | air-condition | private WC)'
 	  			                              ,'Zone F (4-person room | fan | share WC)','Zone F (4-person room | fan | private WC)']},
 	  			 {'Gender':'Female', 'Scholar': true, 'zones':['Zone F (4-person room | air-condition | share WC)','Zone F (4-person room | air-condition | private WC)'
