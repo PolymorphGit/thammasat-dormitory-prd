@@ -7,7 +7,74 @@
 		<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js" ></script>
 		<script src = "/javascript/date-time-picker.min.js" > </script>
 		<script src = "/javascript/register.js" > </script>
-		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>    
+<script type="text/javascript">  
+$(function(){        
+       
+    $(".css_data_item1").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item1"); //   
+            $(".css_data_item1").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+  $(".css_data_item2").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item2"); //   
+            $(".css_data_item2").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+ $(".css_data_item3").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item3"); //   
+            $(".css_data_item3").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+ $(".css_data_item4").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item4"); //   
+            $(".css_data_item4").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+ $(".css_data_item5").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item5"); //   
+            $(".css_data_item5").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+ $(".css_data_item6").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item6"); //   
+            $(".css_data_item6").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+ $(".css_data_item7").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item7"); //   
+            $(".css_data_item7").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+ $(".css_data_item8").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item8"); //   
+            $(".css_data_item8").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+ $(".css_data_item9").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item9"); //   
+            $(".css_data_item9").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+ $(".css_data_item10").click(function(){  
+        if($(this).prop("checked")==true){ 
+            var indexObj=$(this).index(".css_data_item10"); //   
+            $(".css_data_item10").not(":eq("+indexObj+")").prop( "checked", false ); 
+        }  
+    });  
+  
+           
+});  
+</script>  
 		<script src="/datepicker/mootools-1.2.4-core-yc.js"></script>
 		<script src="/datepicker/mootools-1.2.4.4-more-yc.js"></script>
 		<script src="/datepicker/DatePicker.js"></script>
@@ -1061,10 +1128,9 @@
 						
 						<tr>
                         	<td align="right">
-                            <b>สามารถเลือกตอบได้มากกว่า 1 ข้อ</b>
-	                        </td>
-	                        <td />
-	                        <td />
+                            
+<td align="left"></td><td align="left">ใช่ &nbsp;&nbsp;ไม่ใช่ </td>
+	                 
 	                    </tr>
 						
 						<tr>
@@ -1074,7 +1140,9 @@
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.sleep_after_midnight__c" id="chk_sleep_after_midnight__c" />
+	                            <input type="checkbox" class="css_data_item1" ng-model="lead.sleep_after_midnight__c" id="chk_sleep_after_midnight__c" />
+
+					 &nbsp;&nbsp;&nbsp;<input type="checkbox" class="css_data_item1" id="chk_sleep_after_midnight__d" />
 	                        </td>
 	                    </tr>
 	                    
@@ -1085,7 +1153,8 @@
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.sleep_with_light_on__c" id="chk_sleep_with_light_on__c" />
+	                           <input type="checkbox" class="css_data_item2" ng-model="lead.sleep_with_light_on__c" id="chk_sleep_with_light_on__c" />
+			  &nbsp;&nbsp;&nbsp;<input type="checkbox" class="css_data_item2" id="chk_sleep_with_light_on__d" />
 	                        </td>
 	                    </tr>
 	                    
@@ -1096,7 +1165,8 @@
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.sleep_with_turn_off_air_condition__c" id="chk_sleep_with_turn_off_air_condition__c" />
+	                            <input type="checkbox"  class="css_data_item3" ng-model="lead.sleep_with_turn_off_air_condition__c" id="chk_sleep_with_turn_off_air_condition__c" />
+				 &nbsp;&nbsp;&nbsp;<input type="checkbox"  class="css_data_item3" id="chk_sleep_with_turn_off_air_condition__d" />
 	                        </td>
 	                    </tr>
 	                    
@@ -1107,7 +1177,8 @@
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.sleep_soundly__c" id="chk_sleep_soundly__c" />
+	                            <input type="checkbox"  class="css_data_item4" ng-model="lead.sleep_soundly__c" id="chk_sleep_soundly__c" />
+					 &nbsp;&nbsp;&nbsp;<input type="checkbox"  class="css_data_item4"  id="chk_sleep_soundly__c" />
 	                        </td>
 	                    </tr>
 	                    
@@ -1118,7 +1189,8 @@
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.love_cleaning__c" id="chk_love_cleaning__c" />
+	                            <input type="checkbox" class="css_data_item5"  ng-model="lead.love_cleaning__c" id="chk_love_cleaning__c" />
+					 &nbsp;&nbsp;&nbsp;<input type="checkbox" class="css_data_item5"  id="chk_love_cleaning__c" />
 	                        </td>
 	                    </tr>
 						
@@ -1129,18 +1201,20 @@
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.prefer_staying_dorm_to_going_out__c" id="chk_prefer_staying_dorm_to_going_out__c" />
+	                            <input type="checkbox"  class="css_data_item6" ng-model="lead.prefer_staying_dorm_to_going_out__c" id="chk_prefer_staying_dorm_to_going_out__c" />
+					 &nbsp;&nbsp;&nbsp;<input type="checkbox" class="css_data_item6"  id="chk_prefer_staying_dorm_to_going_out__c" />
 	                        </td>
 	                    </tr>
 				
 		            <tr>
 	                        <td align="right" class='CustomLayout1'>
-	                            Go Home On Weekend / กลับบ้าทุกวันหยุด
+	                            Go Home On Weekend / กลับบ้านทุกวันหยุด
 	                        </td>
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.go_home_on_weekend__c" id="chk_go_home_on_weekend__c" />
+	                            <input type="checkbox" class="css_data_item7"  ng-model="lead.go_home_on_weekend__c" id="chk_go_home_on_weekend__c" />
+					 &nbsp;&nbsp;&nbsp;<input type="checkbox" class="css_data_item7"  id="chk_go_home_on_weekend__c" />
 	                        </td>
 	                    </tr>
 				
@@ -1151,29 +1225,32 @@
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.flexible_time__c" id="chk_flexible_time__c" />
+	                            <input type="checkbox" class="css_data_item8"  ng-model="lead.flexible_time__c" id="chk_flexible_time__c" />
+					 &nbsp;&nbsp;&nbsp;<input type="checkbox"  class="css_data_item8" id="chk_flexible_time__c" />
 	                        </td>
 	                    </tr>
 				
 		            <tr>
 	                        <td align="right" class='CustomLayout1'>
-	                            Love Exercise / ขอออกกำลังกาย
+	                            Love Exercise / ชอบออกกำลังกาย
 	                        </td>
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.love_exercise__c" id="chk_love_exercise__c" />
+	                            <input type="checkbox"  class="css_data_item9" ng-model="lead.love_exercise__c" id="chk_love_exercise__c" />
+					 &nbsp;&nbsp;&nbsp;<input type="checkbox"  class="css_data_item9" id="chk_flexible_time__c" />
 	                        </td>
 	                    </tr>
 				
 			    <tr>
 	                        <td align="right" class='CustomLayout1'>
-	                            Activist / ขอเข้าร่วมกิจกรรม
+	                            Activist / ชอบเข้าร่วมกิจกรรม
 	                        </td>
 	                        <td>
 	                        </td>
 	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.activist__c" id="chk_activist__c" />
+	                            <input type="checkbox"  class="css_data_item10" ng-model="lead.activist__c" id="chk_activist__c" />
+		  &nbsp;&nbsp;&nbsp;<input type="checkbox" class="css_data_item10"  id="chk_activist__c" />
 	                        </td>
 	                    </tr>	
 					</table>
