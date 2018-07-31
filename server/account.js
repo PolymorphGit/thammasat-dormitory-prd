@@ -633,7 +633,7 @@ exports.getmobileid = function(req, res, next) {
 							console.log('Mobile Id : ' + obj2.identities[0].user_id);
 							res.send(obj2.identities[0].user_id);
 						}
-						catch(ex) {	res.status(887).send("{ \"status\": \"Invalid access token\" }");	}
+						catch(ex) {	res.status(887).send("No Auth0's User.");	}
 					});
 				}
 				
