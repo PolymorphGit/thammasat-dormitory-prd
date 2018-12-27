@@ -170,6 +170,7 @@ exports.getInfo2 = function(req, res, next) {
 exports.challengecode = function(req, res, next) {
 	var head = req.headers['authorization'];
 	var https = require('https');
+	var http = require('http');
 	
 	var options = {
 	  host: 'app69362200.auth0.com',
@@ -187,22 +188,22 @@ exports.challengecode = function(req, res, next) {
 			str += chunk;
 		});
 		results.on('end', function() {
+			console.log('end');
 			try
 			{
 				var obj = JSON.parse(str);
 				var Username = 'tupsm';
 				var Password = 'sms1234';
 				var phone;
-				var msg;
 				var Sender = 'baanTU';
 				///Sender = 'SMSMKT.COM';
 				
 				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
-					console.log(results2);
+					// console.log(results2);
 					phone = results2[0].personmobilephone;
 					//msg = 'Your%20verify%20code%20is%20' + results2[0].auth_code__c;
-					msg = 'Your%20verify%20code%20baanTU%20is%20' + results2[0].auth_code__c;
+					// msg = 'Your verify code baanTU is ' + results2[0].auth_code__c;
 					var valid = results2[0].auth_code_valid__c;
 					if(phone != null)
 					{
@@ -220,25 +221,87 @@ exports.challengecode = function(req, res, next) {
 						}
 						
 						//console.log('User: ' + Username + ', Password: ' + Password + ', Msnlist: ' + phone + ', Msg: ' + msg + ', Sender :' + Sender);
-						var path = '/SMSLink/SendMsg/index.php?User=' + Username + '&Password=' + Password + '&Msnlist=' + phone + '&Msg=' + msg + '&Sender=' + Sender;
-						var options2 = {
-						  host: 'member.smsmkt.com',
-						  path: path,
-						  port: '443',
-						  method: 'GET'
-						  //headers: { 'User': Username, 'Password': Password, 'Msnlist': phone, 'Msg': msg, 'Sender': Sender}
-						};
-						console.log(options2);
-						callback2 = function(results3){
-							var str = '';
-							results3.on('data', function(chunk) {
-								str += chunk;
-							});
-							results3.on('end', function() {
-								console.log(str);
-								//res.send(str);
-								var send = str.includes('Status=0');
-								if(send == true)
+						// var path = '/SMSLink/SendMsg/index.php?User=' + Username + '&Password=' + Password + '&Msnlist=' + phone + '&Msg=' + msg + '&Sender=' + Sender;
+						// var options2 = {
+						//   host: 'member.smsmkt.com',
+						//   path: path,
+						//   port: '443',
+						//   method: 'GET'
+						//   //headers: { 'User': Username, 'Password': Password, 'Msnlist': phone, 'Msg': msg, 'Sender': Sender}
+						// };
+						
+						// console.log(option3);
+						// callback2 = function(results3){
+						// 	var str = '';
+						// 	results3.on('data', function(chunk) {
+						// 		str += chunk;
+						// 	});
+						// 	results3.on('end', function() {
+						// 		console.log(str);
+						// 		//res.send(str);
+						// 		var send = str.includes('Status=0');
+								// if(send == true)
+								// {
+								// 	res.send("{ \"status\": \"OK\" }");
+								// 	//res.send('OK');
+								// 	if(results2[0].auth_code_valid__c == null || results2[0].auth_code_valid__c < today)
+								// 	{
+								// 		//write new code to DB
+								// 		var query = "UPDATE salesforce.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
+								// 		query += "auth_code_valid__c='" + valid.toLocaleString() + "' ";
+								// 		query += " WHERE SFID='" + results2[0].sfid + "'";
+								// 		db.select(query)
+								// 		.then(function(results4) {
+								// 			console.log(results4);	
+								// 			//res.json(results4);
+								// 		})	
+								// 		.catch(next);
+								// 	}
+								// }
+								// else
+								// {
+								// 	res.send("{ \"status\": \"Fail\" }");
+								// 	//res.send('Fail');	
+								// }
+						// 	});
+						// }
+						// var httprequest2 = https.request(options2, callback2);
+						
+						// httprequest2.on('error', (e) => {
+						// 	//console.log(`problem with request: ${e.message}`);
+						// 	res.send('problem with request: ${e.message}');
+						// });
+						// httprequest2.end();
+						var msg = 'Your verify code baanTU is ' + results2[0].auth_code__c;
+						var body = `
+							<transaction>
+								<id>00093350163332346</id>
+								<msisdn>66627512888</msisdn>
+								<msgtype>E</msgtype>
+								<msdata>${msg}</msdata>
+								<sender>${Sender}</sender>
+							</transaction>`;
+
+						var options3 = {
+							host: "sms.911itwist.com",
+							path: "/tunnel/servlet/sendSMS.do",
+							port: "80",
+							method: 'POST',
+							headers: {
+								'Content-Type': 'text/xml',
+								'Authorization': 'YmFhbnR1OjExMDA=',
+								'Content-Length': Buffer.byteLength(body)
+							 }
+						}
+						
+						var req2 = http.request( options3, ( res2 ) => {
+
+							console.log( res2.statusCode );
+							var buffer = "";
+							res2.on( "data", function( data ) { buffer = buffer + data; } );
+							res2.on( "end", function( data ) { 
+								// console.log( data );
+								if(buffer.includes('<desc>Success</desc>'))
 								{
 									res.send("{ \"status\": \"OK\" }");
 									//res.send('OK');
@@ -261,14 +324,16 @@ exports.challengecode = function(req, res, next) {
 									res.send("{ \"status\": \"Fail\" }");
 									//res.send('Fail');	
 								}
-							});
-						}
-						var httprequest2 = https.request(options2, callback2);
-						httprequest2.on('error', (e) => {
-							//console.log(`problem with request: ${e.message}`);
-							res.send('problem with request: ${e.message}');
-						});
-						httprequest2.end();
+							} );
+						 
+						 });
+						 
+						 req2.on('error', function(e) {
+							 console.log('problem with request: ' + e.message);
+						 });
+						 
+						 req2.write( body );
+						 req2.end();
 						/*
 						var datetime = valid.toLocaleString();
 						var query = "UPDATE salesforce.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
