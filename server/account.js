@@ -272,11 +272,12 @@ exports.challengecode = function(req, res, next) {
 						// 	res.send('problem with request: ${e.message}');
 						// });
 						// httprequest2.end();
+						// console.log(phone);
 						var msg = 'Your verify code baanTU is ' + results2[0].auth_code__c;
 						var body = `
 							<transaction>
 								<id>00093350163332346</id>
-								<msisdn>66627512888</msisdn>
+								<msisdn>${phone}</msisdn>
 								<msgtype>E</msgtype>
 								<msdata>${msg}</msdata>
 								<sender>${Sender}</sender>
