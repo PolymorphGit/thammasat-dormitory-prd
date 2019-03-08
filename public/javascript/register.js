@@ -29,13 +29,13 @@ angular.module('leadApp', [])
                     ,'Faculty of Public Health','Puey Ungphakorn School of Development Studies','School of Global Studies'
                     ,'Faculty of Science and Technology','Sirindhorn International Institute of Technology'
                     ,'Faculty of Social Administration','Faculty of Sociology and Anthropology','Others'];
-  $scope.zone = [{'Gender':'Male', 'Scholar': false, 'zones':['Zone B (4-person room)'
+  $scope.zone = [{'Gender':'Male', 'Scholar': false, 'zones':['Zone B6 (4-person room)','Zone B7 (4-person room)'
                                             ,'Zone C and E (2-person room)'
                                             ,'Zone M (4-person room | air-condition | share WC)','Zone M (4-person room | air-condition | private WC)'
                                             ,'Zone M (4-person room | fan | share WC)','Zone M (4-person room | fan | private WC)']}, 
                  {'Gender':'Male', 'Scholar': true, 'zones':['Zone M (4-person room | air-condition | share WC)','Zone M (4-person room | air-condition | private WC)'
                                             ,'Zone M (4-person room | fan | share WC)','Zone M (4-person room | fan | private WC)']}, 
-	  			 {'Gender':'Female', 'Scholar': false, 'zones':['Zone B (4-person room)','Zone B8 (4-person room)'
+	  			 {'Gender':'Female', 'Scholar': false, 'zones':['Zone B (4-person room)','Zone B8 (4-person room)','Zone C(C3,C4,C5,C07) (2-person room)'
 	  			                              ,'Zone C and E (2-person room)'
 	  			                              ,'Zone F (4-person room | air-condition | share WC)','Zone F (4-person room | air-condition | private WC)'
 	  			                              ,'Zone F (4-person room | fan | share WC)','Zone F (4-person room | fan | private WC)']},
