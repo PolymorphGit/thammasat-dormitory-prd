@@ -198,7 +198,7 @@ exports.challengecode = function(req, res, next) {
 				var Sender = 'baanTU';
 				///Sender = 'SMSMKT.COM';
 				
-				db.select("SELECT * FROM salesforce11.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
 					// console.log(results2);
 					phone = results2[0].personmobilephone;
