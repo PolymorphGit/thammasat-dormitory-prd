@@ -5,7 +5,7 @@ exports.getDetail = function(req, res, next) {
 	var limit = req.headers['limit'];
 	var start = req.headers['start'];
 	
-	var query = "SELECT * FROM salesforce.Announcement__c Order by createddate desc";
+	var query = "SELECT * FROM salesforce1.Announcement__c Order by createddate desc";
 	if(!isNaN(limit))
 	{
 		query += " limit " + limit;

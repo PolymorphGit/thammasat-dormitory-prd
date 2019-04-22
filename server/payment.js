@@ -4,7 +4,7 @@ exports.getDetail = function(req, res, next) {
 	var id = req.params.id;
 	var output = '';
 	var date;
-	db.select("SELECT * FROM salesforce.Invoice__c WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Invoice__c WHERE SFID='" + id + "'")
 	.then(function(results) {
 		//console.log(results);	
 		//output = JSON.stringify(results);
@@ -17,7 +17,7 @@ exports.getDetail = function(req, res, next) {
 		output += '", "total_amount":"' + results[0].total_amount__c;
 		output += '", "create_date":"' + results[0].createddate + '"}]';
 		
-		db.select("SELECT * FROM salesforce.Invoice_Line_Item__c WHERE Invoice__c='" + results[0].sfid + "'")
+		db.select("SELECT * FROM salesforce1.Invoice_Line_Item__c WHERE Invoice__c='" + results[0].sfid + "'")
 		.then(function(results2) {	
 			//console.log(results2);
 			if(results2.length > 0)
@@ -77,9 +77,9 @@ exports.getList = function(req, res, next) {
 			try
 			{
 			    var obj = JSON.parse(str);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					var query = "SELECT * FROM salesforce.Invoice__c where Student_Name__c='" + results[0].sfid + "' Order by createddate desc";
+					var query = "SELECT * FROM salesforce1.Invoice__c where Student_Name__c='" + results[0].sfid + "' Order by createddate desc";
 					if(!isNaN(limit))
 					{
 						query += " limit " + limit;

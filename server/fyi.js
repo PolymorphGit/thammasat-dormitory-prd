@@ -4,7 +4,7 @@ exports.getDetail = function(req, res, next){
 	var head = req.headers['authorization'];
 	var type = req.headers['type'];
 	var output = '[{"URL":[';
-	db.select("SELECT * FROM salesforce.FYI__c where type__c='" + type + "'")
+	db.select("SELECT * FROM salesforce1.FYI__c where type__c='" + type + "'")
 	.then(function(results) {
 		//console.log(results.length);	
 		for(var i = 0 ; i < results.length; i++)

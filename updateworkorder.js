@@ -3,9 +3,9 @@ var Pusher = require('pusher');
 
 function updateWorkOrder() {
     //console.log('Notification');
-    var query = "UPDATE salesforce.WorkOrder SET caseid = ";
-    query += "(SELECT sfid FROM salesforce.Case WHERE id = salesforce.WorkOrder.case_heroku_id__c) "
-    query += "WHERE salesforce.WorkOrder.caseid is null or salesforce.WorkOrder.caseid = 'null' RETURNING *";
+    var query = "UPDATE salesforce1.WorkOrder SET caseid = ";
+    query += "(SELECT sfid FROM salesforce1.Case WHERE id = salesforce1.WorkOrder.case_heroku_id__c) "
+    query += "WHERE salesforce1.WorkOrder.caseid is null or salesforce1.WorkOrder.caseid = 'null' RETURNING *";
     db.select(query)
     .then(function(results) {
       console.log("Record : " + results.length);
@@ -22,7 +22,7 @@ function updateWorkOrder() {
 updateWorkOrder();
 
 function CheckNull(){
-	db.select("SELECT * FROM salesforce.WorkOrder WHERE caseid is null or caseid = ''")	
+	db.select("SELECT * FROM salesforce1.WorkOrder WHERE caseid is null or caseid = ''")	
 	.then(function(results) {
 		console.log("Record : " + results.length);
 		if(results.length > 0)

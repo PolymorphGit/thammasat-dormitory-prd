@@ -62,7 +62,7 @@ function getBilling(id, next)
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Invoice__c WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Invoice__c WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].student_name__c;
 		invoiceNo = results[0].name;
@@ -92,7 +92,7 @@ function getMailing(id, next)
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Mailing__c WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Mailing__c WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].student_name__c;
 		console.log('To:' + to + ', No:' + results[0].name + ', type:' + results[0].mailing_type__c + ', date:' + results[0].received_date__c);
@@ -117,7 +117,7 @@ function problemWorking(id, next)
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -142,7 +142,7 @@ function problemHold(id, message, next)
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -167,7 +167,7 @@ function problemClosed(id, message, next)
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -192,7 +192,7 @@ function complainAccept(id, message, next)
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -218,10 +218,10 @@ function cleanClosed(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.WorkOrder WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.WorkOrder WHERE SFID='" + id + "'")
 	.then(function(results) {
 		console.log(results);
-		db.select("SELECT * FROM salesforce.Case WHERE SFID='" + results[0].caseid + "'")
+		db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + results[0].caseid + "'")
 		.then(function(results2) {
 			to = results2[0].accountid;
 			date = new Date(results[0].working_date__c);
@@ -251,7 +251,7 @@ function checkoutConfirm(id, next)
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -276,7 +276,7 @@ function checkoutPayment(id, message, next)
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -302,7 +302,7 @@ function accessApprove(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		date = results[0].early_late_access_date__c;
@@ -331,7 +331,7 @@ function accesReject(id, message, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		date = results[0].early_late_access_date__c;
@@ -360,7 +360,7 @@ function leaveApprove(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		date = results[0].early_late_access_date__c;
@@ -389,7 +389,7 @@ function leaveReject(id, message, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		date = results[0].early_late_access_date__c;
@@ -418,7 +418,7 @@ function stayApprove(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		date = results[0].stay_start_date__c;
@@ -447,7 +447,7 @@ function stayReject(id, message, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		date = results[0].stay_start_date__c;
@@ -476,7 +476,7 @@ function roomAccept(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -502,7 +502,7 @@ function roomReject(id, message, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -528,7 +528,7 @@ function mailFound(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -554,7 +554,7 @@ function mailNotFound(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -580,7 +580,7 @@ function houseProgress(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -606,7 +606,7 @@ function houseDoc(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -632,7 +632,7 @@ function houseCompleted(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -658,7 +658,7 @@ function otherProgress(id, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);
@@ -684,7 +684,7 @@ function otherCompleted(id, message, next)
 	var date;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		to = results[0].accountid;
 		console.log('To:' + to + ', No:' + results[0].casenumber + ', Subject:' + results[0].subject);

@@ -24,7 +24,7 @@ exports.getInfo = function(req, res, next) {
 			{
 			    var obj = JSON.parse(str);
 			    //res.send(obj.identities[0].user_id);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
 					console.log(results);	
 					res.json(results);
@@ -71,7 +71,7 @@ exports.getInfo2 = function(req, res, next) {
 			    var date;
 				var time;
 			    //res.send(obj.identities[0].user_id);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
 					console.log(results);
 					var room = results[0].room__c;
@@ -83,7 +83,7 @@ exports.getInfo2 = function(req, res, next) {
 					{
 						room = results[0].room_summer__c;
 					}
-					db.select("SELECT * FROM salesforce.Product2 WHERE SFID='" + room + "'")
+					db.select("SELECT * FROM salesforce1.Product2 WHERE SFID='" + room + "'")
 					.then(function(results2) {
 						//console.log(results2);	
 						date = results[0].birthdate__c;
@@ -198,7 +198,7 @@ exports.challengecode = function(req, res, next) {
 				var Sender = 'baanTU';
 				///Sender = 'SMSMKT.COM';
 				
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce11.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
 					// console.log(results2);
 					phone = results2[0].personmobilephone;
@@ -247,7 +247,7 @@ exports.challengecode = function(req, res, next) {
 								// 	if(results2[0].auth_code_valid__c == null || results2[0].auth_code_valid__c < today)
 								// 	{
 								// 		//write new code to DB
-								// 		var query = "UPDATE salesforce.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
+								// 		var query = "UPDATE salesforce1.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
 								// 		query += "auth_code_valid__c='" + valid.toLocaleString() + "' ";
 								// 		query += " WHERE SFID='" + results2[0].sfid + "'";
 								// 		db.select(query)
@@ -309,7 +309,7 @@ exports.challengecode = function(req, res, next) {
 									if(results2[0].auth_code_valid__c == null || results2[0].auth_code_valid__c < today)
 									{
 										//write new code to DB
-										var query = "UPDATE salesforce.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
+										var query = "UPDATE salesforce1.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
 										query += "auth_code_valid__c='" + valid.toLocaleString() + "' ";
 										query += " WHERE SFID='" + results2[0].sfid + "'";
 										db.select(query)
@@ -337,7 +337,7 @@ exports.challengecode = function(req, res, next) {
 						 req2.end();
 						/*
 						var datetime = valid.toLocaleString();
-						var query = "UPDATE salesforce.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
+						var query = "UPDATE salesforce1.Account SET auth_code__c='" + results2[0].auth_code__c + "', "; 
 						query += "auth_code_valid__c='" + datetime + "' ";
 						query += " WHERE SFID='" + results2[0].sfid + "'";
 						console.log(query);
@@ -393,7 +393,7 @@ exports.verifycode = function(req, res, next) {
 			try
 			{
 				var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) { 
 					console.log(results2);	
 					if(results2[0].auth_code__c == otp || results2[0].name == 'Test User' )
@@ -411,7 +411,7 @@ exports.verifycode = function(req, res, next) {
 							{
 								room = results2[0].room_summer__c;
 							}
-							db.select("SELECT * FROM salesforce.Product2 WHERE SFID='" + room + "'")
+							db.select("SELECT * FROM salesforce1.Product2 WHERE SFID='" + room + "'")
 							.then(function(results3) {
 								console.log(results3);	
 								date = results2[0].birthdate__c;
@@ -527,7 +527,7 @@ exports.checkStatus = function(req, res, next) {
 			{
 			    var obj = JSON.parse(str);
 			    //res.send(obj.identities[0].user_id);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) { 
 					console.log(results);	
 					var output = { renew : results[0].allow_renew__c, checkout : results[0].allow_check_out__c};
@@ -725,7 +725,7 @@ exports.getmobileid = function(req, res, next) {
 
 exports.UserInfobyId = function(req, res, next) {
 	var id = req.params.id;
-	db.select("SELECT * FROM salesforce.Account WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Account WHERE SFID='" + id + "'")
 	.then(function(results) {
 		//console.log(results);	
 		res.json(results);
@@ -735,7 +735,7 @@ exports.UserInfobyId = function(req, res, next) {
 
 exports.UserInfobyMobileId = function(req, res, next) {
 	var id = req.params.mobileid;
-	db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + id + "'")
 	.then(function(results) {
 		console.log(results);	
 		res.json(results);
@@ -747,7 +747,7 @@ exports.update = function(req, res, next) {
 	var id = req.params.id;
 	if (!req.body) return res.sendStatus(400);
 	//console.log(req.body);
-	var query = "UPDATE salesforce.Account SET identification_number__c='" + req.body.identification_number__c + "', "; 
+	var query = "UPDATE salesforce1.Account SET identification_number__c='" + req.body.identification_number__c + "', "; 
 	query += "passport_number__c='" + req.body.passport_number__c + "', ";
 	query += "gender__c='" + req.body.gender__c + "', ";
 	query += "title_th__c='" + req.body.title_th__c + "', ";
@@ -813,7 +813,7 @@ exports.update = function(req, res, next) {
 
 exports.getRoommate = function(req, res, next) {
 	//if (!req.body) return res.sendStatus(400);
-	db.select("SELECT * FROM salesforce.Account WHERE room__c is null and secondary__c = false")
+	db.select("SELECT * FROM salesforce1.Account WHERE room__c is null and secondary__c = false")
 	.then(function(results) {
 		console.log(results);	
 		res.json(results);
@@ -850,7 +850,7 @@ exports.getZone = function(req, res, next) {
 			{
 			    var obj = JSON.parse(str);
 			    //res.send(obj.identities[0].user_id);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
 					console.log(results2);
 					if(results2.length > 0)
@@ -922,7 +922,7 @@ exports.getZone = function(req, res, next) {
 exports.checkinDetail = function(req, res, next){
 	var head = req.headers['authorization'];
 	var output = '[{"URL":[';
-	db.select("SELECT * FROM salesforce.FYI__c where type__c='Checkin'")
+	db.select("SELECT * FROM salesforce1.FYI__c where type__c='Checkin'")
 	.then(function(results) {
 		//console.log(results.length);	
 		for(var i = 0 ; i < results.length; i++)
@@ -962,7 +962,7 @@ exports.checkin = function(req, res, next){
 			{
 			    var obj = JSON.parse(str);
 			    //res.send(obj.identities[0].user_id);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
 					console.log(results2);
 					//TODO: Update account and Create Asset
@@ -988,14 +988,14 @@ exports.checkin = function(req, res, next){
 						
 						if (room != null)
 						{
-							db.select("UPDATE salesforce.Account SET Status__c='Checkin', allow_check_out__c=false, renew__c=false, check_in_comment__c='" + req.body.comment + "' WHERE SFID='" + results2[0].sfid + "' RETURNING *")
+							db.select("UPDATE salesforce1.Account SET Status__c='Checkin', allow_check_out__c=false, renew__c=false, check_in_comment__c='" + req.body.comment + "' WHERE SFID='" + results2[0].sfid + "' RETURNING *")
 							.then(function(results3) {
 								console.log(results3);	
 								if(results3.length > 0)
 								{
-									db.select("SELECT * FROM salesforce.product2 where sfid='" + room + "'")
+									db.select("SELECT * FROM salesforce1.product2 where sfid='" + room + "'")
 									.then(function(result4) {
-										db.select("INSERT INTO salesforce.Asset (Name, accountId, product2id, UsageEndDate, contract_end__c, active__c) VALUES ('" + result4[0].name + "', '" + results2[0].sfid + "', '" + room + "', '" + enddate + "', '" + enddate + "', true)")
+										db.select("INSERT INTO salesforce1.Asset (Name, accountId, product2id, UsageEndDate, contract_end__c, active__c) VALUES ('" + result4[0].name + "', '" + results2[0].sfid + "', '" + room + "', '" + enddate + "', '" + enddate + "', true)")
 										.then(function(results5) {
 											console.log(results5);	
 											res.send("{ \"status\": \"Success\"}");
@@ -1057,13 +1057,13 @@ exports.RequestCheckout = function(req, res, next) {
 			{
 				//TODO: Open Case
 				var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					db.select("SELECT * FROM salesforce.RecordType WHERE name='Checkout'")
+					db.select("SELECT * FROM salesforce1.RecordType WHERE name='Checkout'")
 					.then(function(results2) {
 						var date = req.body.date;
 						date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
-						var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, checkout_date__c, type, problem_type__c, subject, description, reason_to_check_out__c) ";
+						var query = "INSERT INTO salesforce1.Case (recordtypeid, accountid, checkout_date__c, type, problem_type__c, subject, description, reason_to_check_out__c) ";
 							query += "VALUES ('" + results2[0].sfid + "', '" + results[0].sfid + "', '" + date + "', '";
 							query += "Request', 'Checkout', 'Checkout', '" + req.body.comment + "', '" + req.body.reason +"')";
 							//console.log(query);
@@ -1111,16 +1111,16 @@ exports.checkout = function(req, res, next){
 			try
 			{
 				var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
 					if(results2.length > 0)
 					{
 					    var obj = JSON.parse(str);
 					    //res.send(obj.identities[0].user_id);
-					    var query = "UPDATE salesforce.Account SET Status__c='Checkout', room__c='' WHERE SFID='" + results2[0].sfid + "' RETURNING *";
+					    var query = "UPDATE salesforce1.Account SET Status__c='Checkout', room__c='' WHERE SFID='" + results2[0].sfid + "' RETURNING *";
 					    if(results2[0].renew__c == true)
 				    	{
-					    	query = "UPDATE salesforce.Account SET Status__c='Checkout' WHERE SFID='" + results2[0].sfid + "' RETURNING *";
+					    	query = "UPDATE salesforce1.Account SET Status__c='Checkout' WHERE SFID='" + results2[0].sfid + "' RETURNING *";
 				    	}
 					    var today = new Date();
 						var startDate = new Date(today.getFullYear(), 5, 1);
@@ -1128,18 +1128,18 @@ exports.checkout = function(req, res, next){
 						if((startDate < today && today < endDate))
 						{
 							enddate = today.getFullYear() + '-5-31';
-							query = "UPDATE salesforce.Account SET Status__c='Checkout', room_summer__c='' WHERE SFID='" + results2[0].sfid + "' RETURNING *";
+							query = "UPDATE salesforce1.Account SET Status__c='Checkout', room_summer__c='' WHERE SFID='" + results2[0].sfid + "' RETURNING *";
 						}
 					    db.select(query)
 						.then(function(results3) {
 							console.log(results3);
 							//TODO: Query Active Asset and Update to deactive and Usage end date to TODAY
-							db.select("SELECT * FROM salesforce.Asset WHERE accountId='" + results3[0].sfid + "' and active__c=true")
+							db.select("SELECT * FROM salesforce1.Asset WHERE accountId='" + results3[0].sfid + "' and active__c=true")
 							.then(function(results4) {
 								console.log(results4);	
 								var today = new Date();
 								var todayDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-								db.select("UPDATE salesforce.Asset SET active__c=false, usageenddate='" + todayDate + "' WHERE SFID='" + results4[0].sfid + "' RETURNING *")
+								db.select("UPDATE salesforce1.Asset SET active__c=false, usageenddate='" + todayDate + "' WHERE SFID='" + results4[0].sfid + "' RETURNING *")
 								.then(function(results5) {
 									console.log(results5);	
 									//res.json(results);
@@ -1190,14 +1190,14 @@ exports.renew = function(req, res, next) {
 			{
 			    var obj = JSON.parse(str);
 			    //TODO: Open Case Renew
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
 					if(results2.length > 0)
 					{
-					    var query = "UPDATE salesforce.Account SET renew__c=true WHERE SFID='" + results2[0].sfid + "'";
+					    var query = "UPDATE salesforce1.Account SET renew__c=true WHERE SFID='" + results2[0].sfid + "'";
 					    if(req.body.summer == 'true')
 				    	{
-					    	query = "UPDATE salesforce.Account SET renew__c=true, room_summer__c='" + results2[0].room__c + "' WHERE SFID='" + results2[0].sfid + "'";
+					    	query = "UPDATE salesforce1.Account SET renew__c=true, room_summer__c='" + results2[0].room__c + "' WHERE SFID='" + results2[0].sfid + "'";
 				    	}
 					    db.select(query)
 						.then(function(results3) {
@@ -1223,12 +1223,12 @@ exports.renew = function(req, res, next) {
 
 exports.getprimary = function(req, res, next) {
 	var id = req.params.id;
-	db.select("SELECT * FROM salesforce.roommate__c WHERE co_roommate__c='" + id + "'")
+	db.select("SELECT * FROM salesforce1.roommate__c WHERE co_roommate__c='" + id + "'")
 	.then(function(results) {
 		console.log(results);	
 		if(results.length > 0)
 		{
-			db.select("SELECT * FROM salesforce.Account WHERE sfid='" + results[0].primary_roommate__c + "'")
+			db.select("SELECT * FROM salesforce1.Account WHERE sfid='" + results[0].primary_roommate__c + "'")
 			.then(function(results2) {
 				res.json(results2);
 			})
@@ -1244,12 +1244,12 @@ exports.getprimary = function(req, res, next) {
 
 exports.getroommate = function(req, res, next) {
 	var id = req.params.id;
-	db.select("SELECT * FROM salesforce.roommate__c WHERE co_roommate__c='" + id + "'")
+	db.select("SELECT * FROM salesforce1.roommate__c WHERE co_roommate__c='" + id + "'")
 	.then(function(results) {
 		console.log(results);	
 		if(results.length > 0)
 		{
-			db.select("SELECT * FROM salesforce.roommate__c WHERE primary_roommate__c='" + results[0].primary_roommate__c + "'")
+			db.select("SELECT * FROM salesforce1.roommate__c WHERE primary_roommate__c='" + results[0].primary_roommate__c + "'")
 			.then(function(results2) {
 				var listacc = '(\'' + results[0].primary_roommate__c + '\', ';
 				for(var i = 0 ; i < results2.length ; i++)
@@ -1260,7 +1260,7 @@ exports.getroommate = function(req, res, next) {
 				if(results2.length > 0)
 				{
 					listacc = listacc.substr(0, listacc.length - 2) + ')';
-					db.select("SELECT * FROM salesforce.Account WHERE SFID IN " + listacc)
+					db.select("SELECT * FROM salesforce1.Account WHERE SFID IN " + listacc)
 					.then(function(results3) {
 						res.json(results3);
 					})

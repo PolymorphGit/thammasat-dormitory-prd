@@ -22,7 +22,7 @@ exports.getCleanRate = function(req, res, next) {
 			{
 			    var obj = JSON.parse(str);
 			    //res.send(obj.identities[0].user_id);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
 					var today = new Date();
 					var startDate = new Date(today.getFullYear(), 5, 1);
@@ -34,9 +34,9 @@ exports.getCleanRate = function(req, res, next) {
 						console.log("Summer Term");
 						room = results[0].room_summer__c;
 					}
-					db.select("SELECT * FROM salesforce.Product2 WHERE SFID='" + room + "'")
+					db.select("SELECT * FROM salesforce1.Product2 WHERE SFID='" + room + "'")
 					.then(function(results2) {
-						db.select("SELECT * FROM salesforce.Master_Clean_Rate__c where type__c='" + results2[0].room_type__c + "' order by quantity__c asc")
+						db.select("SELECT * FROM salesforce1.Master_Clean_Rate__c where type__c='" + results2[0].room_type__c + "' order by quantity__c asc")
 						.then(function(results2) {
 							console.log(results2);
 							var output = '[';
@@ -79,9 +79,9 @@ exports.getDetail = function(req, res, next) {
 	var time;
 	var detail;
 	var period;
-	db.select("SELECT * FROM salesforce.WorkOrder WHERE sfid='" + id + "'")
+	db.select("SELECT * FROM salesforce1.WorkOrder WHERE sfid='" + id + "'")
 	.then(function(results0) {
-	db.select("SELECT * FROM salesforce.case WHERE sfid='" + results0[0].caseid + "' and type='Care and Clean'")
+	db.select("SELECT * FROM salesforce1.case WHERE sfid='" + results0[0].caseid + "' and type='Care and Clean'")
 	.then(function(results) {
 		console.log(results);	
 		//output = JSON.stringify(results);
@@ -103,7 +103,7 @@ exports.getDetail = function(req, res, next) {
 		output += '", "created_time":"' + time + '"}]';
 		
 		
-		db.select("SELECT * FROM salesforce.WorkOrder WHERE caseid='" + results[0].sfid + "'")
+		db.select("SELECT * FROM salesforce1.WorkOrder WHERE caseid='" + results[0].sfid + "'")
 		.then(function(results2) {	
 			//console.log(results2);
 			if(results2.length > 0)
@@ -158,11 +158,11 @@ exports.getList = function(req, res, next) {
 			try
 			{
 			    var obj = JSON.parse(str);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
 					
 					
-					var query = "SELECT * FROM salesforce.WorkOrder where accountid='" + results[0].sfid + "' and subject='Care and Clean' and createddate is not null Order by createddate desc";
+					var query = "SELECT * FROM salesforce1.WorkOrder where accountid='" + results[0].sfid + "' and subject='Care and Clean' and createddate is not null Order by createddate desc";
 					if(!isNaN(limit))
 					{
 						query += " limit " + limit;
@@ -264,10 +264,10 @@ exports.openClean = function(req, res, next) {
 			else
 			{
 				//Open Case 
-				db.select("SELECT * FROM salesforce.RecordType WHERE name='Care and Clean'")
+				db.select("SELECT * FROM salesforce1.RecordType WHERE name='Care and Clean'")
 				.then(function(results2) {
 					
-					var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, origin, subject, description";
+					var query = "INSERT INTO salesforce1.Case (recordtypeid, accountid, origin, subject, description";
 					query += ", amount__c, allow_to_access_room__c, agree_to_pay__c, priority, package_number__c) ";
 					query += "VALUES ('" + results2[0].sfid + "', '" + obj.sfid + "', 'Mobile Application', 'Care and Clean', '";
 					query += req.body.comment + "', '" + req.body.amount + "', '" + req.body.access + "', '";
@@ -277,16 +277,16 @@ exports.openClean = function(req, res, next) {
 					.then(function(results3) {
 						setTimeout(function () {
 							console.log(results3);
-							db.select("SELECT * FROM salesforce.Case WHERE id='" + results3[0].id + "'")
+							db.select("SELECT * FROM salesforce1.Case WHERE id='" + results3[0].id + "'")
 							.then(function(results4) {
 								console.log(results4);
-								db.select("SELECT * FROM salesforce.RecordType WHERE name='Maid'")
+								db.select("SELECT * FROM salesforce1.RecordType WHERE name='Maid'")
 								.then(function(results5) {
 									console.log(results5);
-									db.select("SELECT * FROM salesforce.Asset WHERE accountid='" + obj.sfid + "' and active__c=true")
+									db.select("SELECT * FROM salesforce1.Asset WHERE accountid='" + obj.sfid + "' and active__c=true")
 									.then(function(results6) {
 										console.log(results6);
-										var query2 = "INSERT INTO salesforce.WorkOrder (caseid, working_date__c, cleaning_period__c, recordtypeid, assetid, subject, accountid, case_heroku_id__c) VALUES ";
+										var query2 = "INSERT INTO salesforce1.WorkOrder (caseid, working_date__c, cleaning_period__c, recordtypeid, assetid, subject, accountid, case_heroku_id__c) VALUES ";
 										for(var i = 0 ; i < req.body.schedule.length; i++)
 										{
 											var date = req.body.schedule[i].date;
@@ -349,7 +349,7 @@ exports.checkCap = function(req, res, next) {
 			try
 			{
 				var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results2) {
 					var listDate = '';
 					var date;
@@ -370,17 +370,17 @@ exports.checkCap = function(req, res, next) {
 					if(CheckDuplicate == false)
 					{
 						listDate = listDate.substr(0, listDate.length - 2);
-						var query = "SELECT Id, to_char(working_date__c, 'DD/MM/YYYY') as date FROM salesforce.workorder where accountid='" + results2[0].sfid + "' and working_date__c IN (" + listDate +")";
+						var query = "SELECT Id, to_char(working_date__c, 'DD/MM/YYYY') as date FROM salesforce1.workorder where accountid='" + results2[0].sfid + "' and working_date__c IN (" + listDate +")";
 						db.select(query)
 						.then(function(results3) {
 							console.log(results3);
 							if(results3.length == 0)
 							{
-								db.select("SELECT * FROM salesforce.clean_capacity__c WHERE zone__c='" + results2[0].zone__c + "'")
+								db.select("SELECT * FROM salesforce1.clean_capacity__c WHERE zone__c='" + results2[0].zone__c + "'")
 								.then(function(results4) {
 									console.log(results4);
-									query = "SELECT count(worder.Id) as count, to_char(working_date__c, 'DD/MM/YYYY') as date, cleaning_period__c FROM salesforce.workorder as worder ";
-									query += "LEFT JOIN salesforce.account as acc on worder.accountid = acc.sfid ";
+									query = "SELECT count(worder.Id) as count, to_char(working_date__c, 'DD/MM/YYYY') as date, cleaning_period__c FROM salesforce1.workorder as worder ";
+									query += "LEFT JOIN salesforce1.account as acc on worder.accountid = acc.sfid ";
 									query += "where acc.zone__c='" + results2[0].zone__c + "' and working_date__c IN (" + listDate +") group by working_date__c, cleaning_period__c";
 									db.select(query)
 									.then(function(results5) {

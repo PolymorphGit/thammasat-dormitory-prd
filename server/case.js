@@ -6,7 +6,7 @@ exports.getDetail = function(req, res, next) {
 	var date;
 	var time;
 	var detail;
-	db.select("SELECT * FROM salesforce.Case WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Case WHERE SFID='" + id + "'")
 	.then(function(results) {
 		//console.log(results);
 		date = results[0].createddate;
@@ -76,9 +76,9 @@ exports.getList = function(req, res, next) {
 			try
 			{
 			    var obj = JSON.parse(str);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					var query = "SELECT * FROM salesforce.Case where accountid='" + results[0].sfid + "' and type<>'Care and Clean' and createddate is not null Order by createddate desc";
+					var query = "SELECT * FROM salesforce1.Case where accountid='" + results[0].sfid + "' and type<>'Care and Clean' and createddate is not null Order by createddate desc";
 					if(!isNaN(limit))
 					{
 						query += " limit " + limit;
@@ -167,11 +167,11 @@ exports.openCaseService = function(req, res, next) {
 			try
 			{
 			    var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					db.select("SELECT * FROM salesforce.RecordType WHERE name='Services'")
+					db.select("SELECT * FROM salesforce1.RecordType WHERE name='Services'")
 					.then(function(results2) {
-						var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, origin, type, problem_type__c, problem_sub_type__c";
+						var query = "INSERT INTO salesforce1.Case (recordtypeid, accountid, origin, type, problem_type__c, problem_sub_type__c";
 						query += ", Description, allow_to_access_room__c, agree_to_pay__c, priority, subject) ";
 						query += "VALUES ('" + results2[0].sfid + "', '" + results[0].sfid + "', 'Mobile Application', '" + req.body.type + "', '";
 						query += req.body.problem_type + "', '" + req.body.problem_sub_type + "', '" + req.body.comment + "', '" + req.body.access + "', '";
@@ -221,11 +221,11 @@ exports.openCaseComplain = function(req, res, next) {
 			try
 			{
 			    var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					db.select("SELECT * FROM salesforce.RecordType WHERE name='Complain'")
+					db.select("SELECT * FROM salesforce1.RecordType WHERE name='Complain'")
 					.then(function(results2) {
-						var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, origin, type, problem_type__c";
+						var query = "INSERT INTO salesforce1.Case (recordtypeid, accountid, origin, type, problem_type__c";
 						query += ", Description, priority, subject) ";
 						query += "VALUES ('" + results2[0].sfid + "', '" + results[0].sfid + "', 'Mobile Application', '" + req.body.type + "', '";
 						query += req.body.problem_type + "', '" + req.body.comment + "', '";
@@ -275,16 +275,16 @@ exports.openCaseRequest = function(req, res, next) {
 			try
 			{
 				var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
 					var type = "Check Mailing";
 					if (req.body.problem_type == "คัดสำเนาทะเบียนบ้าน")
 					{
 						type = "Request Household";
 					}
-					db.select("SELECT * FROM salesforce.RecordType WHERE name='" + type + "'")
+					db.select("SELECT * FROM salesforce1.RecordType WHERE name='" + type + "'")
 					.then(function(results2) {
-						var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject) ";
+						var query = "INSERT INTO salesforce1.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject) ";
 						query += "VALUES ('" + results2[0].sfid + "', '" + results[0].sfid + "', 'Mobile Application', 'Request', '" + req.body.problem_type + "', '";
 						query += req.body.comment + "', 'Medium', '" + req.body.problem_type + "')";
 						//console.log(query);
@@ -332,11 +332,11 @@ exports.openCaseOther = function(req, res, next) {
 			try
 			{
 				var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					db.select("SELECT * FROM salesforce.RecordType WHERE name='Other'")
+					db.select("SELECT * FROM salesforce1.RecordType WHERE name='Other'")
 					.then(function(results2) {
-						var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject) ";
+						var query = "INSERT INTO salesforce1.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject) ";
 						query += "VALUES ('" + results2[0].sfid + "', '" + results[0].sfid + "', 'Mobile Application', 'Other', 'อื่นๆ', '";
 						query += req.body.comment + "', 'Medium', 'อื่นๆ')";
 						//console.log(query);
@@ -385,15 +385,15 @@ exports.openCaseAccess = function(req, res, next) {
 			{
 				console.log(results);
 				var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
 					console.log(results);
-					db.select("SELECT * FROM salesforce.RecordType WHERE name='Early and Late Access'")
+					db.select("SELECT * FROM salesforce1.RecordType WHERE name='Early and Late Access'")
 					.then(function(results2) {
 						console.log(results2);
 						var date = req.body.date;
 						date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
-						var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject, Early_Late_Access_Date__c) ";
+						var query = "INSERT INTO salesforce1.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject, Early_Late_Access_Date__c) ";
 						query += "VALUES ('" + results2[0].sfid + "', '" + results[0].sfid + "', 'Mobile Application', 'Request', '"; 
 						query += req.body.type + "', '" + req.body.comment + "', 'Medium', '" + req.body.type + "', '" + date + "')";
 						//console.log(query);
@@ -441,13 +441,13 @@ exports.openCaseGuest = function(req, res, next) {
 			try
 			{
 				var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					db.select("SELECT * FROM salesforce.RecordType WHERE name='Request to Stay'")
+					db.select("SELECT * FROM salesforce1.RecordType WHERE name='Request to Stay'")
 					.then(function(results2) {
 						var date = req.body.date;
 						date = date.substring(3, 5) + "/" + date.substring(0, 2) + "/" + date.substring(6, 10);
-						var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject, citizen_id_passport_no__c, stay_start_date__c) ";
+						var query = "INSERT INTO salesforce1.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject, citizen_id_passport_no__c, stay_start_date__c) ";
 						query += "VALUES ('" + results2[0].sfid + "', '" + results[0].sfid + "', 'Mobile Application', 'Request', '"; 
 						query += "ขออนุญาตค้างคืน', '" + req.body.comment + "', 'Medium', 'ขออนุญาตค้างคืน', '" + req.body.identity_number + "', '" + date + "')";
 						//console.log(query);
@@ -495,11 +495,11 @@ exports.openCaseChange = function(req, res, next) {
 			try
 			{
 				var obj = JSON.parse(str);
-				db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+				db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					db.select("SELECT * FROM salesforce.RecordType WHERE name='Move Room'")
+					db.select("SELECT * FROM salesforce1.RecordType WHERE name='Move Room'")
 					.then(function(results2) {
-						var query = "INSERT INTO salesforce.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject, Request_Zone__c, reason_to_move_room__c) ";
+						var query = "INSERT INTO salesforce1.Case (recordtypeid, accountid, origin, type, problem_type__c, description, priority, subject, Request_Zone__c, reason_to_move_room__c) ";
 						query += "VALUES ('" + results2[0].sfid + "', '" + results[0].sfid + "', 'Mobile Application', 'Request', '"; 
 						query += "ย้ายห้อง', '" + req.body.comment + "', 'Medium', 'ย้ายห้อง', '" + req.body.zone + "', '" + req.body.reason + "')";
 						//console.log(query);

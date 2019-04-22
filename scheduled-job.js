@@ -30,7 +30,7 @@ function sendBilling()
 	var to;
 	var noti;
 	var payload;
-	db.select("SELECT * FROM salesforce.Invoice__c WHERE send_notification__c is null or send_notification__c = false ")
+	db.select("SELECT * FROM salesforce1.Invoice__c WHERE send_notification__c is null or send_notification__c = false ")
 	.then(function(results) {
 		console.log('Invoice count: ' + results.length);
 		for(var i = 0 ; i < results.length ; i++)
@@ -62,7 +62,7 @@ function sendBilling()
 		{
 			listId = listId.substr(0, listId.length - 2) + ')';
 			//TODO Mark Send Notification to true
-			db.select("UPDATE salesforce.Invoice__c SET send_notification__c=true WHERE SFID IN " + listId)
+			db.select("UPDATE salesforce1.Invoice__c SET send_notification__c=true WHERE SFID IN " + listId)
 			.then(function(results) {
 				console.log('Invoice complete');
 			})
@@ -80,7 +80,7 @@ function sendMailing()
 	var noti;
 	var payload;
 	var duedate;
-	db.select("SELECT * FROM salesforce.Mailing__c WHERE send_notification__c is null or send_notification__c = false ")
+	db.select("SELECT * FROM salesforce1.Mailing__c WHERE send_notification__c is null or send_notification__c = false ")
 	.then(function(results) {
 		console.log('Mailing count: ' + results.length);
 		for(var i = 0 ; i < results.length ; i++)
@@ -108,7 +108,7 @@ function sendMailing()
 			//TODO Mark Send Notification to true
 			listId = listId.substr(0, listId.length - 2) + ')';
 			//TODO Mark Send Notification to true
-			db.select("UPDATE salesforce.Mailing__c SET send_notification__c=true WHERE SFID IN " + listId)
+			db.select("UPDATE salesforce1.Mailing__c SET send_notification__c=true WHERE SFID IN " + listId)
 			.then(function(results) {
 				console.log('Mailing complete');
 			})
@@ -127,7 +127,7 @@ function sendContractExpire()
 	var noti;
 	var payload;
 	var contract_end_date;
-	db.select("SELECT * FROM salesforce.Asset WHERE active__c=true and send_notification__c=false and contract_end__c < NOW() - interval '1 months' ")
+	db.select("SELECT * FROM salesforce1.Asset WHERE active__c=true and send_notification__c=false and contract_end__c < NOW() - interval '1 months' ")
 	.then(function(results) {
 		console.log(results);
 		for(var i = 0 ; i < results.length ; i++)
@@ -157,9 +157,9 @@ function sendContractExpire()
 			listId = listId.substr(0, listId.length - 2) + ')';
 			listAccId = listAccId.substr(0, listAccId.length - 2) + ')';
 			//TODO Mark Send Notification to true
-			db.select("UPDATE salesforce.Asset SET send_notification__c=true WHERE SFID IN " + listId)
+			db.select("UPDATE salesforce1.Asset SET send_notification__c=true WHERE SFID IN " + listId)
 			.then(function(results) {
-				db.select("UPDATE salesforce.Account SET allow_renew__c=true WHERE SFID IN " + listAccId)
+				db.select("UPDATE salesforce1.Account SET allow_renew__c=true WHERE SFID IN " + listAccId)
 				.then(function(results) {
 					console.log('Contract complete');
 				})
@@ -176,9 +176,9 @@ function caseNotification()
 {
 	var sfid, type, message;
 	var listCaseId = '(';
-	db.select("SELECT * FROM salesforce.RecordType WHERE name !='Care and Clean' and sobjecttype = 'Case'")
+	db.select("SELECT * FROM salesforce1.RecordType WHERE name !='Care and Clean' and sobjecttype = 'Case'")
 	.then(function(rec) {
-		db.select("SELECT * FROM salesforce.Case WHERE send_notification__c=false and type != 'Care and Clean' and status != 'New' ")
+		db.select("SELECT * FROM salesforce1.Case WHERE send_notification__c=false and type != 'Care and Clean' and status != 'New' ")
 		.then(function(results) {
 			console.log('Notification count: ' + results.length);
 			for(var i = 0 ; i < results.length ; i++)
@@ -372,7 +372,7 @@ function caseNotification()
 						}
 					}
 				}
-				db.select("UPDATE salesforce.Case SET send_notification__c=true WHERE SFID = '" + results[i].sfid + "' RETURNING *")
+				db.select("UPDATE salesforce1.Case SET send_notification__c=true WHERE SFID = '" + results[i].sfid + "' RETURNING *")
 				.then(function(results) {
 					//console.log('Send Case : ' + results[i].sfid);
 				})
@@ -389,9 +389,9 @@ function workorderNotification()
 {
 	var sfid, type, message;
 	var listCaseId = '(';
-	db.select("SELECT * FROM salesforce.RecordType WHERE name='Maid'")
+	db.select("SELECT * FROM salesforce1.RecordType WHERE name='Maid'")
 	.then(function(rec) {
-		db.select("SELECT * FROM salesforce.workorder WHERE send_notification__c=false and recordtypeid = '" + rec[0].sfid + "' and status ='Closed' ")
+		db.select("SELECT * FROM salesforce1.workorder WHERE send_notification__c=false and recordtypeid = '" + rec[0].sfid + "' and status ='Closed' ")
 		.then(function(results) {
 			//console.log(results);
 			for(var i = 0 ; i < results.length ; i++)
@@ -421,7 +421,7 @@ function workorderNotification()
 						httprequest.end();
 					}
 				}
-				db.select("UPDATE salesforce.workorder SET send_notification__c=true WHERE SFID = '" + results[i].sfid + "' RETURNING *")
+				db.select("UPDATE salesforce1.workorder SET send_notification__c=true WHERE SFID = '" + results[i].sfid + "' RETURNING *")
 				.then(function(results) {
 					//console.log('Send Clean : ' + results[i].sfid);
 				})

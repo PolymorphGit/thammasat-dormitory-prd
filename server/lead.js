@@ -2,7 +2,7 @@ var db = require('./pghelper');
 
 exports.getInfobyId = function(req, res, next) {
 	var id = req.params.id;
-	db.select("SELECT * FROM salesforce.Lead WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Lead WHERE SFID='" + id + "'")
 	.then(function(results) {
 		//console.log(results);	
 		res.json(results);
@@ -63,7 +63,7 @@ exports.createLead = function(req, res, next) {
 	var love_exercise__c =(req.body.love_exercise__c? req.body.love_exercise__c : 'false');
 	var activist__c =(req.body.activist__c? req.body.activist__c : 'false');
 	
-	var query2 = "INSERT INTO salesforce.lead (identification_number__c, passport_number__c, gender__c,";
+	var query2 = "INSERT INTO salesforce1.lead (identification_number__c, passport_number__c, gender__c,";
 	query2 += "first_name_th__c, last_name_th__c, salutation, firstname, lastname, mobilephone, email, congenital_disease__c, ";
 	query2 += "student_id__c, faculty__c, request_zone__c, street, city, state, postalcode, ";
 	query2 += "country, parent_name__c, parent_phone__c, parent_name_2__c, parent_phone_2__c,";
@@ -91,7 +91,7 @@ exports.createLead = function(req, res, next) {
 	
 	
 	/*
-	var query = "INSERT INTO salesforce.lead (identification_number__c, passport_number__c, gender__c, title_th__c, ";
+	var query = "INSERT INTO salesforce1.lead (identification_number__c, passport_number__c, gender__c, title_th__c, ";
 	query += "first_name_th__c, last_name_th__c, salutation, firstname, lastname, mobilephone, email, congenital_disease__c, ";
 	query += "student_id__c, faculty__c, request_zone__c, street, city, state, postalcode, ";
 	query += "country, parent_name__c, parent_phone__c, parent_name_2__c, parent_phone_2__c, Scholarship__c,";
@@ -110,7 +110,7 @@ exports.createLead = function(req, res, next) {
 	db.select(query2)
 	.then(function(results) {
 		setTimeout(function () {
-			db.select("SELECT * FROM salesforce.lead WHERE id='" + results[0].id + "'")
+			db.select("SELECT * FROM salesforce1.lead WHERE id='" + results[0].id + "'")
 			.then(function(results2) {
 				console.log(results2);	
 				res.json(results2);
@@ -123,7 +123,7 @@ exports.createLead = function(req, res, next) {
 
 exports.deleteLead = function(req, res, next) {
 	var id = req.params.id;
-	db.select("DELETE FROM salesforce.Lead WHERE SFID='" + id + "'" )
+	db.select("DELETE FROM salesforce1.Lead WHERE SFID='" + id + "'" )
 	.then(function(results) {
 		console.log(results);	
 		res.json(results);
@@ -135,7 +135,7 @@ exports.updateLead = function(req, res, next) {
 	var id = req.params.id;
 	if (!req.body) return res.sendStatus(400);
 	console.log(req.body);
-	var query = "UPDATE salesforce.Lead SET identification_number__c='" + req.body.identification_number__c + "', "; 
+	var query = "UPDATE salesforce1.Lead SET identification_number__c='" + req.body.identification_number__c + "', "; 
 	query += "passport_number__c='" + req.body.passport_number__c + "', ";
 	query += "gender__c='" + req.body.gender__c + "', ";
 	//query += "title_th__c='" + req.body.title_th__c + "', ";

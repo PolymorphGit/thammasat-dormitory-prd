@@ -5,10 +5,10 @@ exports.getDetail = function(req, res, next) {
 	var output = '';
 	var date;
 	var time;
-	db.select("SELECT * FROM salesforce.Mailing__c WHERE SFID='" + id + "'")
+	db.select("SELECT * FROM salesforce1.Mailing__c WHERE SFID='" + id + "'")
 	.then(function(results) {
 		//console.log(results);	
-		db.select("SELECT * FROM salesforce.Account WHERE SFID='" + results[0].student_name__c + "'")
+		db.select("SELECT * FROM salesforce1.Account WHERE SFID='" + results[0].student_name__c + "'")
 		.then(function(results2) {
 			//console.log(results2);	
 			date = results[0].createddate;
@@ -67,9 +67,9 @@ exports.getList = function(req, res, next) {
 			try
 			{
 			    var obj = JSON.parse(str);
-			    db.select("SELECT * FROM salesforce.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
+			    db.select("SELECT * FROM salesforce1.Account WHERE Mobile_Id__c='" + obj.identities[0].user_id + "'")
 				.then(function(results) {
-					var query = "SELECT * FROM salesforce.Mailing__c where Student_Name__c='" + results[0].sfid + "' Order by createddate desc";
+					var query = "SELECT * FROM salesforce1.Mailing__c where Student_Name__c='" + results[0].sfid + "' Order by createddate desc";
 					if(!isNaN(limit))
 					{
 						query += " limit " + limit;
