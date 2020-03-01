@@ -757,11 +757,24 @@
 								<label id="lbl_student_id__c" />
 							</td>
 						</tr>
+
+						<tr style="display:none">
+							<td align="right">
+								Sex / เพศ
+							</td>
+							<td>
+								<b style="color:red">*</b>
+							</td>
+							<td>
+								<select ng-model="lead.sex__c" ng-options="g for g in sex" id='pick_sex__c'></select>
+								<label id="lbl_gender__c"/>
+							</td>
+						</tr>
 						
 						
 						<tr style="display:none">
 							<td align="right">
-								Sex / เพศ
+								Gender / เพศสภาวะ
 							</td>
 							<td>
 								<b style="color:red">*</b>

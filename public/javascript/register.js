@@ -5,12 +5,15 @@ angular.module('leadApp', [])
   
   //$scope.salutation = ['Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.'];
   $scope.title = ['นาย', 'นางสาว', 'นาง'];
-  $scope.gender = ['Male', 'Female'];
+  $scope.gender = [{'Sex' : 'Male', 'gender':['Male', 'LGBT+']}, {'Sex' : 'Female', 'gender' : ['Female','LGBT+']}];
+
+  $scope.sex = ['Male', 'Female']
+
   $scope.salutation2 = ['Mr.', 'Ms.', 'Mrs.'];
   
   $scope.graduated_area=["Bangkok and Metropolitan","Other"];
 
-  $scope.salutation=[{'Gender':'Male','salutations':['Mr.']},{'Gender':'Female' ,'salutations':['Ms.', 'Mrs.']} ];
+  $scope.salutation=[{'Sex':'Male','salutations':['Mr.']},{'Sex':'Female' ,'salutations':['Ms.', 'Mrs.']} ];
   
   /*
   $scope.faculty = ['นิติศาสตร์ 99/3', 'พาณิชยศาสตร์และการบัญชี 99/4', 'รัฐศาสตร์ 99/10', 'เศรษฐศาสตร์ 99/8', 'สังคมสงเคราะห์ศาสตร์ 99/9', 'สังคมวิทยามนุษย์วิทยา 99/10', 'ศิลปศาสตร์ 99/5',
@@ -48,7 +51,7 @@ angular.module('leadApp', [])
   $scope.usingairconditioner = ['Turn On Air Conditioner','Turn Off Air Conditioner'];
   
 	  			
-  $scope.$watch('lead.gender__c', function(newVal) {
+  $scope.$watch('lead.sex__c', function(newVal) {
       if (newVal)
       {
     	  //alert($scope.lead.gender__c);
@@ -56,17 +59,17 @@ angular.module('leadApp', [])
 	      {
     		  //alert(value.Gender);
     		  
-    		  if(value.Gender == $scope.lead.gender__c && value.Scholar == $scope.lead.scholarship__c)
+    		  if(value.sex == $scope.lead.sex__c && value.Scholar == $scope.lead.scholarship__c)
     		  {
     			//alert(value.zones);
     	  		$scope.zones = value.zones;
 			if($scope.lead.scholarship__c)
         	  		{
-        	  			if($scope.lead.gender__c == 'Male' && !$scope.lead.request_zone__c.include('zone M'))
+        	  			if($scope.lead.sex__c == 'Male' && !$scope.lead.request_zone__c.include('zone M'))
         	  			{
         	  				$scope.lead.request_zone__c = '';
         	  			}
-        	  			else if($scope.lead.gender__c == 'Female' && !$scope.lead.request_zone__c.include('zone F'))
+        	  			else if($scope.lead.sex__c == 'Female' && !$scope.lead.request_zone__c.include('zone F'))
         	  			{
         	  				$scope.lead.request_zone__c = '';
         	  			}
@@ -78,7 +81,7 @@ angular.module('leadApp', [])
     	  angular.forEach($scope.salutation , function(value)
 	      {
     		  //alert(value.Gender);
-    		  if(value.Gender == $scope.lead.gender__c)
+    		  if(value.sex == $scope.lead.sex__c)
     		  {
     			//alert(value.zones);
     			$scope.salutations = value.salutations;
@@ -119,17 +122,17 @@ angular.module('leadApp', [])
     	  //alert($scope.lead.scholarship__c);
     	  angular.forEach($scope.zone , function(value)
 	      {
-    		  if(value.Gender == $scope.lead.gender__c && value.Scholar == $scope.lead.scholarship__c)
+    		  if(value.sex == $scope.lead.sex__c && value.Scholar == $scope.lead.scholarship__c)
     		  {
     			  //alert(value.zones);
     	  			$scope.zones = value.zones;
 			  if($scope.lead.scholarship__c)
         	  		{
-        	  			if($scope.lead.gender__c == 'Male' && !$scope.lead.request_zone__c.include('zone M'))
+        	  			if($scope.lead.sex__c == 'Male' && !$scope.lead.request_zone__c.include('zone M'))
         	  			{
         	  				$scope.lead.request_zone__c = '';
         	  			}
-        	  			else if($scope.lead.gender__c == 'Female' && !$scope.lead.request_zone__c.include('zone F'))
+        	  			else if($scope.lead.sex__c == 'Female' && !$scope.lead.request_zone__c.include('zone F'))
         	  			{
         	  				$scope.lead.request_zone__c = '';
         	  			}
