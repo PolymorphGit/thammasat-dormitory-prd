@@ -689,7 +689,21 @@
 	            if (pageblock != null){ pageblock.firstChild.style.cssText = "background-color: #C80000; color: white;";}
 	        }
 	    </script>
-	    
+		
+		<script>
+			function chkCondition() {
+            var x = document.getElementById("chkCondition").checked;
+
+            // console.log("xxx", x)
+            if (x) {
+				document.getElementById("submit").disabled = false;
+				submit.style.background='limegreen';
+            } else {
+				document.getElementById("submit").disabled = true;
+				submit.style.background='lightgray';
+            }
+        }
+		</script>
 	  
 	</header>
 	
@@ -814,7 +828,31 @@
 						</tr>
 						
 						
-						
+						<tr>
+							<td align="right" class="CustomLayout2">
+								Sex / เพศ
+							</td>
+							<td class="CustomLayout2">
+								<b style="color:red">*</b>
+							</td>
+							<td>
+								<select ng-model="lead.sex__c" ng-options="g for g in sex" id='pick_sex__c'></select>
+								<label id="lbl_sex__c" />
+							</td>
+						</tr>
+
+						<tr>
+							<td align="right" class="CustomLayout2">
+								Gender / เพศภาวะ
+							</td>
+							<td class="CustomLayout2">
+								<b style="color:red">*</b>
+							</td>
+							<td>
+								<select ng-model="lead.gender__c" ng-options="g for g in gender" id='pick_gender__c'></select>
+								<label id="lbl_gender__c" />
+							</td>
+						</tr>
 						
 						<tr>
 							<td align="right" class="CustomLayout2" >
@@ -1072,123 +1110,7 @@
 						    <td><a href="http://www.psm.tu.ac.th/main.php?page_name=dormitory.m1.p01" target="_blank" />Residence Details / รายละเอียดหอพัก</a></td>
 						</tr>
 						
-						<tr>
-                        	<td align="right">
-                            <b>สามารถเลือกตอบได้มากกว่า 1 ข้อ</b>
-	                        </td>
-	                        <td />
-	                        <td />
-	                    </tr>
 						
-						<tr>
-	                        <td align="right" class='CustomLayout1'>
-	                            Sleep After Midnight / นอนหลังเที่ยงคืนได้
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.sleep_after_midnight__c" id="chk_sleep_after_midnight__c" />
-	                        </td>
-	                    </tr>
-	                    
-	                    <tr>
-	                        <td align="right" class='CustomLayout1'>
-	                             Sleep With Light On / นอนเปิดไฟ
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.sleep_with_light_on__c" id="chk_sleep_with_light_on__c" />
-	                        </td>
-	                    </tr>
-	                    
-	                    <tr>
-	                        <td align="right" class='CustomLayout1'>
-	                             Sleep With Turn Off Air Condition / นอนโดยไม่ต้องเปิดแอร์
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.sleep_with_turn_off_air_condition__c" id="chk_sleep_with_turn_off_air_condition__c" />
-	                        </td>
-	                    </tr>
-	                    
-	                    <tr>
-	                        <td align="right" class='CustomLayout1'>
-	                            Sleep Soundly / หลับง่ายแม้มีเสียงรบกวน
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.sleep_soundly__c" id="chk_sleep_soundly__c" />
-	                        </td>
-	                    </tr>
-	                    
-	                    <tr>
-	                        <td align="right" class='CustomLayout1'>
-	                            Love Cleaning / ชอบทำความสะอาดห้อง
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.love_cleaning__c" id="chk_love_cleaning__c" />
-	                        </td>
-	                    </tr>
-						
-		            <tr>
-	                        <td align="right" class='CustomLayout1'>
-	                            Prefer Staying Dorm to Going Out / ชอบที่จะอยู่หอมากกว่าออกไปข้างนอก
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.prefer_staying_dorm_to_going_out__c" id="chk_prefer_staying_dorm_to_going_out__c" />
-	                        </td>
-	                    </tr>
-				
-		            <tr>
-	                        <td align="right" class='CustomLayout1'>
-	                            Go Home On Weekend / กลับบ้าทุกวันหยุด
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.go_home_on_weekend__c" id="chk_go_home_on_weekend__c" />
-	                        </td>
-	                    </tr>
-				
-		            <tr>
-	                        <td align="right" class='CustomLayout1'>
-	                            Flexible Time / เป็นคนยืดหยุ่นเรื่องเวลา
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.flexible_time__c" id="chk_flexible_time__c" />
-	                        </td>
-	                    </tr>
-				
-		            <tr>
-	                        <td align="right" class='CustomLayout1'>
-	                            Love Exercise / ขอออกกำลังกาย
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.love_exercise__c" id="chk_love_exercise__c" />
-	                        </td>
-	                    </tr>
-				
-			    <tr>
-	                        <td align="right" class='CustomLayout1'>
-	                            Activist / ขอเข้าร่วมกิจกรรม
-	                        </td>
-	                        <td>
-	                        </td>
-	                        <td class='CustomLayout1'>
-	                            <input type="checkbox" ng-model="lead.activist__c" id="chk_activist__c" />
-	                        </td>
-	                    </tr>	
 					</table>
 					</td>
 					
@@ -1380,6 +1302,15 @@
 								<label id="parentPhone2Result" />
 							</td>
 						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>
+								<input type="checkbox" id="chkCondition" onClick="javascript:chkCondition()"/>
+								<label>ฉันยอมรับในข้อกำหนดและได้อ่าน <a target="blank" href="https://drive.google.com/file/d/1Maqel39hR6qD9mdg4saGdAZAFF49RMzR/view?usp=sharing">ข้อตกลงและระเบียบมหาวิทยาลัยธรรมว่าด้วยหอพักนักศึกษาและบุคคลากร พ.ศ. 2551</a>  </label>
+							</td>
+
+						</tr>
 						
 					</table>
 					</td>
@@ -1454,7 +1385,7 @@
 			-->
 			<br/>
 			
-			<br/><center><button onclick="update();" style="background:limegreen; color:white; width:80px; height:30px">Submit</button>
+			<br/><center><button id="submit" onclick="update();" style="background:lightgray; color:white; width:80px; height:30px" disabled>Submit</button>
 			
 		</div>
 		
